@@ -1,0 +1,9 @@
+\section{Related Work}\label{sec:related-work}
+
+Data augmentation is a widely used strategy to improve the generalization ability of deep learning models. Traditional augmentation techniques have been extensively used to artificially expand datasets. These methods have proven effective for general computer vision tasks but may not fully capture the physical distortions that appear in printed materials.
+
+For icon recognition, augmentation is particularly crucial due to the often limited availability of labeled data. Existing work has explored digital transformations to generate additional training samples, with methods including geometric distortions, occlusions, and synthetic noise (Krizhevsky et al., 2012). Additionally, some studies have leveraged generative adversarial networks (GANs) to synthesize new icons with slight variations, allowing models to learn more robust representations (Zhu et al., 2017).
+
+However, digitally generated augmentations fail to replicate real-world imperfections that arise from the physical printing and aging process. Physical augmentation techniques have been less explored in the context of icon datasets, with most studies focusing on handwritten character augmentation (Simard et al., 2003). Some approaches have attempted to replicate real-world distortions by capturing printed symbols under different lighting conditions or paper textures, but these remain limited in scope.
+
+Our approach builds upon these ideas by introducing a physically-grounded augmentation technique specifically designed for printed 2D icons. By leveraging sheets of paper with varying levels of abrasion and degradation, our method generates augmented datasets that better reflect the real-world conditions of printed icons. This technique not only enhances model robustness but also provides a simple, low-cost alternative to synthetic augmentation methods.

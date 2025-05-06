@@ -1,0 +1,230 @@
+. Abstract
+. Summary (pt)
+. Introduction (5-7)
+    - Preamble (no title)
+    - Contextualization
+    - Objectives
+    - Contributions
+    - Thesis Outline
+
+. Problem Statement - Objective vs Subjective (5)
+    - Introduction
+    - Explain the problem and visualization
+    - dificulties with FIQA
+
+. Related Work (10-12)
+    - IQA Fundamentals
+    - Metrics Overview
+    - Human Perception and Image Quality
+    - F(IQA) Metrics
+    - Steganography and Image Assessment (ITU-R)
+
+. Methodology (3-5)
+    - Dataset Creation (London subset)
+    . ITU-R methods (single-stimulus)
+    - MOS Data Collection
+    - Objective IQA Evaluation
+    - How to create a new metric
+
+. Experiments and Results (13-15)
+    - Dataset and Steganography methods
+    - Platform
+    - Collection of Data
+    - Compare
+
+. Discussion (2)
+. Conclusion (3-5)
+    - Conclusion
+    - Future Work
+. References
+
+
+
+
+
+
+
+. Abstract
+. Summary (pt)
+. Introduction (5-7)
+    - Preamble (no title)
+    - Contextualization
+    - Objectives
+    - Contributions
+    - Sturcture
+. Related Work (10-12)
+    - IQA
+        - Objective vs Subjective
+    - Subjective Metrics
+    - F(IQA) Metrics
+    - Regulations (ITU-R, ISOs/IEC-norms)
+    - Steganography methods
+. Problem Statement - Objective vs Subjective (2)
+    - Introduction
+    - Explain the problem and visualization
+. Methodology (3-5)
+    - Methods to compare and evaluate images (ITU-R)
+    - How to create a new metric
+. Experiments and Results (13-15)
+    - Dataset and Steganography methods
+    - Platform
+    - Collection of Data
+    - Compare
+. Discussion (2)
+. Conclusion (3-5)
+    - Conclusion
+    - Future Work
+. References
+
+
+
+
+
+
+Image Quality Assessment (IQA) is a critical field in computer vision and image processing that focuses on quantifying the visual quality of images.
+
+The importance of IQA lies in its diverse applications, including image compression, enhancement, restoration, medical imaging, and multimedia delivery systems. By providing a means to evaluate image quality, IQA enables the optimization of algorithms that rely on high-quality visual data.
+
+The assessment of image quality can be categorized into subjective and objective aproaches. \textbf{Subjective IQA} relies on human observers to evaluate images based on their perceived quality. \textbf{Objective IQA} aims to mathematically calculate and quantitize image quality. In theory, the closest an objective IQA metric is to the subjective colective opinion, the better.
+
+\section{Subjective IQA}
+
+The most reliable method for assessing image quality is through subjective testing, as human observers are the primary end-users in most multimedia applications. In such tests, a group of participants is asked to provide their opinion on the perceived quality of each image. To ensure reliable results, several international standards are proposed to guide this process.
+
+Recommendation International Telecommunication Union --- Radiocommunication Broadcasting service (television) (ITU-R BT.500--15)\cite{itu2023bt500} is one of the most widely used standards for subjective assessment. In this section we will revisit definitions and commonly used methodologies from ITU-R.
+
+In general, there are two classes of subjective assessments. First, the assessments that establish the performance of systems under optimum conditions; these are called \textbf{Quality Assessments}. Second, the assessments that establish the ability of systems to retain quality under non-optimum conditions that relate to transmission or emission; these are called \textbf{Impairment Assessments}.
+
+\subsection{Single-stimulus (SS)}
+
+In SS methods, a single image is presented and the observers are asked to rate it on a given scale. The test material might include only test sequences, or it might include both the test sequences and their corresponding reference sequence. In the latter case, the reference is presented as a freestanding stimulus for rating like any other.
+
+In general, SS methods can be divided into three types, distinguished by their rating scales:
+
+\begin{itemize}
+    \item Adjectival Categorical Scale (SSACS): Ratings are expressed using descriptive terms such as ``Excellent'', ``Good'', or ``Poor''.
+    \item Numerical Categorical Scale (SSNCS): Ratings are given as numbers on a predefined scale, such as 1 to 5 or 0 to 100.
+    \item Non-categorical: Ratings are provided without predefined scales, allowing free-form feedback or continuous scoring.
+\end{itemize}
+
+\subsection{Double-stimulus (DS)}
+
+In DS methods, two images are presented to observers simultaneously or sequentially for comparison. These images can include a pristine reference and a distorted version, or two distorted versions of the same image. Observers are asked to evaluate the quality of one image relative to the other, or to rate both images independently. This approach is effective for identifying subtle differences or impairments that might not be noticeable in single-stimulus evaluations.
+
+DS methods can be further divided based on the type of comparison and rating procedure:
+
+\begin{itemize}
+    \item Double Stimulus Continuous Quality Scale (DSCQS): Observers rate both images on a continuous scale, typically evaluating overall quality or preference without being informed of their roles.
+    \item Double Stimulus Impairment Scale (DSIS): Observers evaluate the degree of degradation between two images, often comparing a test image to a baseline reference or another distorted version.
+    \item Pairwise comparison: Observers compare two images and choose the one perceived as having better quality or less impairment, without assigning numerical ratings.
+\end{itemize}
+
+\subsection{Metrics of Subjective IQA}
+
+The outputs of subjective IQA tests are typically numerical scores derived from observer ratings, which are then processed into standardized metrics for analysis. These metrics provide quantitative representations of perceived image quality, forming the basis for comparisons and evaluations. The most commonly used subjective metrics are as follows:
+
+\begin{itemize}
+    \item \textbf{Mean Opinion Score (MOS)}: MOS is the average score of all observer ratings for a given stimulus. It provides a single value representing the overall perceived quality of the image. Formally, MOS is calculated as:
+    \begin{equation}
+        \text{MOS} = \frac{1}{N} \sum_{i=1}^{N} R_i,\label{eq:mos}
+    \end{equation}
+    where $N$ is the number of observers and $R_i$ is the rating given by the $i$-th observer. MOS is widely used in both SS and DS methods, as it effectively summarizes collective human perception.
+    \item \textbf{Differential Mean Opinion Score (DMOS)}: DMOS measures the difference in perceived quality between a reference and a distorted image, and it is calculated as:
+    \begin{equation}
+        \text{DMOS} = \text{MOS}_{\text{ref}} - \text{MOS}_{\text{dist}},\label{eq:dmos}
+    \end{equation}
+    where $\text{MOS}_{\text{ref}}$ is the Mean Opinion Score of the reference image and $\text{MOS}_{\text{dist}}$ is that of the distorted image. DMOS quantifies the degree of impairment, with higher values indicating greater degradation. 
+    In some cases, DMOS values are normalized to a $[0, 1]$ range for easier comparisson.
+    
+    \begin{equation}
+        \text{DMOS}_{\text{norm}} = \frac{\text{DMOS}}{\text{MOS}_{\text{ref}}}\label{eq:dmos_norm}
+    \end{equation}
+
+    \item \textbf{Confidence Intervals (CI)}: Confidence intervals are calculated to assess the reliability of the subjective scores. A smaller confidence interval suggests greater consistency among observer ratings, enhancing the validity of the results. CI is often used in conjunction with MOS or DMOS to provide additional insight into the variability of ratings.
+
+    \item \textbf{Outlier Detection and Screening Metrics}: To ensure the reliability of subjective tests, outlier detection methods are applied to identify and remove ratings from observers who deviate significantly from the group. Metrics such as standard deviation thresholds or interquartile range analysis are used to screen for inconsistencies.
+\end{itemize}
+
+These subjective metrics are essential for benchmarking the performance of objective IQA methods and validating new image quality models.
+
+% In addition, they form the basis for constructing datasets used in training and evaluating modern machine learning-based IQA algorithms.
+\section{Objective IQA}
+
+Objective IQA refers to the process of evaluating the quality of images using mathematical models or algorithms, eliminating the need for human observers. Its primary goal is to approximate human perception as closely as possible, by leveraging models that simulate aspects of the Human Visual System (HVS).
+
+Depending on the availability of reference images, objective IQA can be divided into:
+
+\begin{itemize}
+    \item Full-Reference (FR):\@ Requires an original reference image to compare against the distorted image. It quantifies quality by analyzing the difference between the two images.
+    \item Reduced-Reference (RR):\@ Relies on partial information or features extracted from the reference image. These methods balance accuracy and practicality, making them suitable for scenarios where transmitting or storing the full reference image is not feasible.
+    \item No-Reference (NR):\@ Also known as blind IQA, this approach assesses image quality without any reference image.
+\end{itemize}
+
+\subsection{Metrics of Objective IQA}
+
+Traditional metrics rely on pixel-wise comparisons between a reference and a distorted image, these methods are computationally simple and widely used but often fail to align with human perception due to their lack of consideration for perceptual factors.
+
+\subsubsection{Mean Squared Error (MSE)}
+MSE measures the average squared difference between corresponding pixels of the reference (\(I\)) and distorted (\(\hat{I}\)) images. It is defined as:
+\begin{equation}
+    \text{MSE} = \frac{1}{MN} \sum_{i=1}^M \sum_{j=1}^N \left[ I(i, j) - \hat{I}(i, j) \right]^2,
+\end{equation}
+where \(M\) and \(N\) are the dimensions of the image. While MSE is simple to compute, it does not correlate well with human perception, as it treats all pixel errors equally, regardless of their spatial or perceptual significance.
+
+\subsubsection{Peak Signal-to-Noise Ratio (PSNR)}
+PSNR builds on MSE to quantify the ratio between the maximum possible pixel intensity (\(MAX\)) and the MSE:\@
+\begin{equation}
+    \text{PSNR} = 10 \cdot \log_{10} \left(\frac{MAX^2}{\text{MSE}}\right).
+\end{equation}
+Higher PSNR values indicate better image quality. Despite being easy to interpret, PSNR shares MSE's limitation in failing to account for perceptual factors.
+
+\subsubsection{Structural Similarity Index (SSIM)}
+The Structural Similarity Index (SSIM) was developed to address the shortcomings of classical metrics like MSE and PSNR, which often fail to align with human perception. SSIM models the human visual system by focusing on structural information, as humans are highly sensitive to structures in images. Unlike pixel-wise error metrics, SSIM measures perceptual similarity by comparing three key components: luminance (\(l\)), contrast (\(c\)), and structure (\(s\)).
+
+The SSIM formula is given by:
+\begin{equation}
+    \text{SSIM}(x, y) = \frac{(2\mu_x\mu_y + C_1)(2\sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)},
+\end{equation}
+where:
+\begin{itemize}
+    \item \(\mu_x, \mu_y\): Mean pixel intensities of the images \(x\) and \(y\),
+    \item \(\sigma_x^2, \sigma_y^2\): Variances of pixel intensities,
+    \item \(\sigma_{xy}\): Covariance of \(x\) and \(y\),
+    \item \(C_1, C_2\): Stabilizing constants to avoid division by zero.
+\end{itemize}
+
+SSIM combines these components into a single similarity score, where values range from \(-1\) (no similarity) to \(1\) (perfect similarity). In most practical cases, SSIM values are normalized to the range \([0, 1]\), with higher values indicating better quality.
+
+\subsubsection{Fréchet Inception Distance (FID)}
+\textbf{Type}: Reference-Based Metric.\\
+\textbf{Description}: FID evaluates the quality of generative models by comparing the feature distributions of real and generated images. It calculates the Fréchet distance between the two distributions using a pretrained Inception network.\\
+\textbf{Formula}:
+\begin{equation}
+\text{FID} = \| \mu_r - \mu_g \|^2 + \text{Tr}(\Sigma_r + \Sigma_g - 2(\Sigma_r \Sigma_g)^{1/2}),
+\end{equation}
+where \(\mu_r, \Sigma_r\) and \(\mu_g, \Sigma_g\) are the means and covariances of the real and generated feature distributions.\\
+\textbf{Application}: FID is commonly used to assess the performance of GANs in generating realistic images for super-resolution, denoising, or style transfer.
+
+\subsubsection{LPIPS (Learned Perceptual Image Patch Similarity)}
+\textbf{Type}: Reference-Based Metric.\\
+\textbf{Description}: LPIPS measures perceptual similarity between two images by comparing their features extracted from a pretrained network, such as VGG or AlexNet. It computes a weighted distance between feature maps to assess perceptual quality.\\
+\textbf{Formula} (simplified):
+\begin{equation}
+\text{LPIPS}(x, y) = \sum_l \frac{1}{H_l W_l} \sum_{h,w} \| \phi_l(x)_{h,w} - \phi_l(y)_{h,w} \|,
+\end{equation}
+where \(\phi_l(x)\) and \(\phi_l(y)\) are feature maps at layer \(l\) of the reference and distorted images.\\
+\textbf{Application}: LPIPS is frequently used for comparing images generated by GANs in tasks such as super-resolution, style transfer, and video enhancement.
+
+\subsection*{Key Differences}
+\begin{itemize}
+    \item \textbf{NN Metrics} (e.g., BRISQUE, NIQE):
+    \begin{itemize}
+        \item Focus on extracting handcrafted features or statistical properties for evaluating image quality.
+        \item Typically used in No-Reference IQA tasks.
+    \end{itemize}
+    \item \textbf{GAN Metrics} (e.g., FID, LPIPS):
+    \begin{itemize}
+        \item Leverage pretrained deep learning models to assess perceptual quality.
+        \item Suitable for evaluating generative tasks, focusing on perceptual realism.
+    \end{itemize}
+\end{itemize}

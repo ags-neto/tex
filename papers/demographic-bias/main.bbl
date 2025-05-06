@@ -1,0 +1,176 @@
+\begin{thebibliography}{10}
+
+\bibitem{Kim2015}
+H.-I. Kim, S.~H. Lee, and M.~R. Yong, ``Face image assessment learned with
+  objective and relative face image qualities for improved face recognition,''
+  {\em IEEE International Conference on Image Processing}, pp.~4027--4031,
+  2015.
+
+\bibitem{Huang2020}
+C.~Huang, Y.~Li, C.~C. Loy, and X.~Tang, ``Deep imbalanced learning for face
+  recognition and attribute prediction,'' {\em IEEE Transactions on Pattern
+  Analysis and Machine Intelligence}, vol.~42, no.~11, pp.~2781--2794, 2020.
+
+\bibitem{Cavazos2021}
+J.~G. Cavazos, P.~J. Phillips, C.~D. Castillo, and A.~J. O’Toole, ``Accuracy
+  comparison across face recognition algorithms: Where are we on measuring race
+  bias?,'' {\em IEEE Transactions on Biometrics, Behavior, and Identity
+  Science}, vol.~3, no.~1, pp.~101--111, 2021.
+
+\bibitem{Terhoerst2020}
+P.~Terhoerst, J.~N. Kolf, N.~Damer, F.~Kirchbuchner, and A.~Kuijper, ``Face
+  quality estimation and its correlation to demographic and non-demographic
+  bias in face recognition,'' {\em IEEE International Joint Conference on
+  Biometrics}, pp.~1--11, 2020.
+
+\bibitem{ITU-R-BT500}
+{International Telecommunication Union}, ``{Methodology for the Subjective
+  Assessment of the Quality of Television Pictures},'' Recommendation
+  BT.500-15, International Telecommunication Union, Radiocommunication Sector,
+  2023.
+\newblock Available at: \\url{https://www.itu.int/rec/R-REC-BT.500-15}.
+
+\bibitem{gonzalez2002digital}
+R.~C. Gonzalez and R.~E. Woods, {\em Digital Image Processing}.
+\newblock Prentice Hall, 2nd~ed., 2002.
+
+\bibitem{wang2004image}
+Z.~Wang, A.~C. Bovik, H.~R. Sheikh, and E.~P. Simoncelli, ``Image quality
+  assessment: From error visibility to structural similarity,'' {\em IEEE
+  Transactions on Image Processing}, vol.~13, no.~4, pp.~600--612, 2004.
+
+\bibitem{sheikh2006image}
+H.~R. Sheikh and A.~C. Bovik, ``Image information and visual quality,'' {\em
+  IEEE Transactions on Image Processing}, vol.~15, no.~2, pp.~430--444, 2006.
+
+\bibitem{Babnik2022}
+Z.~Babnik and V.~Struc, ``Assessing bias in face image quality assessment,''
+  {\em ArXiv preprint}, 2022.
+
+\bibitem{Kabbani2024}
+W.~Kabbani, K.~Raja, R.~Ramachandra, and C.~Busch, ``Demographic variability in
+  face image quality measures,'' {\em International Conference of the
+  Biometrics Special Interest Group (BIOSIG)}, pp.~1--6, 2024.
+
+\bibitem{9304865}
+P.~Terhörst, J.~N. Kolf, N.~Damer, F.~Kirchbuchner, and A.~Kuijper, ``Face
+  quality estimation and its correlation to demographic and non-demographic
+  bias in face recognition,'' in {\em 2020 IEEE International Joint Conference
+  on Biometrics (IJCB)}, pp.~1--11, 2020.
+
+\bibitem{tapia2024beauty}
+J.~E. Tapia {\em et~al.}, ``Beauty score fusion for morphing attack
+  detection,'' in {\em Proceedings of the British Machine Vision Conference
+  (BMVC) Workshops}, 2024.
+
+\bibitem{icao_2015}
+``Doc 9303 machine readable travel documents, part 3: Specifications common to
+  all mrtds,'' September 2015.
+
+\bibitem{iso_iec29794-5_2010}
+``Information technology -- biometric sample quality -- part 5: Face image
+  data,'' April 2010.
+
+\bibitem{echr_article14}
+C.~of~Europe, ``European convention on human rights, article 14: Prohibition of
+  discrimination,'' 1950.
+\newblock Council of Europe Treaty Series No. 5.
+
+\bibitem{udhr_article7}
+U.~Nations, ``Universal declaration of human rights, article 7: Equality before
+  the law,'' 1948.
+\newblock General Assembly Resolution 217 A.
+
+\bibitem{gdpr_article22}
+E.~Union, ``General data protection regulation (eu) 2016/679, article 22:
+  Automated individual decision-making, including profiling,'' 2016.
+\newblock Official Journal of the European Union, L 119.
+
+\bibitem{eu_ai_act_2024}
+E.~Union, ``Artificial intelligence act (ai act) - regulation (eu) 2024/1689,''
+  2024.
+\newblock Official Journal of the European Union, L 1689, 12 July 2024.
+
+\bibitem{us_ai_bill_rights_2022}
+T.~W. House, ``Blueprint for an ai bill of rights: Making automated systems
+  work for the american people,'' 2022.
+\newblock Office of Science and Technology Policy, United States.
+
+\bibitem{kanwisher2006fusiform}
+N.~Kanwisher and G.~Yovel, ``The fusiform face area: a cortical region
+  specialized for the perception of faces,'' {\em Philosophical Transactions of
+  the Royal Society B: Biological Sciences}, vol.~361, no.~1476,
+  pp.~2109--2128, 2006.
+
+\bibitem{tsao2008mechanisms}
+D.~Y. Tsao and M.~S. Livingstone, ``Mechanisms of face perception,'' {\em Annu.
+  Rev. Neurosci.}, vol.~31, no.~1, pp.~411--437, 2008.
+
+\bibitem{Robinson2020}
+J.~P. Robinson, G.~Livitz, Y.~Henon, C.~Qin, Y.~Fu, and S.~Timoner, ``Face
+  recognition: Too bias, or not too bias?,'' {\em ArXiv preprint}, 2020.
+
+\bibitem{Kortylewski2019}
+A.~Kortylewski, B.~Egger, A.~Schneider, T.~Gerig, A.~Morel-Forster, and
+  T.~Vetter, ``Analyzing and reducing the damage of dataset bias to face
+  recognition with synthetic data,'' {\em IEEE/CVF Conference on Computer
+  Vision and Pattern Recognition (CVPR) Workshops}, 2019.
+
+\bibitem{DeBruine2017}
+L.~DeBruine and B.~Jones, ``Face research lab london set,'' {\em Open Science
+  Framework}, 2017.
+
+\bibitem{gans2018}
+M.~Heusel, H.~Ramsauer, T.~Unterthiner, B.~Nessler, and S.~Hochreiter, ``Gans
+  trained by a two time-scale update rule converge to a local nash
+  equilibrium,'' 2018.
+
+\bibitem{stegastamp2020}
+M.~Tancik, B.~Mildenhall, and R.~Ng, ``Stegastamp: Invisible hyperlinks in
+  physical photographs,'' in {\em Proceedings of the IEEE/CVF Conference on
+  Computer Vision and Pattern Recognition (CVPR)}, June 2020.
+
+\bibitem{codeface2021}
+F.~Shadmand, I.~Medvedev, and N.~Goncalves, ``Codeface: A deep learning
+  printer-proof steganography for face portraits,'' {\em IEEE Access}, vol.~9,
+  pp.~167282--167291, 2021.
+
+\bibitem{cruz2025riemstega}
+A.~Cruz, G.~Schardong, L.~Schirmer, J.~Marcos, F.~Shadmand, and N.~Gonçalves,
+  ``Riemstega: Covariance-based loss for print-proof transmission of data in
+  images,'' in {\em Proceedings of the IEEE/CVF Winter Conference on
+  Applications of Computer Vision (WACV)}, IEEE, 2025.
+
+\bibitem{stampone2023}
+F.~Shadmand, I.~Medvedev, L.~Schirmer, J.~Marcos, and N.~Gonçalves,
+  ``Stampone: Addressing frequency balance issue in printer-proof
+  steganography.'' ISR Technical Report. To be submited soon., 2022.
+
+\bibitem{tay2022efficient}
+Y.~Tay, M.~Dehghani, D.~Bahri, and D.~Metzler, ``Efficient transformers: A
+  survey,'' 2022.
+
+\bibitem{cohen1988statistical}
+J.~Cohen, {\em Statistical Power Analysis for the Behavioral Sciences}.
+\newblock New York, NY, USA: Routledge, 2nd~ed., 1988.
+
+\bibitem{tukey1949comparing}
+J.~W. Tukey, {\em Comparing Individual Means in the Analysis of Variance},
+  vol.~5.
+\newblock International Biometric Society, 1949.
+
+\bibitem{wang2003multiscale}
+Z.~Wang, E.~P. Simoncelli, and A.~C. Bovik, ``Multiscale structural similarity
+  for image quality assessment,'' {\em IEEE Asilomar Conference on Signals,
+  Systems and Computers}, pp.~1398--1402, 2003.
+
+\bibitem{breiman2001random}
+L.~Breiman, ``Random forests,'' {\em Machine Learning}, vol.~45, no.~1,
+  pp.~5--32, 2001.
+
+\bibitem{ma2011psnr}
+L.~Ma, S.~Wang, G.~Shi, D.~Zhao, and W.~Gao, ``Psnr-b: A novel peak
+  signal-to-noise ratio based on edge preservation,'' {\em IEEE Journal of
+  Selected Topics in Signal Processing}, vol.~6, no.~6, pp.~537--549, 2012.
+
+\end{thebibliography}

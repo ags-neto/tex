@@ -1,0 +1,193 @@
+\chapter{Methodology}
+
+\section{Dataset Creation}
+
+The success of any Image Quality Assessment (IQA) metric depends heavily on the dataset used for its evaluation and development. This thesis utilizes the London dataset.
+
+\subsection{Overview of the Dataset}
+
+The dataset consists of 102 high-quality facial images encoded using four steganographic methods: StegaStamp, CodeFace, RiemannianStegaStamp, and StampOne. Each image is modified at nine thresholds ranging from 0.6 to 1.4 in increments of 0.1, resulting in a total of 3672 steganography-encoded images. The dataset is carefully crafted to balance aesthetic, demographic, cultural and ethnical diversity.
+
+\subsection{Challenges in Dataset Preparation}
+
+\begin{itemize}
+    \item \textbf{Perceptual Diversity:} Facial images are selected to represent a wide range of aesthetic qualities, as human judgments are significantly influenced by factors such as symmetry and attractiveness.
+    \item \textbf{Steganographic Variability:} Each steganographic method introduces unique distortions.
+    \item \textbf{Balanced Distribution:} The dataset ensures an even distribution across different embedding thresholds and methods, preventing bias during training and evaluation.
+\end{itemize}
+
+\subsection{Dataset Organization}
+
+The dataset is structured as follows:
+\begin{itemize}
+    \item \textbf{Reference Images:} High-quality, unaltered facial images.
+    \item \textbf{Distorted Images:} Images encoded with varying thresholds of each steganographic method.
+    \item \textbf{Metadata:} Annotations include the encoding method, threshold value, and MOS scores collected through subjective evaluations.
+\end{itemize}
+
+The next section describes the subjective evaluation process, including the use of ITU-R BT.500 guidelines for Mean Opinion Score (MOS) collection.
+
+\section{MOS Data Collection}
+
+Mean Opinion Score (MOS) is a widely accepted method for collecting subjective evaluations of image quality. In this thesis, the MOS collection process follows the ITU-R BT.500 guidelines to ensure reliability and reproducibility of subjective evaluations.
+
+\subsection{Observer Selection}
+
+A diverse group of 30 observers participated in the evaluation process. The selection criteria included:
+\begin{itemize}
+    \item \textbf{Age Range:} Observers aged 18-50 to ensure a mix of perceptual sensitivities.
+    \item \textbf{Visual Acuity:} Participants were screened to confirm normal or corrected-to-normal vision.
+    \item \textbf{Demographic Diversity:} Efforts were made to balance gender, cultural background, and familiarity with visual assessment tasks (ITU-R BT.500, 2023).
+\end{itemize}
+
+\subsection{Viewing Conditions}
+
+The evaluation was conducted in a controlled environment, adhering to ITU-R BT.500 standards:
+\begin{itemize}
+    \item \textbf{Display:} High-resolution monitors with consistent brightness and color calibration.
+    \item \textbf{Lighting:} Ambient lighting conditions were maintained to minimize glare and eye strain.
+    \item \textbf{Viewing Distance:} Observers were seated at a distance of three times the image height, as recommended for subjective evaluations.
+\end{itemize}
+
+\subsection{Evaluation Methodology}
+
+The Single Stimulus method was used for subjective quality assessment:
+\begin{itemize}
+    \item Observers were presented with one image at a time and asked to rate its quality on a 5-point scale:
+    \begin{itemize}
+        \item 5: Excellent
+        \item 4: Good
+        \item 3: Fair
+        \item 2: Poor
+        \item 1: Bad
+    \end{itemize}
+    \item Ratings were recorded anonymously to minimize bias.
+    \item Each observer evaluated a randomized subset of images to avoid fatigue and ensure reliable results.
+\end{itemize}
+
+\subsection{Post-Screening and Statistical Analysis}
+
+After data collection, post-screening was conducted to remove outliers and ensure consistency:
+\begin{itemize}
+    \item Observers whose ratings showed high variance or inconsistency were excluded.
+    \item Statistical methods, such as confidence interval calculations, were used to validate the collected MOS scores (ITU-R BT.500, 2023).
+\end{itemize}
+
+The collected MOS data serves as the foundation for validating the proposed metrics in this thesis. The next section describes the computation of objective metrics and their comparison with subjective evaluations.
+
+\section{Objective IQA Evaluation}
+
+To complement the subjective Mean Opinion Score (MOS) data, objective Image Quality Assessment (IQA) metrics were computed for all images in the dataset. This step provides a computational perspective, enabling the identification of discrepancies between human perception and algorithmic evaluations.
+
+\subsection{Selected Metrics}
+
+A diverse set of 50 objective IQA metrics was chosen, encompassing both traditional and learning-based approaches. These metrics are categorized as follows:
+
+\begin{itemize}
+    \item \textbf{Full-Reference Metrics:} Require a pristine reference image for evaluation.
+    \begin{itemize}
+        \item Structural Similarity Index (SSIM)
+        \item Peak Signal-to-Noise Ratio (PSNR)
+        \item Feature Similarity Index (FSIM)
+        \item Visual Information Fidelity (VIF) (Sheikh and Bovik, 2006)
+    \end{itemize}
+    \item \textbf{No-Reference Metrics:} Operate without a reference image.
+    \begin{itemize}
+        \item Natural Image Quality Evaluator (NIQE)
+        \item Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) (Mittal et al., 2012)
+        \item Perceptual Adversarial Similarity Score (PASS) (Liu et al., 2021)
+    \end{itemize}
+    \item \textbf{Learning-Based Metrics:} Utilize deep learning models to extract perceptual features.
+    \begin{itemize}
+        \item Learned Perceptual Image Patch Similarity (LPIPS) (Zhang et al., 2018)
+        \item Neural Image Assessment (NIMA) (Talebi and Milanfar, 2018)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Computation Workflow}
+
+Objective metrics were computed using the following workflow:
+\begin{enumerate}
+    \item \textbf{Preprocessing:} Images were resized and normalized to ensure compatibility with the metric algorithms.
+    \item \textbf{Batch Processing:} Metrics were computed for all images using automated scripts developed in Python with libraries such as OpenCV, SciPy, and PyTorch.
+    \item \textbf{Data Aggregation:} Results were stored in a structured format, linking each image to its corresponding MOS and metric scores.
+\end{enumerate}
+
+\subsection{Correlation Analysis}
+
+To evaluate the performance of objective metrics, correlation coefficients were computed between MOS values and metric scores:
+\begin{itemize}
+    \item \textbf{Pearson Correlation:} Measures linear relationships between MOS and metric scores.
+    \item \textbf{Spearman Rank Correlation:} Captures monotonic relationships, providing insight into rank consistency.
+    \item \textbf{Kendall’s Tau:} Used for further validation of rank-based consistency.
+\end{itemize}
+
+The correlation analysis revealed that traditional metrics, such as PSNR and MSE, exhibited weak alignment with MOS values, particularly for steganographic distortions. In contrast, learning-based metrics like LPIPS and NIMA demonstrated stronger correlations, underscoring their potential for perceptually aligned evaluations.
+
+\subsection{Insights from Objective Metrics}
+
+The analysis highlighted several key insights:
+\begin{itemize}
+    \item Full-Reference metrics performed well for simple distortions but struggled with subtle artifacts introduced by steganography.
+    \item No-Reference metrics showed promise for real-world applications but required fine-tuning for specific datasets.
+    \item Learning-based metrics consistently outperformed traditional methods, emphasizing the importance of perceptually informed approaches.
+\end{itemize}
+
+The next section outlines the methodology for creating a novel metric that synthesizes these insights, aiming to bridge the gap between objective and subjective evaluations.
+
+\section{How to Create a New Metric}
+
+The development of a new Image Quality Assessment (IQA) metric requires an approach that synthesizes insights from subjective evaluations, objective metrics, and domain-specific challenges. This thesis proposes a Full-Reference Fusion Metric (FRFM) that combines highly correlated objective metrics into a unified framework. Additionally, the FRFM serves as the foundation for a No-Reference Metric (NRM) that generalizes the assessment to scenarios without pristine reference images.
+
+\subsection{Metric Selection}
+
+The first step in creating the FRFM involves selecting objective metrics that exhibit high correlation with subjective Mean Opinion Scores (MOS). Metrics are ranked based on their Pearson, Spearman, and Kendall’s Tau correlations with MOS data. The selected metrics include:
+\begin{itemize}
+    \item \textbf{SSIM:} Captures structural similarities that align with perceptual quality.
+    \item \textbf{LPIPS:} Leverages deep feature representations to evaluate perceptual similarity.
+    \item \textbf{VIF:} Quantifies the preservation of visual information.
+    \item \textbf{PASS:} Detects perceptual changes in steganographic distortions.
+\end{itemize}
+
+\subsection{Fusion Framework}
+
+The selected metrics are integrated using a weighted fusion approach:
+\begin{enumerate}
+    \item \textbf{Metric Normalization:} Each metric is normalized to a common scale to ensure comparability.
+    \item \textbf{Weight Assignment:} Weights are assigned based on correlation coefficients with MOS values. Metrics with higher correlations are given greater importance.
+    \item \textbf{Fusion Equation:} The overall quality score \( Q \) is computed as:
+    \[
+    Q = \sum_{i=1}^{n} w_i \cdot M_i
+    \]
+    where \( w_i \) represents the weight of the \( i \)-th metric, and \( M_i \) is the corresponding metric score.
+\end{enumerate}
+
+\subsection{Validation of the Fusion Metric}
+
+The FRFM is validated using unseen images from the dataset. Validation steps include:
+\begin{itemize}
+    \item \textbf{Correlation Analysis:} Assess the alignment of FRFM scores with MOS values.
+    \item \textbf{Comparison with Baselines:} Compare the FRFM against individual metrics like SSIM, PSNR, and LPIPS to demonstrate its superiority.
+    \item \textbf{Visual Examples:} Evaluate the metric's performance on challenging images, such as those with subtle steganographic artifacts or region-specific distortions.
+\end{itemize}
+
+\subsection{No-Reference Metric Development}
+
+Using the FRFM as a training framework, a neural network model is designed to predict quality scores directly from distorted images:
+\begin{enumerate}
+    \item \textbf{Training Data:} The FRFM scores serve as the ground truth, while distorted images act as input data.
+    \item \textbf{Model Architecture:} A convolutional neural network (CNN) is chosen for its ability to extract features from image data.
+    \item \textbf{Loss Function:} The model is trained using a regression loss function to minimize the difference between predicted scores and FRFM scores.
+    \item \textbf{Evaluation:} The NRM is validated on unseen datasets, with performance measured using correlation coefficients and visual examples.
+\end{enumerate}
+
+\subsection{Insights for Metric Design}
+
+Key insights from this methodology include:
+\begin{itemize}
+    \item The fusion of complementary metrics improves robustness and perceptual alignment.
+    \item Neural networks trained on FR metrics enable practical applications in scenarios where reference images are unavailable.
+    \item The use of subjective evaluations, such as MOS, as a ground truth ensures that the metrics align with human perception.
+\end{itemize}
+
+This approach sets the stage for the development of metrics that bridge the gap between subjective and objective evaluations. The next chapter details the implementation and validation of the Full-Reference Fusion Metric.

@@ -1,0 +1,11 @@
+/*
+ * Filename: notes.txt
+ * Path: /home/netoa/Desktop/TeX/documents
+ * Created Date: Tuesday January 7th 2025
+ * Author: Andre Neto
+ * -----
+ * Last Modified: Tue Jan 07 2025
+ * Modified By: Andre Neto
+ * -----
+ * Copyright (c) 2025 Institute of Systems and Robotics
+ */

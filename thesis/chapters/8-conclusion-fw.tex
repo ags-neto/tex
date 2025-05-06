@@ -1,0 +1,42 @@
+\chapter{Conclusion and Future Work}
+
+\section{Conclusion}
+
+This thesis addressed the challenge of aligning objective Image Quality Assessment (IQA) metrics with human perception, particularly in the context of facial images and steganography-encoded distortions. The research was driven by the need for metrics that capture subtle, perceptually significant artifacts while maintaining computational feasibility.
+
+The primary contributions of this work include:
+\begin{itemize}
+    \item Development of the Full-Reference Fusion Metric (FRFM), which integrates multiple highly correlated metrics into a unified framework, achieving superior alignment with subjective evaluations.
+    \item Design of the No-Reference Metric (NRM), leveraging neural networks to generalize quality assessment to scenarios without pristine reference images.
+    \item Comprehensive validation of the proposed metrics against traditional methods and subjective Mean Opinion Scores (MOS), demonstrating significant improvements in correlation, robustness, and adaptability.
+\end{itemize}
+
+The proposed metrics effectively address the limitations of existing approaches, offering robust solutions for evaluating facial images and steganographic distortions. Their ability to bridge the gap between objective computations and human perception marks a significant advancement in the field of IQA.
+
+\section{Future Work}
+
+While this thesis has made substantial contributions, several avenues for future research remain:
+
+\subsection{Hybrid Metrics}
+
+Future work could explore hybrid approaches that combine the strengths of Full-Reference and No-Reference metrics. Such methods could leverage reference images when available while maintaining the flexibility to operate without references.
+
+\subsection{Generalization Across Datasets}
+
+The current metrics were validated on a specific dataset. Future studies should test their performance on larger, more diverse datasets to evaluate their generalizability across different image domains and distortion types.
+
+\subsection{Adapting to Emerging Distortion Types}
+
+As steganography and other encoding techniques evolve, new distortion types will emerge. Extending the proposed metrics to handle these distortions will be critical for maintaining their relevance.
+
+\subsection{Real-Time Applications}
+
+The computational complexity of learning-based metrics, such as the NRM, limits their use in real-time scenarios. Future research could focus on optimizing these models for real-time performance without sacrificing accuracy.
+
+\subsection{Integration with Human-Perception Models}
+
+Incorporating models from neuroscience and psychology into IQA frameworks could further enhance their alignment with human perception. For instance, integrating attention mechanisms to prioritize salient image regions could improve metric performance for facial images.
+
+\section{Final Remarks}
+
+This thesis represents a step toward more perceptually aligned IQA metrics, addressing critical gaps in the evaluation of facial images and steganographic distortions. By combining insights from subjective evaluations, objective computations, and neural network-based methods, the proposed metrics offer a robust foundation for future advancements in the field of IQA. Continued research in this area will not only refine these metrics but also expand their applicability to emerging challenges in digital imaging.

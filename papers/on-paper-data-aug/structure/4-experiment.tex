@@ -1,0 +1,29 @@
+\section{Experimental Setup and Evaluation}
+
+To assess the effectiveness of the proposed method, we conduct qualitative and quantitative evaluations of the generated images.
+
+\subsection{Experimental Setup}
+
+We generate a dataset of augmented icons using a diverse set of textures from \texttt{texture\_pack}. The visibility factor $\alpha$ is varied within the predefined range, and random border expansions are applied. The output images are analyzed for their blending quality and degradation realism.
+
+To ensure a fair evaluation, we consider multiple test cases with different texture types, including smooth, rough, and highly creased surfaces. Additionally, we vary the positioning of the icons to test the robustness of the algorithm against different spatial placements.
+
+\subsection{Qualitative Evaluation}
+
+Sample images generated using the proposed algorithm are visually examined to assess their consistency with real-world degradation effects. As shown in Figure~, the blended icons exhibit natural variations in contrast, smudging, and background integration. The images are compared with real-world printed and degraded icons to validate their visual authenticity.
+
+Furthermore, we analyze how different textures impact the final blended output. Icons placed on highly wrinkled textures show more severe degradation, whereas smoother textures yield more subtle blending effects. These qualitative insights help refine the augmentation process.
+
+\subsection{Quantitative Evaluation}
+
+To quantify the effectiveness of the blending, we compute similarity metrics such as the Structural Similarity Index (SSIM) and Peak Signal-to-Noise Ratio (PSNR) between the augmented icons and real-world degraded icons. Higher SSIM values indicate a closer resemblance to naturally degraded images, while PSNR provides an objective measure of signal distortion.
+
+Additionally, we perform a perceptual evaluation by conducting a user study where participants rate the realism of the generated images on a Likert scale. The user study includes a diverse group of individuals who assess whether the augmented images convincingly mimic real-world degradation. Statistical analysis of the responses provides insights into the subjective quality of the augmentation technique.
+
+\subsection{Results and Discussion}
+
+The evaluation results demonstrate that the proposed method produces highly realistic degraded icons with minimal artifacts. The combination of texture-based blending and height-map-driven degradation ensures that the output images closely resemble real-world printed icons exposed to wear and environmental effects.
+
+Table~ presents a summary of the SSIM and PSNR values for different texture categories. The results indicate that textures with higher roughness lead to lower SSIM scores, which aligns with the expectation that increased degradation reduces structural similarity. However, user study results suggest that these variations contribute positively to the perceived authenticity of the degradation effects.
+
+The findings highlight the strengths of the proposed method in generating realistic augmentations while also identifying areas for further improvement, such as fine-tuning degradation intensity based on specific use cases.

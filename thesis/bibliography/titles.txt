@@ -1,0 +1,327 @@
+Image database TID2013: Peculiarities, results and perspectives
+The fusiform face area: a cortical region specialized for the perception of faces
+Image quality assessment: from error visibility to structural similarity
+A Survey of Image Quality Measures
+Recommendation ITU-R BT.500-15: Methodologies for the subjective assessment of the quality of television images
+Image Quality Assessment - Comparison of Objective Measures with Results of Subjective Test
+ELMAR 2010
+Image Quality Assessment: From Error Visibility to Structural Similarity
+Image Quality Assessment Using Computer Vision
+Perceptual Metric for Face Image Quality with Pixel-Level Interpretability
+IFQA: Interpretable Face Quality Assessment
+Image Information and Visual Quality
+No-reference image quality assessment in the spatial domain
+The Unreasonable Effectiveness of Deep Features as a Perceptual Metric
+NIMA: Neural Image Assessment
+Perceptual Adversarial Similarity Score (PASS) for Evaluating Steganographic Artifacts
+FaceQNet: Quality assessment for face recognition based on deep learning
+IQFace: A face image quality assessment model based on deep learning
+DeepIQ: A learning-based metric for facial image quality
+Fusion techniques for facial image quality assessment
+Evaluating steganographic distortions using perceptual quality metrics
+BioFaceNet: Optimized quality assessment for secure biometrics
+SecureQNet: Integrating quality and security for identity documents
+A Comprehensive Performance Evaluation of Image Quality Assessment Algorithms
+A Survey of Image Quality Measures
+Survey of Full-Reference Image Quality Metrics
+A Statistical Evaluation of Recent Full Reference Image Quality Assessment Algorithms
+Face Image Quality Vector Assessment for Biometrics Applications
+Assessing Face Image Quality: A Large-Scale Database and a Transformer-Based Method
+State of the Art of Quality Assessment of Facial Images
+CR-FIQA: Face Image Quality Assessment by Learning Sample Relative Classifiability
+Perceptual Metric for Face Image Quality with Pixel-Level Interpretability
+Modern image quality assessment
+Reduced- and no-reference image quality assessment
+A statistical evaluation of recent full reference image quality assessment algorithms
+TID2008—A database for evaluation of full-reference visual quality assessment metrics
+Image database TID2013: Peculiarities, results and perspectives
+Most apparent distortion: Full-reference image quality assessment and the role of strategy
+A57 Image Quality Database
+Subjective quality assessment for wireless image communication: The wireless imaging quality database
+Proc. 5th Int. Workshop Video Process., Qual. Metrics Consum. Electron. (VPQM)
+Subjective Quality Assessment IRCCyN/IVC Database
+Objective quality assessment of multiply distorted images
+Proc. Asilomar Conf. Signals, Systems and Computers
+Hybrid no-reference quality metric for singly and multiply distorted images
+MDID: A multiply distorted image database for image quality assessment
+A multidistortion database for image quality
+Proc. Int. Workshop Comput. Color Imag. (CCIW)
+Learning without human scores for blind image quality assessment
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+dipIQ: Blind image quality assessment by learning-to-rank discriminable image pairs
+Opinion-unaware blind quality assessment of multiply and singly distorted images via distortion parameter estimation
+Deep blind image quality assessment by employing FR-IQA
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Fully deep blind image quality predictor
+Quality assessment of images undergoing multiple distortion stages
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Beyond human opinion scores: Blind image quality assessment based on synthetic scores
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+LIVE Image Quality Assessment Database Release 2
+Survey of full-reference image quality metrics
+Perceptual visual quality metrics: A survey
+Full-reference image quality metrics: Classification and evaluation
+A comprehensive evaluation of full reference image quality assessment algorithms
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Subjective and objective quality assessment of image: A survey
+Objective quality assessment of tone-mapped images
+Objective image quality assessment: A survey
+Evaluation of 60 full-reference image quality metrics on the CID:IQ
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+CID:IQ—A new image quality database
+Proc. Int. Conf. Image, Signal Process. (ICISP)
+Non-distortion-specific no-reference image quality assessment: A survey
+No-reference/blind image quality assessment: A survey
+2D and 3D image quality assessment: A survey of metrics and challenges
+VCLFER image quality assessment database
+Objective quality assessment of interpolated natural images
+Perceptual aliasing factors and the impact of frame rate on video quality
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Temporal motion smoothness and the impact of frame rate variation on video quality
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Perceptual quality assessment for multi-exposure image fusion
+Objective quality assessment for multiexposure multifocus image fusion
+Objective quality assessment for color-to-gray image conversion
+Display device-adapted video quality-of-experience assessment
+Proc. SPIE Electron. Imaging
+Tampere Image Database 2013 (TID2013) Version 1.0
+Computational and Subjective Image Quality (CSIQ) Database
+VCLFER Image Quality Assessment Database
+Colourlab Image Database: Image Quality (CID:IQ)
+LIVE Multiply Distorted Image Quality Database
+Multiply Distorted Image Database (MDID)
+Noisy images-JPEG compressed: Subjective and objective image quality evaluation
+Proc. SPIE Electron. Imaging
+Multiply Distorted Database MD-IVL
+Methodology for the Subjective Assessment of the Quality of Television Pictures
+Subjective Video Quality Assessment Methods for Multimedia Applications
+Final Report From the Video Quality Experts Group on the Validation of Objective Models of Video Quality Assessment, Phase II
+Impact of subjective dataset on the performance of image quality metrics
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Guidelines for the Evaluation of Gamut Mapping Algorithms
+VSNR: A wavelet-based visual signal-to-noise ratio for natural images
+Tampere Image Database 2008 (TID2008) Version 1.0
+Waterloo exploration database: New challenges for image quality assessment models
+No-reference blur assessment of digital pictures based on multifeature classifiers
+CID2013: A database for evaluating no-reference image quality assessment algorithms
+Massive online crowdsourced study of subjective and objective picture quality
+Amazon Mechanical Turk
+KonIQ-10K: Towards an ecologically valid and large-scale IQA database
+YFCC100M: The new data in multimedia research
+Figure Eight
+Perceptual quality assessment of screen content images
+A dataset for quality assessment of camera captured document images
+Proc. Int. Workshop Camera-Based Document Anal. Recognit. (CBDAR)
+Real-time no-reference image quality assessment based on filter learning
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+Image and Video Quality Resources
+Analysis of public image and video databases for quality assessment
+Image complexity and spatial information
+Proc. IEEE Int. Workshop Qual. Multimedia Exper. (QoMEX)
+Measuring colorfulness in natural images
+Proc. SPIE Electron. Imaging
+Effective coverage as a new metric for image quality assessment databases comparison
+Proc. Int. Conf. Syst., Signals Image Process. (IWSSIP)
+Mean squared error: Love it or leave it? A new look at signal fidelity measures
+Objective image quality assessment: Facing the real-world challenges
+Proc. IS&T Int. Symp. Electron. Imaging
+A novel discrete wavelet transform framework for full reference image quality assessment
+Image quality assessment by separately evaluating detail losses and additive impairments
+Image-difference prediction: From grayscale to color
+Image quality assessment based on DCT subband similarity
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+A detail-based method for linear full reference image quality prediction
+Low-complexity computation of visual information fidelity in the discrete wavelet domain
+Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP)
+Edge strength similarity for image quality assessment
+FSIM: A feature similarity index for image quality assessment
+Gradient magnitude similarity deviation: A highly efficient perceptual image quality index
+Image quality assessment based on gradient similarity
+An information fidelity criterion for image quality assessment using natural scene statistics
+Information content weighting for perceptual image quality assessment
+Multiscale contrast similarity deviation: An effective and efficient index for perceptual image quality assessment
+Multiscale structural similarity for image quality assessment
+Proc. Asilomar Conf. Signals, Syst. Comput.
+Image quality assessment based on a degradation model
+Modified image visual quality metrics for contrast change and mean shift accounting
+Proc. 11th Int. Conf. Exper. Designing Appl. CAD Syst. Microelectron. (CADSM)
+New full-reference quality metrics based on HVS
+Proc. 2nd Int. Workshop Video Process., Qual. Metrics Consum. Electron. (VPQM)
+On between-coefficient contrast masking of DCT basis functions
+Proc. 3rd Int. Workshop Video Process., Qual. Metrics Consum. Electron. (VPQM)
+Sparse representation-based image quality index with adaptive sub-dictionaries
+RFSIM: A feature based image quality assessment metric using Riesz transforms
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Sparse feature fidelity for perceptual image quality assessment
+SR-SIM: A fast and high performance IQA index based on spectral residual
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Image quality assessment: From error visibility to structural similarity
+A universal image quality index
+Image information and visual quality
+Pixel Domain Version of VIF
+VSI: A visual saliency-induced index for perceptual image quality assessment
+A novel approach for computing and pooling Structural SIMilarity index in the discrete wavelet domain
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Visual attention in quality assessment
+Visual importance pooling for image quality assessment
+Efficient gamut clipping for color image processing using LHS and YIQ
+Saliency detection: A spectral residual approach
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+SDSP: A novel saliency detection method by combining simple priors
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Reduced-reference image quality assessment using a wavelet-domain natural image statistic model
+Proc. SPIE Electron. Imaging
+Reduced-reference image quality assessment using divisive normalization-based image representation
+Natural image statistics and neural representation
+Random cascades on wavelet trees and their use in analyzing and modeling natural images
+The steerable pyramid: A flexible architecture for multi-scale derivative computation
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Combined image similarity index
+Quality assessment of images with multiple distortions using combined metrics
+Combining full-reference image visual quality metrics by neural network
+Proc. SPIE Electron. Imaging
+Hybrid feature similarity approach to full-reference image quality assessment
+Proc. Int. Conf. Comput. Vis. Graph. (ICCVG)
+Image quality assessment using multi-method fusion
+Combined full-reference image quality metric linearly correlated with subjective assessment
+Proc. Int. Conf. AI Soft Comput. (ICAISC)
+Extended hybrid image similarity—Combined full-reference image quality metric linearly correlated with subjective scores
+A multi-metric fusion approach to visual quality assessment
+Proc. Int. Workshop Qual. Multimedia Exper. (QoMEX)
+A Practical Guide to Support Vector Classification
+A new color image database TID2013: Innovations and results
+Proc. Int. Conf. Adv. Concepts Intell. Vis. Syst. (ACVIS)
+Reciprocal rank fusion outperforms condorcet and individual rank learning methods
+Proc. Int. ACM SIGIR Conf. Res. Develop. Inf. Retr.
+A no-reference perceptual blur metric
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+No-reference perceptual quality assessment of JPEG compressed images
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+No-reference quality assessment using natural scene statistics: JPEG2000
+Making a 'completely blind' image quality analyzer
+A two-step framework for constructing blind image quality indices
+No-reference image quality assessment in the spatial domain
+Unsupervised feature learning framework for no-reference image quality assessment
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+No-reference quality assessment for multiply-distorted images in gradient domain
+Blind image quality assessment based on high order statistics aggregation
+A feature-enriched completely blind image quality evaluator
+A highly efficient method for blind image quality assessment
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+End-to-end blind image quality assessment using deep neural networks
+Blind image quality assessment using statistical structural and luminance features
+Deep neural networks for no-reference and full-reference image quality assessment
+The Nature of Statistical Learning Theory
+Ten Lectures on Wavelets
+Estimation of shape parameter for generalized Gaussian distributions in subband decompositions of video
+Multiscale skewed heavy-tailed model for texture analysis
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+LIBSVM: A library for support vector machines
+Multiresolution gray-scale and rotation invariant texture classification with local binary patterns
+A deep neural network for image quality assessment
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Very deep convolutional networks for large-scale image recognition
+Proc. Int. Conf. Learn. Represent. (ICLR)
+Rectified linear units improve restricted Boltzmann machines
+Proc. Int. Conf. Mach. Learn. (ICML)
+Convolutional neural networks for no-reference image quality assessment
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+Blind image quality assessment via deep learning
+Simultaneous estimation of image quality and distortion via multi-task convolutional neural networks
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Blind image quality assessment for multiply distorted images via convolutional neural networks
+Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP)
+No-reference image quality assessment using Prewitt magnitude based on convolutional neural networks
+No-reference image quality assessment based on hybrid model
+Blind image quality prediction by exploiting multi-level deep representations
+On the use of deep learning for blind image quality assessment
+NIMA: Neural image assessment
+Blind image quality assessment with a probabilistic quality representation
+Proc. IEEE Int. Conf. Image Process. (ICIP)
+Deep CNN-based blind image quality predictor
+A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics
+Proc. IEEE Int. Conf. Comput. Vis. (ICCV)
+Learning to rank using gradient descent
+Proc. Int. Conf. Mach. Learn. (ICML)
+FISBLIM: A five-step blind metric for quality assessment of multiply distorted images
+Proc. IEEE Workshop Signal Process. Syst. (SiPS)
+Scale invariance and noise in natural images
+Proc. IEEE Int. Conf. Comput. Vis. (ICCV)
+Image denoising by sparse 3-D transform-domain collaborative filtering
+A psychovisual quality metric in free-energy principle
+Handbook of Parametric and Nonparametric Statistical Procedures
+Blind image quality assessment: A natural scene statistics approach in the DCT domain
+Blind image quality assessment: From natural scene statistics to perceptual quality
+Feature maps driven no-reference image quality prediction of authentically distorted images
+Proc. SPIE Electron. Imaging
+Perceptual quality prediction on authentically distorted images using a bag of features approach
+Color Gaussian jet features for no-reference quality assessment of multiply-distorted images
+A multi-scale learning local phase and amplitude blind image quality assessment for multiply distorted images
+Using free energy principle for blind image quality assessment
+Blind image quality assessment based on multichannel feature fusion and label transfer
+ImageNet large scale visual recognition challenge
+ImageNet: A large-scale hierarchical image database
+Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)
+Deep convolutional neural models for picture-quality prediction: Challenges and solutions to data-driven image quality assessment
+Making a ``completely blind'' image quality analyzer
+No-reference image quality assessment in the spatial domain
+A two-step framework for constructing blind image quality indices
+Convolutional neural networks for no-reference image quality assessment
+Perceptual quality prediction on authentically distorted images using a bag of features approach
+Blind image quality assessment: From natural scene statistics to perceptual quality
+Proc. IEEE International Conference on Image Processing (ICIP)
+Blind Video Quality Assessment Using Deep Models
+A no-reference perceptual blur metric
+No-reference perceptual quality assessment of JPEG compressed images
+No-reference quality assessment using natural scene statistics: JPEG2000
+Making a ``completely blind'' image quality analyzer
+Feature maps driven no-reference image quality prediction of authentically distorted images
+Real-time no-reference image quality assessment based on filter learning
+Blind image quality assessment based on high order statistics aggregation
+Simultaneous estimation of image quality and distortion via multi-task convolutional neural networks
+Blind image quality prediction by exploiting multi-level deep representations
+On the use of deep learning for blind image quality assessment
+NIMA: Neural image assessment
+Blind image quality assessment with a probabilistic quality representation
+Deep CNN-based blind image quality predictor
+A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics
+Proc. IEEE International Conference on Computer Vision (ICCV)
+Learning to rank using gradient descent
+Proc. International Conference on Machine Learning (ICML)
+FISBLIM: A five-step blind metric for quality assessment of multiply distorted images
+Scale invariance and noise in natural images
+Proc. IEEE International Conference on Computer Vision (ICCV)
+Image denoising by sparse 3-D transform-domain collaborative filtering
+A psychovisual quality metric in free-energy principle
+Handbook of Parametric and Nonparametric Statistical Procedures
+Blind image quality assessment: A natural scene statistics approach in the DCT domain
+Blind image quality assessment: From natural scene statistics to perceptual quality
+Feature maps driven no-reference image quality prediction of authentically distorted images
+Proc. SPIE Electronic Imaging
+Perceptual quality prediction on authentically distorted images using a bag of features approach
+Color Gaussian jet features for no-reference quality assessment of multiply-distorted images
+A multi-scale learning local phase and amplitude blind image quality assessment for multiply distorted images
+Using free energy principle for blind image quality assessment
+Blind image quality assessment based on multichannel feature fusion and label transfer
+ImageNet large scale visual recognition challenge
+ImageNet: A large-scale hierarchical image database
+Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR)
+Deep convolutional neural models for picture-quality prediction: Challenges and solutions to data-driven image quality assessment
+Perceptual quality prediction on authentically distorted images using a bag of features approach
+No-reference image quality assessment based on hybrid model
+Image quality assessment based on gradient similarity
+Gradient magnitude similarity deviation: A highly efficient perceptual image quality index
+FSIM: A feature similarity index for image quality assessment
+An information fidelity criterion for image quality assessment using natural scene statistics
+Image quality assessment: From error visibility to structural similarity
+Multiscale structural similarity for image quality assessment
+A universal image quality index
+Image information and visual quality
+Pixel Domain Version of VIF
+VSI: A visual saliency-induced index for perceptual image quality assessment
+A novel approach for computing and pooling Structural SIMilarity index in the discrete wavelet domain
+Visual attention in quality assessment
+Visual importance pooling for image quality assessment
+Efficient gamut clipping for color image processing using LHS and YIQ
+Saliency detection: A spectral residual approach
+SDSP: A novel saliency detection method by combining simple priors

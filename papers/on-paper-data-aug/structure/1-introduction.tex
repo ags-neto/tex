@@ -1,0 +1,18 @@
+\section{Introduction}\label{sec:introduction}
+
+The success of deep learning models relies heavily on large and diverse datasets. However, collecting and annotating such datasets is often time-consuming and expensive, especially for specialized tasks. To address this challenge, data augmentation [] has become a fundamental technique, artificially expanding datasets to improve model generalization.
+
+Traditional data augmentation techniques apply transformations such as rotation, scaling, flipping, and noise addition. These methods are effective in many domains but often fail to capture the complex variations found in real-world data. For instance, printed materials such as documents, icons, and symbols undergo physical degradation, including smudging, ink fading, and paper wear, which current digital augmentations algorithms struggle to replicate accurately.
+
+In this paper, we introduce a novel 2D on-paper data augmentation algorithm that simulates real-world degradation using physical sheets of paper with varying states of abrasion. Our method involves preparing multiple sheets with different levels of wear, randomly selecting a region, and imprinting the symbol or icon onto the paper. This process generates thousands of naturally degraded samples, enriching the dataset with realistic variations that improve model performance.
+
+The key contributions of our work are:
+
+\begin{itemize}
+    \item Novel Augmentation Technique: We propose a unique approach that leverages physical paper textures and degradation patterns, offering a realistic alternative to purely digital augmentation.
+    \item Cost-Effective and Accessible: Our method requires minimal computational resources and can be implemented using common materials, making it practical for researchers with limited resources.
+    \item Versatile Applications: The algorithm benefits tasks such as icon recognition, optical character recognition (OCR) [], historical document analysis, and artistic style transfer.
+    \item Improved Model Robustness: By simulating real-world degradation, our augmentation method enhances neural networks' ability to handle variations encountered in practical scenarios.
+\end{itemize}
+
+The remainder of this paper is organized as follows: Section 2 reviews related work in data augmentation and printed symbol recognition. Section 3 details our methodology, including the preparation of paper sheets and the augmentation process. Section 4 presents our experimental setup and results. Section 5 discusses potential applications, and Section 6 concludes the paper with future research directions.
