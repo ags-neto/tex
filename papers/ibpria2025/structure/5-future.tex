@@ -1,0 +1,12 @@
+\section{Conclusion and Future Work}
+
+We proposed a Full-to-No-Reference framework for FIQA that predicts image quality in the absence of reference images by leveraging a pseudo-MOS supervision strategy. Our method first trains a FR fusion model to regress human perceptual judgments on a labeled subset (10\% of the dataset), generating pseudo-MOS labels for a larger unlabeled dataset. These forged labels are then used to train a deep NR regressor, enabling quality prediction from distorted images alone. This two-stage pipeline effectively bridges the gap between fully supervised FR-IQA and reference-free NR-IQA approaches.
+
+Beyond the development of our NR IQA metric, the proposed framework offers a flexible foundation for constructing a variety of task-specific models. By enabling scalable, perceptually grounded supervision with limited ground-truth annotations, our approach can facilitate quality-aware training in applications such as GANs, forensic imaging, and domain-adapted biometric pipelines.
+
+\section{Acknowledgments}
+
+The author would like to thank Dr.\ Shahrukh Athar for his support during the initial state-of-the-art review. His comprehensive list of implemented IQA metrics from his work were invaluable in kick-starting this study.
+The author also gratefully acknowledges the Institute of Systems and Robotics (ISR) for providing the resources and research environment that made this work possible.
+Lastly, we gratefully acknowledge everyone who contributed to the MOS labeling process, as their efforts were crucial in establishing the foundation for our research.
+This study has received funding from the EU Horizon Europe for the  ACHILLES project under Grant Agreement No. 101189689, and FCT -- Fundação para a Ciência e a Tecnologia, I.P., under the project UIDB/00048/2020 (DOI 10.54499/UIDB/00048/2020). % chktex 8

@@ -16,7 +16,6 @@ The MOS is computed as the arithmetic mean of all valid scores for a given image
 \begin{equation}
 \text{MOS} = \frac{1}{N} \sum_{i=1}^{N} S_i
 \end{equation}
-
 where $S_i$ is the score given by the $i$-th subject, and $N$ is the number of valid observers.
 
 For double-stimulus tests, the DMOS reflects the perceptual degradation with respect to a reference:
@@ -138,7 +137,6 @@ The Peak Signal-to-Noise Ratio (PSNR) expresses the logarithmic ratio between th
 \begin{equation}
 \text{PSNR} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{MSE}} \right)
 \end{equation}
-
 where $MAX$ is the maximum possible pixel value (typically 255 for 8-bit images). Although widely used for its simplicity and interpretability, PSNR correlates poorly with human perception, especially in the presence of structured distortions. 
 
 To address this limitation, PSNR-B extends the original formulation by incorporating a blocking effect factor (BEF), which penalizes compression artifacts such as those introduced by block-based codecs:
