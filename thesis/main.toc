@@ -2,9 +2,9 @@
 \contentsline {chapter}{Acknowledgements}{iii}{chapter*.1}%
 \contentsline {chapter}{Resumo}{v}{chapter*.2}%
 \contentsline {chapter}{Abstract}{vii}{chapter*.3}%
-\contentsline {chapter}{List of Acronyms}{xv}{chapter*.6}%
-\contentsline {chapter}{List of Figures}{xvii}{chapter*.7}%
-\contentsline {chapter}{List of Tables}{xix}{chapter*.8}%
+\contentsline {chapter}{List of Acronyms}{xiii}{chapter*.6}%
+\contentsline {chapter}{List of Figures}{xv}{chapter*.7}%
+\contentsline {chapter}{List of Tables}{xvii}{chapter*.8}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Contextualization}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Problem Statement}{3}{section.1.2}%
@@ -22,51 +22,19 @@
 \contentsline {subsection}{\numberline {2.2.2}No-Reference IQA}{16}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Fusion-Based IQA Models}{17}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}Facial Image Quality assessment}{18}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Methodology}{18}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Dataset}{19}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Full-Reference Analysis and Fusion}{21}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Pseudo-MOS Generation via FR-IQA Fusion}{21}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}NR Regression Model}{22}{subsection.2.4.4}%
-\contentsline {chapter}{\numberline {3}Development of the Full-Reference Metric}{23}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Introduction}{23}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Metric Selection}{23}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Correlation Analysis}{23}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Fusion Methodology}{24}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Normalization}{24}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Weight Assignment}{24}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Fusion Equation}{24}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Validation of the FRFM}{25}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Performance Metrics}{25}{subsection.3.4.1}%
-\contentsline {chapter}{\numberline {4}No-Reference Metric Design}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Introduction}{27}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Training Framework}{27}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Dataset Preparation}{27}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Model Architecture}{27}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Loss Function}{28}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Validation and Testing}{28}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Evaluation Metrics}{28}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Qualitative Evaluation}{28}{subsection.4.3.2}%
-\contentsline {chapter}{\numberline {5}Results and Discussion}{31}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Introduction}{31}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Performance Evaluation of FRFM}{31}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Correlation with MOS}{31}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Performance on Steganography-Encoded Images}{31}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Visual Analysis}{32}{subsection.5.2.3}%
-\contentsline {section}{\numberline {5.3}Performance Evaluation of NRM}{32}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Correlation with MOS}{32}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Generalization Across Distortions}{32}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Qualitative Evaluation}{32}{subsection.5.3.3}%
-\contentsline {section}{\numberline {5.4}Comparison Between FRFM and NRM}{32}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Discussion}{33}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Key Insights}{33}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Limitations and Future Work}{33}{subsection.5.5.2}%
-\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{35}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusion}{35}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Future Work}{35}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Hybrid Metrics}{36}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Generalization Across Datasets}{36}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Adapting to Emerging Distortion Types}{36}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Real-Time Applications}{36}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}Integration with Human-Perception Models}{36}{subsection.6.2.5}%
-\contentsline {section}{\numberline {6.3}Final Remarks}{36}{section.6.3}%
-\contentsline {chapter}{\numberline {A}Sample Appendix}{49}{appendix.A}%
+\contentsline {section}{\numberline {2.4}Steganography and Steganalysis}{19}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Steganography Techniques}{19}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Steganalysis Techniques}{19}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Steganography and Steganalysis in Facial Images}{19}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Printer-proof Steganography}{20}{subsection.2.4.4}%
+\contentsline {chapter}{\numberline {3}Methodology}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Dataset}{23}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Debiasing of Subjective Scores}{25}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Correlation of FR-IQA Metrics with Human Perception}{26}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}{28}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Training a No-Reference IQA Model from Pseudo-MOS}{29}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Results}{29}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Full-Reference Fusion Metric Performance}{29}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}No-Reference Regression Model Performance}{30}{subsection.3.6.2}%
+\contentsline {section}{\numberline {3.7}Conclusion and Future Work}{32}{section.3.7}%
+\contentsline {chapter}{\numberline {A}Sample Appendix}{45}{appendix.A}%

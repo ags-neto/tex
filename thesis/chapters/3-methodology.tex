@@ -1,69 +1,154 @@
-\section{Methodology}
+\chapter{Methodology}\label{chap:methodology}
 
-This section describes the proposed hybrid Full-to-No-Reference (FR-to-NR) framework for Facial Image Quality Assessment (FIQA) in steganographically distorted images. The pipeline is divided into four stages:
+\section{Dataset}
 
-\begin{itemize}
-    \item Dataset construction and subjective human annotation.
-    \item Analysis and fusion of Full-Reference IQA metrics to create a perceptually aligned quality estimator.
-    \item Pseudo-MOS generation for weak supervision on unlabeled data.
-    \item Training of a No-Reference regression model using deep features.
-\end{itemize}
+Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102 adult faces, $1350 \times 1350$ pixels in full colour, frontal ICAO-compliant facial images. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the neutral front faces from 2513 people (ages 17--90) are included as well.
 
-This multistage approach allows for scalable perceptual quality prediction in scenarios where reference images or human ratings are unavailable.
-
-\subsection{Dataset}
-
-Our dataset is derived from the publically available Face Research Lab London (FRLL)~\cite{DeBruine2017} set, comprising 102 frontal ICAO-compliant facial images. Each image was encoded using four printer-proof steganographic methods, described ahead, each applied at nine different intensity levels, yielding a total of 3,672 distorted images.
+Each image was encoded using four printer-proof steganographic methods, described ahead, each applied at nine different intensity levels, yielding a total of 3,672 distorted images.
 
 The dataset was partitioned into four subsets, as follows:
 
 \begin{itemize}
-    \item Labeled Set (15 identities, 540 images): a core set of demographically diverse subjects, shown in Fig.~\ref{fig:subdataset}, annotated with MOS through human evaluation.
+    \item MOS set (15 identities, 540 images): a core set of demographically diverse subjects, shown in Fig.~\ref{fig:mos_set}, with subjective MOS annotations. It is split into:
     \begin{itemize}
-        \item Training Subset (12 identities, 432 images): used to train the full-reference fusion model, regressing FR-IQA metrics to human MOS.\@
-        \item Disjoint Test Subset (3 identities, 108 images): held out from the framework and are used solely for final results comparisons, simulating out-of-distribution generalization.
+        \item MOS train set (12 identities): used to train the FR fusion model, regressing FR-IQA metrics to human MOS.\@
+        \item MOS test set (3 identities): held out from the framework and used only for final evaluation.
     \end{itemize}
-    \item Unlabeled Set (87 identities, 3,132 images): no subjective scores were collected for these images. Instead, pseudo-MOS labels were generated using the FR fusion model, enabling large-scale weak supervision.
-    \item No-Reference (NR) Training Pool (99 identities, 3,564 images): Combines the 12 labeled identities and the 87 pseudo-labeled identities, and is used to train the NR regression model on deep features extracted from distorted images.
+    \item Pseudo-MOS set (87 identities, 3,132 images): no subjective scores were collected for these images. Pseudo-MOS are generated for this set using the trained fusion model.
+    \item NR train set: includes both the MOS train set and the pseudo-MOS set. It is used to train the NR regressor.
 \end{itemize}
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{images/subdataset.png}
-    \caption{Labeled set selected from the FRLL dataset.}\label{fig:subdataset}
+    \begin{minipage}[t]{0.76\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/mos_train_set.pdf}\\
+        \textbf{(a)} MOS train set % chktex 10
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/mos_test_set.pdf}\\
+        \textbf{(b)} MOS test set % chktex 10
+    \end{minipage}
+    \caption{Reference images from the MOS set, comprising the selected subjects from the FRLL dataset.}\label{fig:mos_set}
 \end{figure}
 
-The printer-proof steganography methods used were based on Generative Adversarial Networks (GANs)~\cite{gans2018} to encode and decode information, we can obtain various results depending on the method used:
+The printer-proof steganography methods used were based on Generative Adversarial Networks (GANs)~\cite{gans2018} to encode and decode information, illustrated in Fig.~\ref{fig:steganography}, we can obtain various results depending on the method used:
 
 \begin{itemize}
-    \item StegaStamp~\cite{stegastamp2020}: claims to be the first steganography model capable of decoding data from printed images. The authors show robust results in decoding data under physical transmission by developing novel strategies to add noise in the training process, printer noise simulation, and distortion for the training dataset.
-    \item CodeFace~\cite{codeface2021}: encoder and decoder networks are trained using end-to-end GANs. It introduces a new security system for encoding and decoding facial images that are printed in common IDs and MRTDs.
+    \item StegaStamp~\cite{stegastamp2020}: claims to be the first steganography model capable of decoding data from printed images. The authors show robust results in decoding data under physical transmission by adding printer noise in the training process.
+    \item Code\,Face~\cite{codeface2021}: encoder and decoder networks are trained using end-to-end GANs. It introduces a new security system for encoding and decoding facial images that are printed in common IDs and MRTDs.
     \item RiemStega~\cite{cruz2025riemstega}: proposes a new loss function that extends the loss function based on the $L_2$ distance between images to the Riemannian manifold of symmetric and positive definite matrices.
-    \item StampOne~\cite{stampone2023}: focuses on high-level robust steganography, such as~\cite{codeface2021, stegastamp2020}, striking a balance between high-quality encoded images and decoding accuracy. It mitigates distortion-related issues like JPEG compression, camera sensors and printer's Gaussian noise by incorporating gradient transform, wavelet transform, and Depthwise~\cite{tay2022efficient} to normalize and balance frequencies of the inputs. 
+    \item StampOne~\cite{stampone2024}: focuses on high-level robust steganography, such as~\cite{codeface2021, stegastamp2020}, it balances between high-quality encoded images and decoding accuracy. It mitigates distortion-related issues like JPEG compression, camera sensors and printer's Gaussian noise by incorporating gradient transform and wavelet transform to normalize and balance frequencies of the inputs. 
 \end{itemize}
 
-Each image in our dataset was evaluated approximately 30 times by human observers, providing a robust MOS dataset.
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/005_StegaStamp_1.4.jpg}\\
+        \textbf{(a)} StegaStamp
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/005_CodeFace_1.4.jpg}\\
+        \textbf{(b)} Code\,Face
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/005_RiemStega_1.4.jpg}\\
+        \textbf{(c)} RiemStega
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/005_StampOne_1.4.jpg}\\
+        \textbf{(d)} StampOne
+    \end{minipage}
+    \caption{Steganographically distorted facial images from each method.}\label{fig:steganography}
+\end{figure}
 
-We followed ITU-R BT.500--15~\cite{ITU-R-BT500} recommendation, and adopted the Single Stimulus method. Around 200 different observers were carefully instructed on how to perform the test session, the average duration of the session was 22 minutes, and the rounded number of tests in each session was 70. Resulting in over 14,000 evaluations.
 
-To conduct the sessions we created a webapp in Django, seen in Fig.~\ref{fig:platform}, where the observers were asked to evaluate each image on a scale from 1 to 100 using a slider bar, with no time limit. The rating scale was divided into five categorical levels: scores from 1 to 25 were classified as Bad, 26 to 50 as Poor, 51 to 75 as Fair, 76 to 99 as Good, and a score of 100 as Excellent.
+We followed the ITU-R BT.500--15~\cite{ITU-R-BT500} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
+
+Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of four participants.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/webapp.png}
-    \caption{Snippet of the custom webapp platform used to access overall image quality.}\label{fig:platform}
+    \includegraphics[width=0.32\textwidth]{images/webapp_test.png}
+    \caption{Django-based webapp created for the Single Stimulus test.}\label{fig:webapp}
 \end{figure}
 
-To address this, we propose a two-stage hybrid pipeline that first builds a FR quality estimator supervised by MOS, and then extends this supervision to a NR model via pseudo-MOS learning.
+\section{Debiasing of Subjective Scores}
 
-\subsection{Full-Reference Analysis and Fusion}
+To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{clapes2018apparent}, where we applied a residualization method based on linear modeling. An ordinary least squares (OLS) regression was fit to the MOS values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the MOS prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an ANOVA test showing no significant impact from any individual factor. The corrected MOS labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
 
-We compute 41 FR-IQA scores for each distorted image in the MOS-labeled subset. To identify which metrics align best with human perception, we calculate both the Pearson Linear Correlation Coefficient (PLCC) and the Spearman Rank-Order Correlation Coefficient (SRCC)~\cite{plcc_srcc} between each metric and the human MOS.\@ This analysis serves to rank the metrics and select the top-$k$ most perceptually relevant.
+\begin{table}
+    \centering
+    \caption{ANOVA~\cite{ross2017one} results for observer and image attributes. Before debiasing, several factors show statistically significant effects on MOS, p-value $< 0.05$.\@ After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.}\label{tab:anova}
+    \begin{tabular}{lcc}
+        \hline % chktex 44
+        Factor & p-value & p-value (residualized) \\
+        \hline % chktex 44
+        Observer gender                             & 0.022                 & 0.9930 \\
+        Observer ethnicity                          & $8.44 \times 10^{-4}$ & 1 \\
+        Subject gender                              & $1.60 \times 10^{-3}$ & 0.9722 \\
+        Subject ethnicity                           & $7.36 \times 10^{-3}$ & 1 \\
+        Observer gender $\times$ Subject gender     & 0.6417              & 0.6417 \\
+        Observer ethnicity $\times$ Subject ethnicity & 0.0582              & 0.0582 \\
+        \hline % chktex 44
+    \end{tabular}
+\end{table}
 
-\subsection{Pseudo-MOS Generation via FR-IQA Fusion}
+\section{Correlation of FR-IQA Metrics with Human Perception}
 
-The selected top-$k$ IQA metrics are standardized and used as input features for supervised regression models trained to approximate the human MOS.\@ We evaluate Support Vector Regression~\cite{svr}, Random Forest~\cite{randomforest}, XGBoost~\cite{xgboost}, and LightGBM~\cite{lightgbm} as candidate fusion models. Random Forest consistently achieved the highest PLCC and SRCC on the validation set for $k=5$, and was selected as the fusion model. This trained regressor is then applied to the unlabeled portion of the dataset (3,132 distorted images), generating pseudo-MOS scores that serve as proxy ground-truth labels.
+We compute 40 FR-IQA scores for each distorted image in the dataset and compare them against the corresponding MOS, as seen in Fig.~\ref{fig:mos_vs_iqa}. Several metrics exhibit strong linear trends with MOS, while others are poorly aligned or even negatively correlated. For a detailed description of these metrics, we refer the reader to~\cite{shahrukh2019survey}.
 
-\subsection{NR Regression Model}
 
-To enable NR quality prediction, we extract deep features from each distorted image using a ResNet-18~\cite{resnet} model pretrained on ImageNet. These feature vectors are then used to train a regression model, again using Random Forest, tasked with predicting the pseudo-MOS labels obtained from the FR fusion step. The final model performs quality assessment using only the distorted input image, without requiring access to a reference image, thereby enabling NR-IQA in real-world scenarios.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.90\linewidth]{images/mos_vs_iqa_grid.pdf}
+    \caption{Scatter plots illustrating the relationship between MOS and 40 individual full-reference IQA metrics. The red line represents a smoothed local trend curve.}\label{fig:mos_vs_iqa}
+\end{figure}
+
+\section{Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}
+
+To identify which metrics align best with human perception, we compute both the Pearson Linear Correlation Coefficient (PLCC) and the Spearman Rank-Order Correlation Coefficient (SRCC)~\cite{plcc-srcc} which respectively quantify the linearity and monotonicity of the relationship between metric scores and MOS.\@ To determine the appropriate number of metrics to retain for fusion, we applied Singular Value Decomposition (SVD) and the Picard criterion~\cite{hansen1998picard}. Metrics are first ranked by the average of their PLCC and SRCC with MOS.\@ After normalizing the feature matrix, SVD revealed that six components capture 95\% of the total variance, as shown in Fig.~\ref{fig:svd_analysis}a, indicating an optimal dimensionality of $k=6$.
+
+To validate this truncation point, we examined the Picard plot in Fig.~\ref{fig:svd_analysis}b, which compares singular values with the target projections. The stable ratio in the tail confirms that six components provide a good balance between expressiveness and stability. This supports a compact, informative subset of FR-IQA metrics.
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/variance.pdf}
+        \textbf{(a)} Cumulative variance explained by SVD components.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/picard.pdf}
+        \textbf{(b)} Magnitude of singular values and projected response.
+    \end{minipage}
+    \caption{SVD-based analysis of the FR metric space. The cumulative explained variance (a) guides the choice of dimensionality, while the Picard criterion (b) illustrates stability near $k=6$.}\label{fig:svd_analysis}
+\end{figure}
+
+After selecting the top $k = 6$ FR-IQA metrics, we trained a diverse set of supervised regressors to map these features to subjective MOS scores. The models included both linear and non-linear types:
+
+\begin{itemize}
+    \item Linear models: Linear Regression~\cite{linearregression}, Ridge Regression~\cite{ridgeregression}, Bayesian Ridge~\cite{bayesianridge}, ElasticNet~\cite{elasticnet}.
+    \item Kernel-based: Support Vector Regression~\cite{svr} (SVR).
+    \item Ensembles: Random Forest~\cite{randomforest}, Extra Trees~\cite{ensembles}, Gradient Boosting~\cite{gradboosting}, HistGradientBoosting~\cite{histboost}.
+    \item Boosted Trees: XGBoost\cite{xgboost}, LightGBM~\cite{lightgbm}, CatBoost~\cite{catboost}.
+\end{itemize}
+
+Each regressor was trained using five-fold cross-validation with an exhaustive grid search over predefined hyperparameter spaces. The best model, CatBoost, optimal configuration was: depth = 8, iterations = 500, learning rate = 0.05, and $L_2$ regularization = 1. This trained regressor is then applied to the unlabeled portion of the dataset (3,132 distorted images), generating pseudo-MOS.\@
+
+\section{Training a No-Reference IQA Model from Pseudo-MOS}
+
+To enable NR quality prediction, we train a deep regression model end-to-end using pseudo-MOS scores as targets. The architecture is based on a ResNet-18 backbone~\cite{resnet} pretrained on ImageNet~\cite{imagenet}, with its final classification layer replaced by a lightweight multi-layer perceptron (MLP) regressor~\cite{bayesianridge}. All layers are fine-tuned during training to learn perceptual quality representations specific to our task. The training set consists of distorted facial images paired with either pseudo-MOS, from the FR fusion, or real MOS labels, when available. The model is optimized using MSE and evaluated on the, disjoint, MOS test set of labeled images. Once trained, the model infers image quality solely from the distorted input, enabling NR assessment aligned with human perception.
+

@@ -3,7 +3,7 @@
 
 % Preamble
 \documentclass[a4paper, 11pt]{book}
-
+\sloppy
 % Includes
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[utf8]{inputenc}				% UTF-8 encoding, so that you can use characters like ç and ã
@@ -11,6 +11,7 @@
 \usepackage[portuguese,english]{babel}	% Still related to the above
 \setlength{\marginparwidth}{2cm}
 \usepackage{todonotes}
+\usepackage{amsmath, amssymb, amsfonts}
 \usepackage{longtable}
 \usepackage{acronym}					% List of acronyms
 \usepackage{textcomp} 					% Extra characters
@@ -51,7 +52,7 @@
 \usepackage{amsthm}
 \usepackage[style=ieee, backend=biber]{biblatex}
 \usepackage{csquotes}
-\addbibresource{bibliography/references.bib}
+\addbibresource{misc/references.bib}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section] % Tied to sections
@@ -82,6 +83,7 @@
 \setlength{\headheight}{16pt}
 \renewcommand{\baselinestretch}{1.5}	% 1.5 line spacing, as mandated by the rules
 \renewcommand{\familydefault}{\rmdefault}
+
 
 %---FORMAT CHAPTERS---
 
@@ -194,7 +196,7 @@
 % ABSTRACT
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-\input{chapters/00-abstract.tex}
+\input{chapters/0-abstract.tex}
 
 % INSPIRATIONAL QUOTE
 % Setup
@@ -236,10 +238,8 @@
 \input{chapters/1-introduction.tex}
 \input{chapters/2-related_work.tex}
 \input{chapters/3-methodology.tex}
-\input{chapters/5-frfm.tex}
-\input{chapters/6-nrmetric.tex}
-\input{chapters/7-results.tex}
-\input{chapters/8-conclusion-fw.tex}
+\input{chapters/4-results.tex}
+\input{chapters/5-conclusion.tex}
 
 %---SAMPLE--
 % REFERENCES

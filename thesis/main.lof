@@ -1,10 +1,12 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Labeled set selected from the FRLL dataset.\relax }}{20}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Snippet of the custom webapp platform used to access overall image quality.\relax }}{21}{figure.caption.14}%
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Reference images from the MOS set, comprising the selected subjects from the FRLL dataset.\relax }}{24}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Steganographically distorted facial images from each method.\relax }}{25}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Django-based webapp created for the Single Stimulus test.\relax }}{25}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Scatter plots illustrating the relationship between MOS and 40 individual full-reference IQA metrics. The red line represents a smoothed local trend curve.\relax }}{27}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces SVD-based analysis of the FR metric space. The cumulative explained variance (a) guides the choice of dimensionality, while the Picard criterion (b) illustrates stability near $k=6$.\relax }}{28}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces SHAP summary plot for $k=6$, generated from the best CatBoost model.\relax }}{30}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Evaluation of our NR-IQA model. Panel (a) shows performance on the training set with pseudo and ground-truth MOS;\spacefactor \@m {} panel (b) shows performance on the disjoint test set with ground-truth MOS.\relax }}{31}{figure.caption.21}%
 \addvspace {10\p@ }

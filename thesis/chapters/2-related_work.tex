@@ -35,8 +35,6 @@ Beyond laboratory-controlled protocols, crowdsourcing has emerged as a scalable 
 
 Several benchmark datasets have been curated to support the development and evaluation of IQA models. The LIVE~\cite{sheikh2006image}, TID2013~\cite{pnsr2003}, and CSIQ~\cite{ma2011psnr} datasets follow ITU-R BT.500-compliant procedures, offering high-quality MOS/DMOS annotations across a range of distortion types. More recent datasets, such as PIPAL~\cite{jin2020pipal} and KonIQ-10k~\cite{mos2016}, leverage crowdsourced assessments to achieve broader coverage of real-world content and perceptual variance. These datasets not only facilitate benchmarking but also allow for training data-driven IQA models in both full and no-reference scenarios. Nonetheless, domain-specific datasets, particularly those for biometric, medical, or forensic applications, remain scarce, limiting the generalizability of learned metrics in those contexts.
 
-While subjective assessments offer the most faithful representation of human perception, they are costly, time-consuming, and difficult to replicate at scale. This has motivated the development of objective IQA algorithms that aim to approximate human judgments using computational models.
-
 
 \section{Objective IQA}\label{sec:objective_iqa}
 
@@ -44,22 +42,23 @@ Objective IQA refers to the automatic estimation of visual quality using computa
 
 These metrics can be further characterized by the domain in which they operate and the spectral representation they use. The domain refers to the signal space employed during computation. Classical metrics operate in the spatial domain, comparing pixel intensities directly, as seen in PSNR and SSIM~\cite{Wang2004SSIM}. Others use the frequency domain, employing transforms such as the discrete cosine transform (DCT) or wavelet decompositions to capture structural differences, as in VIF~\cite{sheikh_vif_2006} and IFC~\cite{sheikh2005ifc}. A third group targets the spectral domain, often used in remote sensing, where images are compared across multiple wavelength bands using metrics such as ERGAS~\cite{Ranchin2000ERGAS} and SAM~\cite{Kruse1993SAM}. Additional domains include gradient-based methods that emphasize edge strength or direction, such as GMSD~\cite{Xue2014GMSD}, and deep feature domains, which assess perceptual similarity using activations from convolutional neural networks trained on natural images, as in LPIPS~\cite{zhang2018lpips} and DISTS~\cite{ding2020dists}.
 
-The spectral representation, or color spectrum, denotes the channel configuration used by the metric. Many classical approaches focus solely on the luminance channel (Y), which aligns closely with human perception~\cite{sheikh_vif_2006, chandler2007vsnr}. Others compute scores over grayscale or full RGB images, as seen in FSIM~\cite{zhang2011fsim} and its color extension FSIMc. Some metrics operate in alternative color spaces such as YCbCr or CIELab~\cite{Wang2002PQM}, while hyperspectral or multiband metrics process dozens of spectral channels, particularly in remote sensing applications~\cite{Zhou1998SCC,Alparone2008QNR}. Table~\ref{tab:fr_iqa_metrics} summarizes the 41 IQA metrics considered in this work, detailing their reference type, computational domain, publication year, number of tested databases, and spectral characteristics.
+The spectral representation, or color spectrum, denotes the channel configuration used by the metric. Many classical approaches focus solely on the luminance channel (Y), which aligns closely with human perception~\cite{sheikh_vif_2006, chandler2007vsnr}. Others compute scores over grayscale or full RGB images, as seen in FSIM~\cite{zhang2011fsim} and its color extension FSIMc. Some metrics operate in alternative color spaces such as YCbCr or CIELab~\cite{Wang2002PQM}, while hyperspectral or multiband metrics process dozens of spectral channels, particularly in remote sensing applications~\cite{Zhou1998SCC,Alparone2008QNR}. Table~\ref{tab:fr_iqa_metrics} summarizes the 40 IQA metrics considered in this work, detailing their reference type, computational domain, publication year, number of tested databases, and spectral characteristics.
+
 
 
 \begin{longtable}{l l l c c l}
     \caption{Summary of the 41 IQA metrics used}\label{tab:fr_iqa_metrics}\\
-    \hline
+    \hline % chktex 44
     \textbf{Metric} & \textbf{Type} & \textbf{Domain} & \textbf{Year} & \textbf{Tested Databases} & \textbf{Spectrum}\\
-    \hline
-    \endfirsthead
-    \multicolumn{6}{r}{\small\itshape(continuation)}\\
-    \hline
+    \hline % chktex 44
+    \endfirsthead % chktex 1
+    \multicolumn{6}{r}{\small\itshape(continuation)}\\ % chktex 6
+    \hline % chktex 44
     \textbf{Metric} & \textbf{Type} & \textbf{Domain} & \textbf{Year} & \textbf{Tested Databases} & \textbf{Spectrum}\\
-    \hline
-    \endhead
-    \hline
-    \endfoot
+    \hline % chktex 44
+    \endhead % chktex 1
+    \hline % chktex 44
+    \endfoot % chktex 1
     
     C-SSIM~\cite{Hassan2017CSSIM}          & FR   & spatial             & 2017 & 2    & RGB \\
     CW-SSIM~\cite{Sampat2009CWSSIM}        & FR   & complex wavelet     & 2009 & 1    & grayscale \\
@@ -83,7 +82,6 @@ The spectral representation, or color spectrum, denotes the channel configuratio
     MS-SSIM~\cite{Wang2003MSSSIM}          & FR   & spatial             & 2003 & 1    & grayscale \\
     MSE~\cite{Gonzalez2008DIP}             & FR   & spatial             & N/A  & ---  & grayscale \\
     PQM~\cite{Wang2002PQM}                 & NR   & spatial             & 2002 & 1    & Y (JPEG) \\
-    PIQE~\cite{Venkatanath2015PIQE}        & NR   & spatial             & 2015 & 1    & RGB \\
     PSNR~\cite{Gonzalez2008DIP}            & FR   & spatial             & N/A  & ---  & grayscale \\
     PSNR-B~\cite{Yim2011PSNRB}             & FR   & spatial             & 2011 & 1    & Y (luma) \\
     R-SSIM~\cite{Malpica2008RSSIM}         & FR   & spatial (depth)     & 2009 & 1    & depth map \\
@@ -98,11 +96,10 @@ The spectral representation, or color spectrum, denotes the channel configuratio
     VIF~\cite{Sheikh2006VIF}               & FR   & wavelet             & 2006 & 1    & Y (luma) \\
     VIFc~\cite{Sheikh2006VIF}              & FR   & wavelet             & 2006 & 1    & Y/CbCr \\
     VIFp~\cite{Sheikh2005VIFp}             & FR   & pixel-domain        & 2005 & 1    & Y (luma) \\
-    VSNR~\cite{Chandler2007VSNR}           & FR   & wavelet             & 2007 & 1    & Y (luma) \\
+    VSNR~\cite{chandler2007vsnr}           & FR   & wavelet             & 2007 & 1    & Y (luma) \\
     WaDIQaM~\cite{Bosse2018WaDIQaM}        & FR   & deep features       & 2018 & 3    & RGB \\
     W-SSIM~\cite{Engelke2011WSSIM}         & FR   & spatial             & 2011 & 1    & grayscale \\
     $D_{\lambda}$ (QNR)~\cite{Alparone2008QNR} & FR & spectral/spatial  & 2008 & 1    & multi-band \\
-    
 \end{longtable}
 
 \subsection{Full-Reference IQA}\label{sec:full_reference_iqa}
@@ -162,8 +159,7 @@ The ERGAS (Erreur Relative Globale Adimensionnelle de Synthèse) metric expresse
 \begin{equation}
 \text{ERGAS} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{N} \sum_{i=1}^{N} {\left( \frac{\text{RMSE}_i}{\mu_i} \right)}^2 }
 \end{equation}
-
-where \( h \) and \( l \) are the spatial resolutions of the high- and low-resolution images respectively, \( \text{RMSE}_i \) is the RMSE of band \( i \), and \( \mu_i \) is the mean of the reference band.
+where $h$ and $l$ are the spatial resolutions of the high and low resolution images respectively, $\text{RMSE}_i$ is the RMSE of band $i$, and $\mu_i$ is the mean of the reference band.
 
 These metrics are particularly useful when high pixel fidelity is essential, but they often fail to align with human perception, especially in cases where structural or semantic information is preserved.
 
@@ -177,7 +173,6 @@ The Structural Similarity Index (SSIM) compares local image patches between the 
 \begin{equation}
 \text{SSIM}(x, y) = \frac{(2\mu_x \mu_y + C_1)(2\sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)}
 \end{equation}
-
 where $\mu_x$ and $\mu_y$ are the local means, $\sigma_x^2$ and $\sigma_y^2$ are the local variances, $\sigma_{xy}$ is the local covariance, and $C_1$, $C_2$ are stabilizing constants.
 
 Multiscale SSIM (MS-SSIM) extends SSIM by computing similarity at multiple image scales. It is defined as:
@@ -193,7 +188,6 @@ The Feature Similarity Index (FSIM) combines phase congruency (PC) and gradient 
 \begin{equation}
 \text{FSIM}(x, y) = \frac{\sum_{i \in \Omega} T(i) \cdot PC_m(i)}{\sum_{i \in \Omega} PC_m(i)}
 \end{equation}
-
 where $T(i)$ is a similarity function combining gradient and phase congruency similarity at pixel $i$, and $PC_m(i)$ is the maximum phase congruency across both images.
 
 The Gradient Magnitude Similarity Deviation (GMSD) is based on the standard deviation of pixel-wise gradient similarity maps:
@@ -205,7 +199,6 @@ The Gradient Magnitude Similarity Deviation (GMSD) is based on the standard devi
 \begin{equation}
 \text{GMSD}(x, y) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} {\left( \text{GMS}(i) - \overline{\text{GMS}} \right)}^2}
 \end{equation}
-
 where $G_x(i)$ and $G_y(i)$ are gradient magnitudes of the reference and distorted images, and $C$ is a small constant.
 
 The Spectral Residual Similarity Index (SR-SIM) evaluates similarity by combining spectral residual saliency and gradient magnitude:
@@ -221,7 +214,6 @@ The Information-Weighted Structural Similarity Index (IW-SSIM) assigns greater i
 \begin{equation}
 \text{IW-SSIM}(x, y) = \frac{\sum_{i=1}^{N} w_i \cdot \text{SSIM}_i(x, y)}{\sum_{i=1}^{N} w_i}
 \end{equation}
-
 where $w_i$ is the information weight for window $i$, often computed using local entropy or local variance.
 
 The Wavelet-based SSIM (W-SSIM) extends SSIM into the complex wavelet domain. Instead of operating directly on image intensities, it evaluates phase consistency across wavelet subbands. The general form follows a similar structure to SSIM, applied to wavelet coefficients:
@@ -237,7 +229,6 @@ The Edge Strength Similarity Metric (ESSIM or ESIM) modifies SSIM by replacing t
 \begin{equation}
 \text{ESSIM}(x, y) = \frac{(2\mu_x \mu_y + C_1)(2E(x, y) + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(E(x, x) + E(y, y) + C_2)}
 \end{equation}
-
 where $E(x, y)$ denotes the dot product of edge maps from the two images.
 
 While perceptual similarity metrics approximate human visual perception by analyzing structural and saliency-based cues, they remain largely deterministic and handcrafted.
@@ -251,7 +242,6 @@ The IFC models image patches in the wavelet domain using Gaussian scale mixture 
 \begin{equation}
 \text{IFC}(x, y) = \sum_{i \in \Omega} I(C_{x,i}; C_{y,i} \mid z_i)
 \end{equation}
-
 where $C_{x,i}$ and $C_{y,i}$ are wavelet coefficients of the reference and distorted images in patch $i$, and $z_i$ is a local variance parameter estimated under a GSM model. The total information is accumulated over all image patches $\Omega$.
 
 The VIF index extends this by incorporating a model of the human visual system. It computes the ratio of information that can be extracted by a hypothetical observer from the distorted image versus the reference:
@@ -269,7 +259,6 @@ Another extension is VIFc, which extends the VIF model to handle color images~\c
 \begin{equation}
 \text{VIFc}(x, y) = \sum_{k \in \{Y,Cb,Cr\}} w_k \cdot \text{VIF}_k(x, y)
 \end{equation}
-
 where $w_k$ are empirically determined weights that reflect the perceptual importance of each component. Typically, the luminance channel (Y) receives the highest weight due to its dominant role in human perception.
 
 These variants preserve the conceptual integrity of the original VIF model while offering improved flexibility for different input modalities and computational budgets.
@@ -283,7 +272,6 @@ The LPIPS metric computes the distance between deep feature maps of a reference 
 \begin{equation}
 \text{LPIPS}(x, y) = \sum_{l} \frac{1}{H_l W_l} \sum_{h=1}^{H_l} \sum_{w=1}^{W_l} \| w_l \odot (\hat{f}_l^x(h, w) - \hat{f}_l^y(h, w)) \|_2^2
 \end{equation}
-
 where $\hat{f}_l^x$ and $\hat{f}_l^y$ are the normalized feature maps at layer $l$ for images $x$ and $y$, respectively, with spatial dimensions $H_l \times W_l$. The weights $w_l$ are learned scalars for each channel, and $\odot$ denotes element-wise multiplication.
 
 The DISTS metric combines feature similarity and texture similarity between corresponding feature maps:
@@ -291,7 +279,6 @@ The DISTS metric combines feature similarity and texture similarity between corr
 \begin{equation}
 \text{DISTS}(x, y) = \sum_{l} \alpha_l \cdot S_l(x, y) + \beta_l \cdot T_l(x, y)
 \end{equation}
-
 where $S_l(x, y)$ is the structure similarity component computed as the cosine similarity between deep features at layer $l$, and $T_l(x, y)$ is the texture similarity component, often based on the mean and variance of feature activations. The coefficients $\alpha_l$ and $\beta_l$ are learned to balance structure and texture contributions for each layer $l$.
 
 WaDIQaM-FR learns a patch-based quality prediction model using paired deep features from the reference image $x$ and the distorted image $y$. Given a patch pair $(x_i, y_i)$, deep features are extracted using a shared-weight CNN encoder, and the resulting representations are concatenated and passed through a regression network to predict a local quality score $q_i$. The final quality score is the weighted average over all patches:
@@ -299,7 +286,6 @@ WaDIQaM-FR learns a patch-based quality prediction model using paired deep featu
 \begin{equation}
 Q(x, y) = \sum_{i=1}^{N} w_i \cdot q_i
 \end{equation}
-
 where $q_i = f_{\theta}(x_i, y_i)$ is the predicted quality for patch $i$, $w_i$ is a learned spatial weight indicating the perceptual relevance of patch $i$, and $N$ is the total number of patches. The function $f_{\theta}$ denotes the trained regression model with parameters $\theta$.
 
 During training, the network minimizes the error between predicted quality scores and human-annotated MOS or DMOS labels using an appropriate loss function (e.g., MSE or Huber loss). Unlike LPIPS or DISTS, WaDIQaM does not rely on pretrained networks, allowing it to adapt feature representations to the task of quality prediction.
@@ -308,10 +294,46 @@ In summary, full-reference IQA models span a spectrum from simple error-based me
 
 \subsection{No-Reference IQA}\label{sec:no_reference_iqa}
 
-No-reference image quality assessment (NR-IQA) seeks to estimate perceptual quality without access to a reference image. This setting reflects practical use cases such as user-generated content, mobile imaging, and surveillance, where undistorted ground-truth images are typically unavailable. NR-IQA is inherently ill-posed, as models must infer the type and severity of distortion solely from the image under test. Among the earliest approaches, several models are tailored to specific distortion types. JPEG, the most widely used lossy image compression standard, operates by dividing images into $8 \times 8$ blocks, applying the discrete cosine transform (DCT), quantizing the coefficients, and entropy-coding the result~\cite{wallace1992jpeg}. While efficient, this block-based approach introduces artifacts such as blocking, ringing, and loss of fine detail, particularly at low bitrates. The PQM metric~\cite{wang2002pqm} exploits these properties by modeling visual thresholds under JPEG quantization. In contrast, PIQE~\cite{venkatanath2015piqe} adopts a more general framework, detecting local distortions such as blur, noise, and blockiness using block-level statistical analysis. More recently, SPIQ~\cite{chen2022spiq} applies a deep neural network to predict score distributions aligned with human opinion scores, achieving higher robustness and perceptual alignment across diverse content and distortion types.
+Among traditional NR-IQA techniques, PIQE~\cite{piqe2016} (Perception-based Image Quality Evaluator) and NIQE~\cite{mittal2013making} (Natural Image Quality Evaluator) are widely used due to their computational simplicity. PIQE begins by dividing the input image into non-overlapping $16 \times 16$ blocks, denoted $B_i$, and identifying distorted blocks based on edge content and local variance thresholds. For each block, it computes perceptual features using the gradient magnitude:
+\begin{equation}
+S_i = \frac{1}{|B_i|} \sum_{(x,y) \in B_i} \sqrt{ {\left( \frac{\partial I}{\partial x} \right)}^2 + {\left( \frac{\partial I}{\partial y} \right)}^2 },
+\end{equation}
+and noise, estimated by subtracting a low-pass filtered (LPF) version of the block:
+\begin{equation}
+N_i = \text{std}\left( B_i - \text{LPF}(B_i) \right).
+\end{equation}
+The global PIQE score is computed via a weighted aggregation over the distorted blocks, $\mathcal{D}$:
+\begin{equation}
+\text{PIQE} = \frac{1}{|\mathcal{D}|} \sum_{i \in \mathcal{D}} w_i \cdot ( \alpha S_i + \beta N_i + \gamma C_i ),
+\end{equation}
+where $w_i$ are confidence weights and $\alpha, \beta, \gamma$ are scaling factors for sharpness, noise, and contrast, respectively. The final score is scaled between 0 (best quality) and 100 (worst quality).
 
+In contrast, NIQE is grounded in natural scene statistics (NSS), using a statistical deviation model to quantify perceptual degradation. First, it applies Mean Subtracted Contrast Normalization (MSCN) to locally standardize luminance:
+\begin{equation}
+\hat{I}(x, y) = \frac{I(x, y) - \mu(x, y)}{\sigma(x, y) + \epsilon},
+\end{equation}
+from which it extracts statistical features associated with Generalized Gaussian Distributions (GGD) and Asymmetric GGD (AGGD). A multivariate Gaussian (MVG) model with mean $\mu_r$ and covariance $\Sigma_r$ is estimated to a set of pristine images. During inference, the Mahalanobis distance between the test image features $\mathbf{f}_t$ and the natural image model is used to compute the NIQE score:
+\begin{equation}
+\text{NIQE}(\mathbf{f}_t) = \sqrt{ {(\mathbf{f}_t - \mu_r)}^T \Sigma_r^{-1} (\mathbf{f}_t - \mu_r) }.
+\end{equation}
+This formulation enables NIQE to operate in a completely opinion-unaware and unsupervised fashion, relying solely on deviations from natural image statistics to infer perceptual quality.
 
-The PQM metric operates in the JPEG compression domain and estimates quality based on the characteristics of the quantization matrix and the signal activity in each block. It computes a weighted distortion visibility index across blocks, with perceptual thresholds derived from luminance masking and contrast sensitivity~\cite{wang2002pqm}. In contrast, PIQE is a distortion-aware metric that segments the image into non-overlapping blocks and identifies artifacts using measures such as blockiness, noise, and blur~\cite{venkatanath2015piqe}. Blocks deemed distorted contribute to a pooled score based on localized deviations from natural image statistics. Both PQM and PIQE are deterministic, non-learning-based models that are efficient but limited in their ability to generalize across diverse content or unseen distortion types. SPIQ~\cite{chen2022spiq}, on the other hand, predicts a perceptual quality score distribution using a deep neural network trained on human opinion scores. It jointly models the mean and variance of subjective ratings, enabling more accurate prediction of both central tendency and confidence. Compared to traditional methods, SPIQ achieves superior correlation with subjective assessments, especially on authentic distortions, but requires significantly more training data and computational resources.
+In contrast to traditional statistical NR-IQA methods, recent approaches such as SER-FIQ~\cite{terhorst2020serfiq} (Stochastic Embedding Robustness for Face Image Quality) and MagFace~\cite{meng2021magface} adopt deep learning-based strategies tailored specifically for facial image quality. SER-FIQ builds on the intuition that high-quality facial images produce consistent embeddings under stochastic dropout perturbations, while low-quality images result in more variable and unstable representations. Given a face image, a pre-trained face recognition model (e.g., ArcFace) with dropout enabled generates $T$ stochastic embeddings $\{\mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_T\} \in \mathbb{R}^d$. The pairwise cosine similarities between these embeddings are then computed:
+\begin{equation}
+\text{sim}(\mathbf{e}_i, \mathbf{e}_j) = \frac{\mathbf{e}_i \cdot \mathbf{e}_j}{\|\mathbf{e}_i\| \|\mathbf{e}_j\|}, \quad \forall i,j \in \{1,\dots,T\}, i < j.
+\end{equation}
+The final SER-FIQ score is derived from the mean or standard deviation of the similarity matrix, often defined as:
+\begin{equation}
+\text{SER-FIQ} = \frac{1}{\binom{T}{2}} \sum_{i<j} \text{sim}(\mathbf{e}_i, \mathbf{e}_j),
+\end{equation}
+where higher scores indicate more stable (and thus higher-quality) facial representations. This method is fully unsupervised and exploits intrinsic model uncertainty as an indicator for quality.
+
+MagFace, on the other hand, is a supervised approach that explicitly learns a quality-aware embedding space. It introduces a margin-adaptive loss that couples facial feature magnitude with image quality. For an embedding \( \mathbf{e} \in \mathbb{R}^d \), its \( L_2 \)-norm \( \|\mathbf{e}\| \) is used as a measure for quality. The classification loss is modified as:
+\begin{equation}
+\mathcal{L}_{\text{MagFace}} = -\log \frac{e^{s \cdot (\cos(\theta_y + m(\|\mathbf{e}\|)))}}{e^{s \cdot (\cos(\theta_y + m(\|\mathbf{e}\|)))} + \sum_{j \neq y} e^{s \cdot \cos(\theta_j)}},
+\end{equation}
+where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector of the correct class, \( s \) is a scaling factor, and \( m(\|\mathbf{e}\|) \) is a dynamic margin that increases with quality. The final MagFace quality score is proportional to the magnitude \( \|\mathbf{e}\| \), constrained during training to lie within a fixed interval \([l, u]\) for regularization. Unlike SER-FIQ, MagFace learns to embed quality-awareness directly into the feature space through supervision, enabling both verification and quality prediction in a unified framework.
+
 
 \subsection{Fusion-Based IQA Models}\label{sec:fusion_iqa}
 
@@ -319,13 +341,43 @@ To address the perceptual limitations of individual image quality metrics, sever
 
 In parallel, the scarcity of large-scale human-labeled datasets has motivated weakly supervised learning strategies. Chen et al.~\cite{chen2021pseudo} generated pseudo-MOS labels by averaging outputs of multiple FR-IQA metrics. RankIQA~\cite{liu2017rankiqa} applied relative ranking supervision on synthetically degraded images to learn ordinal quality representations. Wu et al.~\cite{wu2020cascaded} used cascaded convolutional regressors trained on pseudo-MOS labels, demonstrating that pseudo-supervision can bootstrap learning when subjective ground truth is limited.
 
-These developments support the feasibility of learning perceptual quality through fusion, either via model ensembles or by generating training supervision. Our approach builds on this principle: we construct a regression-based fusion model that aggregates multiple FR-IQA scores to predict perceptual quality, using human-labeled MOS as supervision.\@ This model is then applied to a larger unlabeled dataset to generate pseudo-MOS scores, which in turn are used to train a no-reference regressor. This hybrid full-to-no-reference framework enables scalable, perceptually grounded quality estimation even in the absence of pristine reference images.\@
+These developments support the feasibility of learning perceptual quality through fusion, either via model ensembles or by generating training supervision. Our approach builds on this principle: we construct a regression-based fusion model that aggregates multiple FR-IQA scores to predict perceptual quality, using human-labeled MOS as supervision. This model is then applied to a larger unlabeled dataset to generate pseudo-MOS scores, which in turn are used to train a no-reference regressor. This hybrid full-to-no-reference framework enables scalable, perceptually grounded quality estimation even in the absence of pristine reference images.
 
 \section{Facial Image Quality assessment}\label{sec:fiqa}
 
-Facial image quality assessment (FIQA) refers to the estimation of biometric utility from face images—typically in the context of face recognition, verification, or detection pipelines. Unlike generic no-reference IQA, FIQA does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{damer2021localfusion, best2018faceqnet}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
+Facial image quality assessment (FIQA) refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic no-reference IQA, FIQA does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{damer2021localfusion, best2018faceqnet}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
 
-Traditional FIQA methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{grother2003facequality}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, terhorst2022quality}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy. For instance, FaceQnet~\cite{best2018faceqnet, hernandezortiz2019faceqnetv2} learns a regression model that predicts similarity-based utility from face embeddings. SER-FIQ~\cite{terhorst2020serfiq} estimates image quality by measuring the consistency of face embeddings under dropout-induced stochastic variation.
+Traditional FIQA methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{grother2003facequality}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, terhorst2022quality}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
 
 FIQA is an inherently task-dependent quality problem. Unlike general-purpose IQA, it must account for the characteristics of the recognition model and dataset. Furthermore, FIQA methods often correlate poorly with perceptual quality metrics, as an image may appear visually high-quality but remain unsuitable for matching due to pose or occlusion. This motivates the need to explore perceptually grounded IQA models tailored to face data, and to investigate how traditional metrics can be adapted, fused, or compared against biometric-specific quality indicators.
 
+\section{Steganography and Steganalysis}\label{sec:steganography}
+
+Steganography is the practice of concealing information within other data. The goal is to embed secret messages in a way that is imperceptible to human observers, while steganalysis refers to the techniques used to detect such hidden information~\cite{steganography}. This field has evolved significantly with the advent of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies.
+\subsection{Steganography Techniques}\label{sec:steganography_techniques}
+Steganography techniques can be broadly categorized into spatial domain methods, frequency domain methods, and adaptive methods. Spatial domain methods directly manipulate pixel values to embed secret messages, often using least significant bit (LSB) substitution~\cite{steganography2017}. Frequency domain methods, such as discrete cosine transform (DCT) or discrete wavelet transform (DWT), embed information in the transformed coefficients of the image, making it more robust against compression and noise~\cite{zhang2017survey}. Adaptive methods dynamically adjust the embedding process based on the local characteristics of the image, improving imperceptibility and robustness~\cite{li2018adaptive}.
+\subsection{Steganalysis Techniques}\label{sec:steganalysis_techniques}
+Steganalysis techniques aim to detect the presence of hidden information in images. Traditional methods rely on statistical analysis of pixel values or transformed coefficients to identify anomalies indicative of steganography~\cite{fridrich2009steganography}. More recent approaches leverage machine learning and deep learning techniques to classify images as stego or cover based on learned features~\cite{cozzolino2015steganalysis, zhang2017survey}. These methods can achieve high detection accuracy, even against adaptive steganography techniques, by capturing subtle patterns that distinguish stego images from natural ones.
+\subsection{Steganography and Steganalysis in Facial Images}\label{sec:steganalysis_facial_images}
+Steganography and steganalysis in facial images present unique challenges and opportunities. Facial images are often subject to strict quality requirements for recognition tasks, making them sensitive to alterations~\cite{damer2021localfusion}. Steganographic techniques must balance imperceptibility with the need to embed sufficient information, while steganalysis methods must account for the specific characteristics of facial data, such as symmetry, texture, and lighting conditions~\cite{best2018faceqnet}.
+Recent research has explored the use of steganography in facial images for secure communication, watermarking, and privacy protection~\cite{damer2021localfusion}. Steganalysis techniques have also been adapted to detect hidden information in facial images, often using deep learning models trained on large datasets of stego and cover images~\cite{terhorst2020serfiq, terhorst2022quality}. These advancements highlight the need for specialized approaches that consider the unique properties of facial data while addressing the challenges of imperceptibility and robustness in steganographic applications.
+
+\subsection{Printer-proof Steganography}\label{sec:printer_proof_steganography}
+Printer-proof steganography is a specialized form of steganography that focuses on embedding information in images while ensuring that the hidden data remains intact and detectable even after the image has been printed and scanned. This technique is particularly relevant in contexts where physical copies of images are distributed, such as in security documents, identification cards, or artworks.
+
+The key challenge in printer-proof steganography is to design embedding methods that are robust against the distortions introduced by the printing and scanning processes. These distortions can include color shifts, resolution changes, and noise, which can significantly affect the visibility of the embedded information.
+
+To achieve printer-proof steganography, several strategies can be employed:
+\begin{itemize}
+    \item \textbf{Adaptive Embedding:} The embedding process can be adapted to the specific characteristics of the image and the expected distortions. This may involve analyzing the image content and selecting suitable regions for embedding that are less likely to be affected by printing artifacts.
+    \item \textbf{Error Correction Codes:} Incorporating error correction codes can help recover the embedded information even if some parts are lost or distorted during printing and scanning. This is particularly important for maintaining the integrity of the hidden data.
+    \item \textbf{Robust Feature Selection:} Selecting features that are less sensitive to distortions, such as texture or edge information, can improve the robustness of the embedded data. These features are often more resilient to changes introduced by printing processes.
+    \item \textbf{Multi-layer Embedding:} Embedding information in multiple layers or channels of the image can enhance robustness. For example, using both luminance and chrominance channels can provide additional redundancy against distortions.
+    \item \textbf{Testing and Validation:} Extensive testing with various printing and scanning conditions is crucial to ensure that the embedded information remains detectable. This may involve simulating different printing processes and evaluating the visibility and recoverability of the hidden data.
+    \item \textbf{Perceptual Considerations:} Ensuring that the embedded information does not significantly degrade the visual quality of the image is essential. Techniques such as perceptual masking can be used to embed data in areas that are less noticeable to human observers, thereby maintaining the aesthetic quality of the image.
+    \item \textbf{Machine Learning Approaches:} Recent advancements in machine learning can be leveraged to improve the robustness of printer-proof steganography. Deep learning models can learn to identify optimal embedding strategies and features that are resilient to printing distortions, enhancing the overall effectiveness of the steganographic process.
+    \item \textbf{Evaluation Metrics:} Developing appropriate evaluation metrics to assess the effectiveness of printer-proof steganography is crucial. Metrics should consider both the imperceptibility of the embedded data and its robustness against printing and scanning distortions, providing a comprehensive assessment of the technique's performance.
+    \item \textbf{Standardization:} Establishing standardized protocols for printer-proof steganography can facilitate comparisons between different techniques and promote best practices in the field. This can include guidelines for embedding methods, evaluation metrics, and testing procedures.
+    \item \textbf{Applications:} Printer-proof steganography has various applications, including secure document distribution, watermarking for copyright protection, and embedding metadata in images for authentication purposes. Understanding the specific requirements of these applications can guide the development of effective steganographic techniques.
+    \item \textbf{Ethical Considerations:} As with any steganographic technique, ethical considerations are paramount. Ensuring that printer-proof steganography is used responsibly and does not infringe on privacy or security rights is essential for maintaining trust in its applications.
+\end{itemize}
