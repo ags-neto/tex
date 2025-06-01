@@ -685,7 +685,7 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Journal of Selected Topics in Signal Processing}
-      \field{month}{4}
+      \field{month}{6}
       \field{number}{2}
       \field{title}{Reduced-reference image quality assessment using divisive normalization-based image representation}
       \field{volume}{3}
@@ -1407,28 +1407,48 @@
       \field{year}{2020}
     \endentry
     \entry{liu2017rankiqa}{inproceedings}{}
-      \true{moreauthor}
-      \true{morelabelname}
-      \name{author}{1}{}{%
-        {{hash=4b44bba1743c2ad874f7d960887af663}{%
+      \name{author}{5}{}{%
+        {{hash=81e242b8fcbdf3579bd5ff6c9182df80}{%
            family={Liu},
            familyi={L\bibinitperiod},
-           given={X.},
-           giveni={X\bibinitperiod}}}%
+           given={Shuang},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b8002f53f507f79f6e0c64a1e83c99f0}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod}}}%
+        {{hash=49a9a9c965001db641ceb0e392d3b385}{%
+           family={Fang},
+           familyi={F\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=330e18fb499a5fa7fa598125962993f7}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Ying},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=25742db732e0b83c21065d197375ff9f}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Wei-Shi},
+           giveni={W\bibinithyphendelim S\bibinitperiod}}}%
       }
-      \strng{namehash}{1f76401e7dbc86cd82b589641bfa5ec6}
-      \strng{fullhash}{1f76401e7dbc86cd82b589641bfa5ec6}
-      \strng{bibnamehash}{1f76401e7dbc86cd82b589641bfa5ec6}
-      \strng{authorbibnamehash}{1f76401e7dbc86cd82b589641bfa5ec6}
-      \strng{authornamehash}{1f76401e7dbc86cd82b589641bfa5ec6}
-      \strng{authorfullhash}{1f76401e7dbc86cd82b589641bfa5ec6}
+      \strng{namehash}{a2c4f3cf8b065bf776b61ad19b85e7ca}
+      \strng{fullhash}{751b4847ca508252dd53b2d17f61edc4}
+      \strng{bibnamehash}{751b4847ca508252dd53b2d17f61edc4}
+      \strng{authorbibnamehash}{751b4847ca508252dd53b2d17f61edc4}
+      \strng{authornamehash}{a2c4f3cf8b065bf776b61ad19b85e7ca}
+      \strng{authorfullhash}{751b4847ca508252dd53b2d17f61edc4}
       \field{sortinit}{3}
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{ICCV}
+      \field{booktitle}{Proceedings of the IEEE International Conference on Computer Vision (ICCV)}
       \field{title}{RankIQA: Learning from rankings for no-reference image quality assessment}
       \field{year}{2017}
+      \field{pages}{1040\bibrangedash 1049}
+      \range{pages}{10}
     \endentry
     \entry{babnik2022}{misc}{}
       \name{author}{2}{}{%
@@ -3708,81 +3728,75 @@
       \verb https://proceedings.neurips.cc/paper_files/paper/2017/file/838e8afb1ca34354ac209f53d90c3a43-Paper.pdf
       \endverb
     \endentry
-    \entry{frll}{article}{}
-      \name{author}{2}{}{%
-        {{hash=8bf75d10c8ded269934973ad9203a529}{%
-           family={DeBruine},
-           familyi={D\bibinitperiod},
-           given={Lisa},
-           giveni={L\bibinitperiod}}}%
-        {{hash=f980b593296b96b1c6a6100fb172987a}{%
-           family={Jones},
-           familyi={J\bibinitperiod},
-           given={Benedict},
-           giveni={B\bibinitperiod}}}%
+    \entry{steganography2016survey}{article}{}
+      \name{author}{3}{}{%
+        {{hash=ea25d6b951b37c81e2568cad3c9fd33b}{%
+           family={Fkirin},
+           familyi={F\bibinitperiod},
+           given={Alaa},
+           giveni={A\bibinitperiod}}}%
+        {{hash=7285ef0db42bf06e8d4e7ca3f1702161}{%
+           family={Attiya},
+           familyi={A\bibinitperiod},
+           given={Gamal},
+           giveni={G\bibinitperiod}}}%
+        {{hash=a6e146f0013519db5787acd69a204051}{%
+           family={El-Sayed},
+           familyi={E\bibinithyphendelim S\bibinitperiod},
+           given={Ayman},
+           giveni={A\bibinitperiod}}}%
       }
-      \strng{namehash}{f0e734e2737e471f7ea3e6f8287b153d}
-      \strng{fullhash}{f0e734e2737e471f7ea3e6f8287b153d}
-      \strng{bibnamehash}{f0e734e2737e471f7ea3e6f8287b153d}
-      \strng{authorbibnamehash}{f0e734e2737e471f7ea3e6f8287b153d}
-      \strng{authornamehash}{f0e734e2737e471f7ea3e6f8287b153d}
-      \strng{authorfullhash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{namehash}{67c635f76311819f889c251a8a8f4498}
+      \strng{fullhash}{67c635f76311819f889c251a8a8f4498}
+      \strng{bibnamehash}{67c635f76311819f889c251a8a8f4498}
+      \strng{authorbibnamehash}{67c635f76311819f889c251a8a8f4498}
+      \strng{authornamehash}{67c635f76311819f889c251a8a8f4498}
+      \strng{authorfullhash}{67c635f76311819f889c251a8a8f4498}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Open Science Framework}
-      \field{title}{Face Research Lab London Set}
-      \field{year}{2017}
+      \field{journaltitle}{Communications on Applied Electronics}
+      \field{month}{09}
+      \field{title}{Steganography Literature Survey, Classification and Comparative Study}
+      \field{volume}{5}
+      \field{year}{2016}
+      \field{pages}{13\bibrangedash 22}
+      \range{pages}{10}
       \verb{doi}
-      \verb 10.17605/OSF.IO/FPZ3U
+      \verb 10.5120/cae2016652384
       \endverb
     \endentry
-    \entry{gans2018}{misc}{}
-      \name{author}{5}{}{%
-        {{hash=73191877890a6350d04aa0151d96fa10}{%
-           family={Heusel},
-           familyi={H\bibinitperiod},
-           given={Martin},
-           giveni={M\bibinitperiod}}}%
-        {{hash=f7ddff2d58ece37233af8650f706e499}{%
-           family={Ramsauer},
-           familyi={R\bibinitperiod},
-           given={Hubert},
-           giveni={H\bibinitperiod}}}%
-        {{hash=1a47640139e63b9b5969c969dfe95def}{%
-           family={Unterthiner},
-           familyi={U\bibinitperiod},
-           given={Thomas},
-           giveni={T\bibinitperiod}}}%
-        {{hash=46903af2a234346e2857b1bfc2f54949}{%
-           family={Nessler},
-           familyi={N\bibinitperiod},
-           given={Bernhard},
+    \entry{steganography2018adaptive}{article}{}
+      \name{author}{2}{}{%
+        {{hash=6cb400e32f4b7cb465416520aee40a1e}{%
+           family={Demirci},
+           familyi={D\bibinitperiod},
+           given={B},
            giveni={B\bibinitperiod}}}%
-        {{hash=41b31e29fb2bdbf9f5c9c1b0d5b3e815}{%
-           family={Hochreiter},
-           familyi={H\bibinitperiod},
-           given={Sepp},
-           giveni={S\bibinitperiod}}}%
+        {{hash=cf0c2b0139828680ec1654ba721f0820}{%
+           family={Tutuncu},
+           familyi={T\bibinitperiod},
+           given={Kemal},
+           giveni={K\bibinitperiod}}}%
       }
-      \strng{namehash}{c2fad614351c447f02e8ebc06fa3ad1d}
-      \strng{fullhash}{d8b1bbf858e98229cb351aa71ede2179}
-      \strng{bibnamehash}{d8b1bbf858e98229cb351aa71ede2179}
-      \strng{authorbibnamehash}{d8b1bbf858e98229cb351aa71ede2179}
-      \strng{authornamehash}{c2fad614351c447f02e8ebc06fa3ad1d}
-      \strng{authorfullhash}{d8b1bbf858e98229cb351aa71ede2179}
+      \strng{namehash}{e3c4520f5e326e6122f5edc61ee125e5}
+      \strng{fullhash}{e3c4520f5e326e6122f5edc61ee125e5}
+      \strng{bibnamehash}{e3c4520f5e326e6122f5edc61ee125e5}
+      \strng{authorbibnamehash}{e3c4520f5e326e6122f5edc61ee125e5}
+      \strng{authornamehash}{e3c4520f5e326e6122f5edc61ee125e5}
+      \strng{authorfullhash}{e3c4520f5e326e6122f5edc61ee125e5}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{eprintclass}{cs.LG}
-      \field{eprinttype}{arXiv}
-      \field{title}{GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium}
+      \field{journaltitle}{Advances in Electrical and Computer Engineering}
+      \field{month}{01}
+      \field{title}{Adaptive LSB Steganography Based on Chaos Theory and Random Distortion}
+      \field{volume}{18}
       \field{year}{2018}
-      \verb{eprint}
-      \verb 1706.08500
-      \endverb
+      \field{pages}{15\bibrangedash 22}
+      \range{pages}{8}
     \endentry
     \entry{cruz2025riemstega}{inproceedings}{}
       \name{author}{6}{}{%
@@ -3882,6 +3896,82 @@
       \range{pages}{10}
       \verb{doi}
       \verb 10.1109/CVPRW63382.2024.00440
+      \endverb
+    \endentry
+    \entry{frll}{article}{}
+      \name{author}{2}{}{%
+        {{hash=8bf75d10c8ded269934973ad9203a529}{%
+           family={DeBruine},
+           familyi={D\bibinitperiod},
+           given={Lisa},
+           giveni={L\bibinitperiod}}}%
+        {{hash=f980b593296b96b1c6a6100fb172987a}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Benedict},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{fullhash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{bibnamehash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{authorbibnamehash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{authornamehash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \strng{authorfullhash}{f0e734e2737e471f7ea3e6f8287b153d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Open Science Framework}
+      \field{title}{Face Research Lab London Set}
+      \field{year}{2017}
+      \verb{doi}
+      \verb 10.17605/OSF.IO/FPZ3U
+      \endverb
+    \endentry
+    \entry{gans2018}{misc}{}
+      \name{author}{5}{}{%
+        {{hash=73191877890a6350d04aa0151d96fa10}{%
+           family={Heusel},
+           familyi={H\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f7ddff2d58ece37233af8650f706e499}{%
+           family={Ramsauer},
+           familyi={R\bibinitperiod},
+           given={Hubert},
+           giveni={H\bibinitperiod}}}%
+        {{hash=1a47640139e63b9b5969c969dfe95def}{%
+           family={Unterthiner},
+           familyi={U\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=46903af2a234346e2857b1bfc2f54949}{%
+           family={Nessler},
+           familyi={N\bibinitperiod},
+           given={Bernhard},
+           giveni={B\bibinitperiod}}}%
+        {{hash=41b31e29fb2bdbf9f5c9c1b0d5b3e815}{%
+           family={Hochreiter},
+           familyi={H\bibinitperiod},
+           given={Sepp},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c2fad614351c447f02e8ebc06fa3ad1d}
+      \strng{fullhash}{d8b1bbf858e98229cb351aa71ede2179}
+      \strng{bibnamehash}{d8b1bbf858e98229cb351aa71ede2179}
+      \strng{authorbibnamehash}{d8b1bbf858e98229cb351aa71ede2179}
+      \strng{authornamehash}{c2fad614351c447f02e8ebc06fa3ad1d}
+      \strng{authorfullhash}{d8b1bbf858e98229cb351aa71ede2179}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LG}
+      \field{eprinttype}{arXiv}
+      \field{title}{GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium}
+      \field{year}{2018}
+      \verb{eprint}
+      \verb 1706.08500
       \endverb
     \endentry
     \entry{clapes2018apparent}{inproceedings}{}
@@ -4431,69 +4521,20 @@
            given={Tie-Yan},
            giveni={T\bibinithyphendelim Y\bibinitperiod}}}%
       }
-      \name{editor}{7}{}{%
-        {{hash=e7e74de725116358b68a6e890c026145}{%
-           family={Guyon},
-           familyi={G\bibinitperiod},
-           given={I.},
-           giveni={I\bibinitperiod}}}%
-        {{hash=3b118a9660c18913c6d05d3bcfae41a3}{%
-           family={Luxburg},
-           familyi={L\bibinitperiod},
-           given={U.\bibnamedelimi Von},
-           giveni={U\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
-        {{hash=9b411b6c9cefdde16ffea77ecf612142}{%
-           family={Bengio},
-           familyi={B\bibinitperiod},
-           given={S.},
-           giveni={S\bibinitperiod}}}%
-        {{hash=1444141e07dd9549dbb4b8530fe4ec15}{%
-           family={Wallach},
-           familyi={W\bibinitperiod},
-           given={H.},
-           giveni={H\bibinitperiod}}}%
-        {{hash=f3857e15544199442f3d4fb2cf6645b4}{%
-           family={Fergus},
-           familyi={F\bibinitperiod},
-           given={R.},
-           giveni={R\bibinitperiod}}}%
-        {{hash=c73f06e2fc98c9b0bf52eb5fdce61943}{%
-           family={Vishwanathan},
-           familyi={V\bibinitperiod},
-           given={S.},
-           giveni={S\bibinitperiod}}}%
-        {{hash=36b98b7ab533936cf1b5716148de704f}{%
-           family={Garnett},
-           familyi={G\bibinitperiod},
-           given={R.},
-           giveni={R\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Curran Associates, Inc.}%
-      }
       \strng{namehash}{3f310c6fe235873814ad6bcc5d2c004e}
       \strng{fullhash}{138b620984178bfaf960c59da39eb14f}
       \strng{bibnamehash}{3f310c6fe235873814ad6bcc5d2c004e}
       \strng{authorbibnamehash}{3f310c6fe235873814ad6bcc5d2c004e}
       \strng{authornamehash}{3f310c6fe235873814ad6bcc5d2c004e}
       \strng{authorfullhash}{138b620984178bfaf960c59da39eb14f}
-      \strng{editorbibnamehash}{8107ce890771c5f95589bcad654d491d}
-      \strng{editornamehash}{8107ce890771c5f95589bcad654d491d}
-      \strng{editorfullhash}{1564f811a39f09a7400a11284c987926}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{booktitle}{NeurIPS}
       \field{title}{LightGBM: A Highly Efficient Gradient Boosting Decision Tree}
       \field{volume}{30}
       \field{year}{2017}
-      \verb{urlraw}
-      \verb https://proceedings.neurips.cc/paper_files/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf
-      \endverb
-      \verb{url}
-      \verb https://proceedings.neurips.cc/paper_files/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf
-      \endverb
     \endentry
     \entry{catboost}{inproceedings}{}
       \name{author}{5}{}{%
@@ -4739,10 +4780,6 @@
       \range{pages}{13}
     \endentry
   \enddatalist
-  \missing{cozzolino2015steganalysis}
-  \missing{fridrich2009steganography}
-  \missing{li2018adaptive}
-  \missing{zhang2017survey}
 \endrefsection
 \endinput
 

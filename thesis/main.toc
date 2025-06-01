@@ -22,19 +22,21 @@
 \contentsline {subsection}{\numberline {2.2.2}No-Reference IQA}{16}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Fusion-Based IQA Models}{17}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}Facial Image Quality assessment}{18}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Steganography and Steganalysis}{19}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Steganography Techniques}{19}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Steganalysis Techniques}{19}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Steganography and Steganalysis in Facial Images}{19}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}Printer-proof Steganography}{20}{subsection.2.4.4}%
-\contentsline {chapter}{\numberline {3}Methodology}{23}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Dataset}{23}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Debiasing of Subjective Scores}{25}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Correlation of FR-IQA Metrics with Human Perception}{26}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}{28}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Training a No-Reference IQA Model from Pseudo-MOS}{29}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Results}{29}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Full-Reference Fusion Metric Performance}{29}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}No-Reference Regression Model Performance}{30}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Conclusion and Future Work}{32}{section.3.7}%
+\contentsline {section}{\numberline {2.4}Steganography}{19}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Printer-proof Steganography}{19}{subsection.2.4.1}%
+\contentsline {subsubsection}{StegaStamp}{19}{subsubsection*.13}%
+\contentsline {subsubsection}{CodeFace}{20}{subsubsection*.14}%
+\contentsline {subsubsection}{RiemStega}{20}{subsubsection*.15}%
+\contentsline {subsubsection}{StampOne}{20}{subsubsection*.16}%
+\contentsline {chapter}{\numberline {3}Methodology}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Dataset}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Collection of Subjective Scores}{23}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Debiasing of Subjective Scores}{25}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Correlation of FR-IQA Metrics with Human Perception}{26}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}{28}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Training a No-Reference IQA Model from Pseudo-MOS}{29}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Results}{29}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Full-Reference Fusion Metric Performance}{29}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}No-Reference Regression Model Performance}{30}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}Conclusion and Future Work}{32}{section.3.8}%
 \contentsline {chapter}{\numberline {A}Sample Appendix}{45}{appendix.A}%
