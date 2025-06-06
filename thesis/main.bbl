@@ -3400,111 +3400,6 @@
       \verb 10.1109/LSP.2012.2227726
       \endverb
     \endentry
-    \entry{robinson2020bias}{article}{}
-      \name{author}{6}{}{%
-        {{hash=f4a9aed96d6709f76681069133216b20}{%
-           family={Robinson},
-           familyi={R\bibinitperiod},
-           given={Joseph\bibnamedelima P},
-           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
-        {{hash=1c5cf433df31f4e296ada4163d8c324a}{%
-           family={Livitz},
-           familyi={L\bibinitperiod},
-           given={Gennady},
-           giveni={G\bibinitperiod}}}%
-        {{hash=27730b854d23e2bc5f215555eb4ffa04}{%
-           family={Henon},
-           familyi={H\bibinitperiod},
-           given={Yann},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=e25df8b9301781da841c89d160653286}{%
-           family={Qin},
-           familyi={Q\bibinitperiod},
-           given={Can},
-           giveni={C\bibinitperiod}}}%
-        {{hash=af5bb174cec505de4887d6186d3823ae}{%
-           family={Fu},
-           familyi={F\bibinitperiod},
-           given={Yun},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=6468ffb6b0c7de313bff33e801553b2e}{%
-           family={Timoner},
-           familyi={T\bibinitperiod},
-           given={Samson},
-           giveni={S\bibinitperiod}}}%
-      }
-      \strng{namehash}{445958aa4124ff1dd5971db230a31677}
-      \strng{fullhash}{bb659bdc6461230cef11263a618d2d5a}
-      \strng{bibnamehash}{bb659bdc6461230cef11263a618d2d5a}
-      \strng{authorbibnamehash}{bb659bdc6461230cef11263a618d2d5a}
-      \strng{authornamehash}{445958aa4124ff1dd5971db230a31677}
-      \strng{authorfullhash}{bb659bdc6461230cef11263a618d2d5a}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{eprintclass}{cs.CV}
-      \field{eprinttype}{arXiv}
-      \field{title}{Face Recognition: Too Bias, or Not Too Bias?}
-      \field{year}{2020}
-      \verb{eprint}
-      \verb 2002.06483
-      \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/2002.06483
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/2002.06483
-      \endverb
-    \endentry
-    \entry{wu2020cascaded}{article}{}
-      \name{author}{5}{}{%
-        {{hash=26eef10a04a74175053d803ee4fa1024}{%
-           family={Wu},
-           familyi={W\bibinitperiod},
-           given={Chenqi},
-           giveni={C\bibinitperiod}}}%
-        {{hash=3a28d37361fd4b58b2d56a309b53dcf8}{%
-           family={Ma},
-           familyi={M\bibinitperiod},
-           given={Ke},
-           giveni={K\bibinitperiod}}}%
-        {{hash=9aec47e12e3d6fbc7bdca7a5da683262}{%
-           family={Duanmu},
-           familyi={D\bibinitperiod},
-           given={Zhengfang},
-           giveni={Z\bibinitperiod}}}%
-        {{hash=4762c13030571d33e9f72dc2a071cf2d}{%
-           family={Wang},
-           familyi={W\bibinitperiod},
-           given={Shiqi},
-           giveni={S\bibinitperiod}}}%
-        {{hash=e8334f86b999537613328a0033bd95eb}{%
-           family={Zeng},
-           familyi={Z\bibinitperiod},
-           given={Wenjun},
-           giveni={W\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {IEEE}%
-      }
-      \strng{namehash}{c5e456416f8064db8c78637a33b334aa}
-      \strng{fullhash}{b6fdb217dee512e8d67d794bc31909f4}
-      \strng{bibnamehash}{b6fdb217dee512e8d67d794bc31909f4}
-      \strng{authorbibnamehash}{b6fdb217dee512e8d67d794bc31909f4}
-      \strng{authornamehash}{c5e456416f8064db8c78637a33b334aa}
-      \strng{authorfullhash}{b6fdb217dee512e8d67d794bc31909f4}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{IEEE Transactions on Image Processing}
-      \field{title}{Cascaded perceptual quality assessment using pseudo-reference learning}
-      \field{volume}{29}
-      \field{year}{2020}
-      \field{pages}{9654\bibrangedash 9666}
-      \range{pages}{13}
-    \endentry
     \entry{damer2021localfusion}{inproceedings}{}
       \name{author}{5}{}{%
         {{hash=edd1b85ab9f1921e875e362f7012e749}{%
@@ -3655,6 +3550,111 @@
       \field{year}{2022}
       \field{pages}{1626\bibrangedash 1639}
       \range{pages}{14}
+    \endentry
+    \entry{robinson2020bias}{article}{}
+      \name{author}{6}{}{%
+        {{hash=f4a9aed96d6709f76681069133216b20}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={Joseph\bibnamedelima P},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=1c5cf433df31f4e296ada4163d8c324a}{%
+           family={Livitz},
+           familyi={L\bibinitperiod},
+           given={Gennady},
+           giveni={G\bibinitperiod}}}%
+        {{hash=27730b854d23e2bc5f215555eb4ffa04}{%
+           family={Henon},
+           familyi={H\bibinitperiod},
+           given={Yann},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e25df8b9301781da841c89d160653286}{%
+           family={Qin},
+           familyi={Q\bibinitperiod},
+           given={Can},
+           giveni={C\bibinitperiod}}}%
+        {{hash=af5bb174cec505de4887d6186d3823ae}{%
+           family={Fu},
+           familyi={F\bibinitperiod},
+           given={Yun},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=6468ffb6b0c7de313bff33e801553b2e}{%
+           family={Timoner},
+           familyi={T\bibinitperiod},
+           given={Samson},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{445958aa4124ff1dd5971db230a31677}
+      \strng{fullhash}{bb659bdc6461230cef11263a618d2d5a}
+      \strng{bibnamehash}{bb659bdc6461230cef11263a618d2d5a}
+      \strng{authorbibnamehash}{bb659bdc6461230cef11263a618d2d5a}
+      \strng{authornamehash}{445958aa4124ff1dd5971db230a31677}
+      \strng{authorfullhash}{bb659bdc6461230cef11263a618d2d5a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.CV}
+      \field{eprinttype}{arXiv}
+      \field{title}{Face Recognition: Too Bias, or Not Too Bias?}
+      \field{year}{2020}
+      \verb{eprint}
+      \verb 2002.06483
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2002.06483
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2002.06483
+      \endverb
+    \endentry
+    \entry{wu2020cascaded}{article}{}
+      \name{author}{5}{}{%
+        {{hash=26eef10a04a74175053d803ee4fa1024}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chenqi},
+           giveni={C\bibinitperiod}}}%
+        {{hash=3a28d37361fd4b58b2d56a309b53dcf8}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={Ke},
+           giveni={K\bibinitperiod}}}%
+        {{hash=9aec47e12e3d6fbc7bdca7a5da683262}{%
+           family={Duanmu},
+           familyi={D\bibinitperiod},
+           given={Zhengfang},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=4762c13030571d33e9f72dc2a071cf2d}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Shiqi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=e8334f86b999537613328a0033bd95eb}{%
+           family={Zeng},
+           familyi={Z\bibinitperiod},
+           given={Wenjun},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{c5e456416f8064db8c78637a33b334aa}
+      \strng{fullhash}{b6fdb217dee512e8d67d794bc31909f4}
+      \strng{bibnamehash}{b6fdb217dee512e8d67d794bc31909f4}
+      \strng{authorbibnamehash}{b6fdb217dee512e8d67d794bc31909f4}
+      \strng{authornamehash}{c5e456416f8064db8c78637a33b334aa}
+      \strng{authorfullhash}{b6fdb217dee512e8d67d794bc31909f4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Image Processing}
+      \field{title}{Cascaded perceptual quality assessment using pseudo-reference learning}
+      \field{volume}{29}
+      \field{year}{2020}
+      \field{pages}{9654\bibrangedash 9666}
+      \range{pages}{13}
     \endentry
     \entry{steganography2017}{inproceedings}{}
       \name{author}{1}{}{%
@@ -4463,7 +4463,7 @@
       \field{labeltitlesource}{title}
       \field{booktitle}{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}
       \field{month}{8}
-      \field{series}{KDD ’16}
+      \field{series}{KDD '16}
       \field{title}{XGBoost: A Scalable Tree Boosting System}
       \field{year}{2016}
       \field{pages}{785\bibrangedash 794}

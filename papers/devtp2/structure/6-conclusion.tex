@@ -1,9 +1,0 @@
-\section{Conclusion}
-
-In this study, we implemented and evaluated three prominent classes of generative models, Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), and Denoising Diffusion Probabilistic Models (DDPMs), on the BloodMNIST dataset. Each model was trained under consistent conditions and assessed using both qualitative visualizations and the Fréchet Inception Distance (FID) metric.
-
-The results revealed clear differences in performance. The VAE produced smooth but blurry reconstructions due to its probabilistic decoder. Diffusion models failed to produce visually coherent images, resulting in noisy outputs that barely resemble blood cells. In contrast, GANs achieved the best visual quality, generating diverse and realistic samples that closely match real data.
-
-These observations align with the FID scores reported in Table~\ref{tab:fid-scores}, where GANs obtained the lowest value (180.57), outperforming both VAEs (201.73) and diffusion models (423.70). This demonstrates the effectiveness of adversarial training for modeling complex biomedical structures.
-
-Overall, GANs offer the best balance of fidelity and diversity for blood cell image synthesis in this context. Future work may explore hybrid or conditional architectures to further improve control over generated samples and class specificity.

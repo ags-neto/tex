@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  3 JUN 2025 16:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  6 JUN 2025 22:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1221,7 +1221,7 @@ Package biblatex Warning: Biber reported the following issues
 )
 Package biblatex Info: Reference section=0 on input line 173.
 Package biblatex Info: Reference segment=0 on input line 173.
-<images/cover.pdf, id=175, 597.432pt x 845.07718pt>
+<images/cover.pdf, id=171, 597.432pt x 845.07718pt>
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf>
 Package pdftex.def Info: images/cover.pdf  used on input line 177.
@@ -1230,7 +1230,7 @@ File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf>
 Package pdftex.def Info: images/cover.pdf  used on input line 177.
 (pdftex.def)             Requested size: 597.43054pt x 845.07512pt.
-<images/cover.pdf, id=178, page=1, 597.432pt x 845.07718pt>
+<images/cover.pdf, id=174, page=1, 597.432pt x 845.07718pt>
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
 Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
@@ -1257,7 +1257,7 @@ Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
  <./images/cover.pdf>] (./misc/title_page.tex [2
 
 ]
-<images/UC_logos/UC_V_FundoClaro-negro.png, id=204, 1672.2475pt x 1676.2625pt>
+<images/UC_logos/UC_V_FundoClaro-negro.png, id=200, 1672.2475pt x 1676.2625pt>
 File: images/UC_logos/UC_V_FundoClaro-negro.png Graphic file (type png)
 <use images/UC_logos/UC_V_FundoClaro-negro.png>
 Package pdftex.def Info: images/UC_logos/UC_V_FundoClaro-negro.png  used on input line 4.
@@ -1387,7 +1387,10 @@ Overfull \hbox (1.175pt too wide) has occurred while \output is active
  [] [] [] [] [] [] 
  []
 
-[9] [10] [11] [12] [13] [14] [15] [16] [17] [18]
+[9] [10] [11] [12] [13] [14] [15] [16] [17]
+Underfull \vbox (badness 1097) has occurred while \output is active []
+
+ [18]
 Underfull \vbox (badness 2951) has occurred while \output is active []
 
  [19]) (./chapters/3-methodology.tex [20]
@@ -1396,12 +1399,12 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 12
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<images/mos_train_set.pdf, id=784, 1429.59094pt x 1072.005pt>
+<images/mos_train_set.pdf, id=781, 1429.59094pt x 1072.005pt>
 File: images/mos_train_set.pdf Graphic file (type pdf)
 <use images/mos_train_set.pdf>
 Package pdftex.def Info: images/mos_train_set.pdf  used on input line 25.
 (pdftex.def)             Requested size: 345.98302pt x 259.44563pt.
-<images/mos_test_set.pdf, id=785, 357.58594pt x 1072.005pt>
+<images/mos_test_set.pdf, id=782, 357.58594pt x 1072.005pt>
 File: images/mos_test_set.pdf Graphic file (type pdf)
 <use images/mos_test_set.pdf>
 Package pdftex.def Info: images/mos_test_set.pdf  used on input line 31.
@@ -1409,72 +1412,72 @@ Package pdftex.def Info: images/mos_test_set.pdf  used on input line 31.
  [21
 
 ]
-<images/005_StegaStamp_1.4.jpg, id=801, 1355.0625pt x 1355.0625pt>
+<images/005_StegaStamp_1.4.jpg, id=798, 1355.0625pt x 1355.0625pt>
 File: images/005_StegaStamp_1.4.jpg Graphic file (type jpg)
 <use images/005_StegaStamp_1.4.jpg>
 Package pdftex.def Info: images/005_StegaStamp_1.4.jpg  used on input line 50.
 (pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_CodeFace_1.4.jpg, id=802, 1355.0625pt x 1355.0625pt>
+<images/005_CodeFace_1.4.jpg, id=799, 1355.0625pt x 1355.0625pt>
 File: images/005_CodeFace_1.4.jpg Graphic file (type jpg)
 <use images/005_CodeFace_1.4.jpg>
 Package pdftex.def Info: images/005_CodeFace_1.4.jpg  used on input line 56.
 (pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_RiemStega_1.4.jpg, id=803, 1355.0625pt x 1355.0625pt>
+<images/005_RiemStega_1.4.jpg, id=800, 1355.0625pt x 1355.0625pt>
 File: images/005_RiemStega_1.4.jpg Graphic file (type jpg)
 <use images/005_RiemStega_1.4.jpg>
 Package pdftex.def Info: images/005_RiemStega_1.4.jpg  used on input line 62.
 (pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_StampOne_1.4.jpg, id=804, 1355.0625pt x 1355.0625pt>
+<images/005_StampOne_1.4.jpg, id=801, 1355.0625pt x 1355.0625pt>
 File: images/005_StampOne_1.4.jpg Graphic file (type jpg)
 <use images/005_StampOne_1.4.jpg>
 Package pdftex.def Info: images/005_StampOne_1.4.jpg  used on input line 68.
 (pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
  [22 <./images/mos_train_set.pdf> <./images/mos_test_set.pdf>]
-<images/db_conceptual.png, id=830, 1217.54875pt x 936.49875pt>
+<images/db_conceptual.png, id=827, 1217.54875pt x 936.49875pt>
 File: images/db_conceptual.png Graphic file (type png)
 <use images/db_conceptual.png>
 Package pdftex.def Info: images/db_conceptual.png  used on input line 78.
 (pdftex.def)             Requested size: 364.19667pt x 280.12299pt.
-<images/db_physical.png, id=831, 1251.67625pt x 959.585pt>
+<images/db_physical.png, id=828, 1251.67625pt x 959.585pt>
 File: images/db_physical.png Graphic file (type png)
 <use images/db_physical.png>
 Package pdftex.def Info: images/db_physical.png  used on input line 84.
 (pdftex.def)             Requested size: 364.19667pt x 279.20961pt.
-<images/webapp_test.png, id=835, 656.4525pt x 718.685pt>
+<images/webapp_test.png, id=832, 656.4525pt x 718.685pt>
 File: images/webapp_test.png Graphic file (type png)
 <use images/webapp_test.png>
 Package pdftex.def Info: images/webapp_test.png  used on input line 94.
 (pdftex.def)             Requested size: 145.68144pt x 159.49294pt.
  [23 <./images/005_StegaStamp_1.4.jpg (PNG copy)> <./images/005_CodeFace_1.4.jpg (PNG copy)> <./images/005_RiemStega_1.4.jpg (PNG copy)> <./images/005_StampOne_1.4.jpg>] [24 <./images/db_conceptual.png> <./images/db_physical.png>] [25 <./images/webapp_test.png>]
-<images/mos_vs_iqa_grid.pdf, id=859, 1156.32pt x 1734.48pt>
+<images/mos_vs_iqa_grid.pdf, id=856, 1156.32pt x 1734.48pt>
 File: images/mos_vs_iqa_grid.pdf Graphic file (type pdf)
 <use images/mos_vs_iqa_grid.pdf>
 Package pdftex.def Info: images/mos_vs_iqa_grid.pdf  used on input line 127.
 (pdftex.def)             Requested size: 409.71692pt x 614.56699pt.
  [26] [27 <./images/mos_vs_iqa_grid.pdf>]
-<images/variance.pdf, id=969, 505.89pt x 361.35pt>
+<images/variance.pdf, id=966, 505.89pt x 361.35pt>
 File: images/variance.pdf Graphic file (type pdf)
 <use images/variance.pdf>
 Package pdftex.def Info: images/variance.pdf  used on input line 141.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/picard.pdf, id=970, 505.89pt x 361.35pt>
+<images/picard.pdf, id=967, 505.89pt x 361.35pt>
 File: images/picard.pdf Graphic file (type pdf)
 <use images/picard.pdf>
 Package pdftex.def Info: images/picard.pdf  used on input line 147.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
  [28 <./images/variance.pdf> <./images/picard.pdf>]) (./chapters/4-results.tex
-<images/shap_summary.png, id=1105, 578.16pt x 281.853pt>
+<images/shap_summary.png, id=1102, 578.16pt x 281.853pt>
 File: images/shap_summary.png Graphic file (type png)
 <use images/shap_summary.png>
 Package pdftex.def Info: images/shap_summary.png  used on input line 10.
 (pdftex.def)             Requested size: 318.66948pt x 155.35078pt.
  [29] [30 <./images/shap_summary.png>]
-<images/predictions_train.pdf, id=1133, 505.89pt x 361.35pt>
+<images/predictions_train.pdf, id=1130, 505.89pt x 361.35pt>
 File: images/predictions_train.pdf Graphic file (type pdf)
 <use images/predictions_train.pdf>
 Package pdftex.def Info: images/predictions_train.pdf  used on input line 42.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/predictions_test.pdf, id=1134, 505.89pt x 361.35pt>
+<images/predictions_test.pdf, id=1131, 505.89pt x 361.35pt>
 File: images/predictions_test.pdf Graphic file (type pdf)
 <use images/predictions_test.pdf>
 Package pdftex.def Info: images/predictions_test.pdf  used on input line 48.
@@ -1501,26 +1504,26 @@ Underfull \hbox (badness 1092) in paragraph at lines 247--247
 Appendix A.
 (./appendix/sample.tex) [45] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 155E871E098600D1D76B2BB78D766611;6051.
+(rerunfilecheck)             Checksum: CA2EADA74C3DE3C48AA83FAB173F66A3;5810.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
  42261 strings out of 478287
- 841541 string characters out of 5849290
+ 841542 string characters out of 5849290
  1584618 words of memory out of 5000000
- 59389 multiletter control sequences out of 15000+600000
+ 59388 multiletter control sequences out of 15000+600000
  563440 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  115i,17n,118p,1398b,2551s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{table.2.1} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (65 pages, 7706487 bytes).
+Output written on main.pdf (65 pages, 7707042 bytes).
 PDF statistics:
- 1478 PDF objects out of 1728 (max. 8388607)
- 1043 compressed objects within 11 object streams
- 288 named destinations out of 1000 (max. 500000)
- 521 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1477 PDF objects out of 1728 (max. 8388607)
+ 1042 compressed objects within 11 object streams
+ 289 named destinations out of 1000 (max. 500000)
+ 513 words of extra memory for PDF output out of 10000 (max. 10000000)
 

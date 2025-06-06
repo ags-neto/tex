@@ -294,6 +294,8 @@ In summary, full-reference IQA models span a spectrum from simple error-based me
 
 \subsection{No-Reference IQA}\label{sec:no_reference_iqa}
 
+\subsubsection{Traditional NR-IQA}\label{sec:traditional_nr_iqa}
+
 Among traditional NR-IQA techniques, PIQE~\cite{piqe2016} (Perception-based Image Quality Evaluator) and NIQE~\cite{mittal2013making} (Natural Image Quality Evaluator) are widely used due to their computational simplicity. PIQE begins by dividing the input image into non-overlapping $16 \times 16$ blocks, denoted $B_i$, and identifying distorted blocks based on edge content and local variance thresholds. For each block, it computes perceptual features using the gradient magnitude:
 \begin{equation}
 S_i = \frac{1}{|B_i|} \sum_{(x,y) \in B_i} \sqrt{ {\left( \frac{\partial I}{\partial x} \right)}^2 + {\left( \frac{\partial I}{\partial y} \right)}^2 },
@@ -317,6 +319,15 @@ from which it extracts statistical features associated with Generalized Gaussian
 \text{NIQE}(\mathbf{f}_t) = \sqrt{ {(\mathbf{f}_t - \mu_r)}^T \Sigma_r^{-1} (\mathbf{f}_t - \mu_r) }.
 \end{equation}
 This formulation enables NIQE to operate in a completely opinion-unaware and unsupervised fashion, relying solely on deviations from natural image statistics to infer perceptual quality.
+
+\subsubsection{Facial Image Quality Assessment}\label{sec:fiqa}
+
+FIQA refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic NR-IQA, FIQA does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{damer2021localfusion, best2018faceqnet}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
+
+Traditional FIQA methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{grother2003facequality}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, terhorst2022quality}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
+
+FIQA is an inherently task-dependent quality problem. Unlike general-purpose IQA, it must account for the characteristics of the recognition model and dataset. Furthermore, FIQA methods often correlate poorly with perceptual quality metrics, as an image may appear visually high-quality but remain unsuitable for matching due to pose or occlusion. This motivates the need to explore perceptually grounded IQA models tailored to face data, and to investigate how traditional metrics can be adapted, fused, or compared against biometric-specific quality indicators.
+
 
 In contrast to traditional statistical NR-IQA methods, recent approaches such as SER-FIQ~\cite{terhorst2020serfiq} (Stochastic Embedding Robustness for Face Image Quality) and MagFace~\cite{meng2021magface} adopt deep learning-based strategies tailored specifically for facial image quality. SER-FIQ builds on the intuition that high-quality facial images produce consistent embeddings under stochastic dropout perturbations, while low-quality images result in more variable and unstable representations. Given a face image, a pre-trained face recognition model (e.g., ArcFace) with dropout enabled generates $T$ stochastic embeddings $\{\mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_T\} \in \mathbb{R}^d$. The pairwise cosine similarities between these embeddings are then computed:
 \begin{equation}
@@ -343,13 +354,6 @@ In parallel, the scarcity of large-scale human-labeled datasets has motivated we
 
 These developments support the feasibility of learning perceptual quality through fusion, either via model ensembles or by generating training supervision. Our approach builds on this principle: we construct a regression-based fusion model that aggregates multiple FR-IQA scores to predict perceptual quality, using human-labeled MOS as supervision. This model is then applied to a larger unlabeled dataset to generate pseudo-MOS scores, which in turn are used to train a no-reference regressor. This hybrid full-to-no-reference framework enables scalable, perceptually grounded quality estimation even in the absence of pristine reference images.
 
-\section{Facial Image Quality assessment}\label{sec:fiqa}
-
-Facial image quality assessment (FIQA) refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic no-reference IQA, FIQA does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{damer2021localfusion, best2018faceqnet}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
-
-Traditional FIQA methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{grother2003facequality}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, terhorst2022quality}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
-
-FIQA is an inherently task-dependent quality problem. Unlike general-purpose IQA, it must account for the characteristics of the recognition model and dataset. Furthermore, FIQA methods often correlate poorly with perceptual quality metrics, as an image may appear visually high-quality but remain unsuitable for matching due to pose or occlusion. This motivates the need to explore perceptually grounded IQA models tailored to face data, and to investigate how traditional metrics can be adapted, fused, or compared against biometric-specific quality indicators.
 
 \section{Steganography}\label{sec:steganography}
 
@@ -357,7 +361,7 @@ Steganography has evolved significantly with the rise of digital media and advan
 
 However current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as MRTDs. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
 
-\subsection{Printer-proof Steganography}\label{sec:printer_proof_steganography}
+\subsection{Printer-proof Steganography}
 Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images.
 
 \subsubsection{StegaStamp}
