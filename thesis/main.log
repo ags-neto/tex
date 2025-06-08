@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  6 JUN 2025 22:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  8 JUN 2025 06:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -370,6 +370,8 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \c@LT@tables=\count303
 \c@LT@chunks=\count304
 \LT@p@ftn=\toks37
+) (/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 ) (/usr/share/texlive/texmf-dist/tex/latex/acronym/acronym.sty
 Package: acronym 2020/04/17 v1.47 Support for acronyms (Tobias Oetiker)
  (/usr/share/texlive/texmf-dist/tex/latex/bigfoot/suffix.sty
@@ -1088,30 +1090,30 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 173.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 174.
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 174.
+LaTeX Font Info:    ... okay on input line 174.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count499
@@ -1172,12 +1174,9 @@ Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 (/usr/share/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
-)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-Package hyperref Info: Link coloring ON on input line 173.
+Package hyperref Info: Link coloring ON on input line 174.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1187,9 +1186,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count505
 )
-LaTeX Info: Redefining \ref on input line 173.
-LaTeX Info: Redefining \pageref on input line 173.
-LaTeX Info: Redefining \nameref on input line 173.
+LaTeX Info: Redefining \ref on input line 174.
+LaTeX Info: Redefining \pageref on input line 174.
+LaTeX Info: Redefining \nameref on input line 174.
  (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
@@ -1219,37 +1218,37 @@ Package biblatex Warning: Biber reported the following issues
 (biblatex)                - Range field 'pages' in entry 'clapes2018apparent' is malformed, falling back to literal.
 
 )
-Package biblatex Info: Reference section=0 on input line 173.
-Package biblatex Info: Reference segment=0 on input line 173.
+Package biblatex Info: Reference section=0 on input line 174.
+Package biblatex Info: Reference segment=0 on input line 174.
 <images/cover.pdf, id=171, 597.432pt x 845.07718pt>
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf>
-Package pdftex.def Info: images/cover.pdf  used on input line 177.
+Package pdftex.def Info: images/cover.pdf  used on input line 178.
 (pdftex.def)             Requested size: 597.43054pt x 845.07512pt.
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf>
-Package pdftex.def Info: images/cover.pdf  used on input line 177.
+Package pdftex.def Info: images/cover.pdf  used on input line 178.
 (pdftex.def)             Requested size: 597.43054pt x 845.07512pt.
 <images/cover.pdf, id=174, page=1, 597.432pt x 845.07718pt>
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
-Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
+Package pdftex.def Info: images/cover.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.43054pt x 845.07512pt.
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
-Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
+Package pdftex.def Info: images/cover.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.45789pt x 845.1138pt.
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
-Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
+Package pdftex.def Info: images/cover.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.45789pt x 845.1138pt.
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
-Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
+Package pdftex.def Info: images/cover.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.45789pt x 845.1138pt.
 File: images/cover.pdf Graphic file (type pdf)
 <use images/cover.pdf, page 1>
-Package pdftex.def Info: images/cover.pdf , page1 used on input line 177.
+Package pdftex.def Info: images/cover.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.45789pt x 845.1138pt.
  [1
 
@@ -1269,11 +1268,11 @@ l.35 \end{titlepage}
                      [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/UC_logos/UC_V_FundoClaro-negro.png>])pdfTeX warning (ext4): destination with the same identifier (name{page.ii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.187 \chapter
+l.188 \chapter
               *{Acknowledgments} [2
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 187.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 188.
  (/usr/share/texmf/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (./misc/acknowledgements.tex) [3] [4
@@ -1283,33 +1282,33 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ] (./chapters/0-abstract.tex) [7] [8
 
 ]
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 212.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 213.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 212.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 213.
  (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 212.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 213.
  (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 212.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 213.
  (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 212.
+(Font)              <10> on input line 213.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 212.
+(Font)              <7> on input line 213.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 212.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 212.
+(Font)              <5> on input line 213.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 213.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 212.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 213.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [9] [10
@@ -1352,157 +1351,160 @@ Underfull \vbox (badness 5119) has occurred while \output is active []
 Chapter 2.
 [5
 
-] [6]
-Overfull \hbox (1.175pt too wide) in alignment at lines 49--54
+] [6] [7]
+Overfull \hbox (61.53798pt too wide) in alignment at lines 49--54
  [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.175pt too wide) in alignment at lines 54--59
+Overfull \hbox (61.53798pt too wide) in alignment at lines 54--59
  [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.175pt too wide) in alignment at lines 59--61
+Overfull \hbox (61.53798pt too wide) in alignment at lines 59--61
  [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.175pt too wide) in alignment at lines 61--103
+Overfull \hbox (61.53798pt too wide) in alignment at lines 61--115
  [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1.175pt too wide) has occurred while \output is active
+Overfull \hbox (61.53798pt too wide) has occurred while \output is active
  [] [] [] [] [] [] 
  []
 
-[7]
-Overfull \hbox (1.175pt too wide) has occurred while \output is active
+[8
+
+]
+Overfull \hbox (61.53798pt too wide) has occurred while \output is active
  [] [] [] [] [] [] 
  []
 
-[8]
-Overfull \hbox (1.175pt too wide) has occurred while \output is active
+[9]
+Overfull \hbox (61.53798pt too wide) has occurred while \output is active
  [] [] [] [] [] [] 
  []
 
-[9] [10] [11] [12] [13] [14] [15] [16] [17]
-Underfull \vbox (badness 1097) has occurred while \output is active []
+[10] [11
 
- [18]
-Underfull \vbox (badness 2951) has occurred while \output is active []
+] [12] [13] [14] [15] [16]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [19]) (./chapters/3-methodology.tex [20]
+ [17] [18] [19] [20] [21]) (./chapters/3-methodology.tex [22]
 Chapter 3.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 12.
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<images/mos_train_set.pdf, id=781, 1429.59094pt x 1072.005pt>
+<images/mos_train_set.pdf, id=794, 1429.59094pt x 1072.005pt>
 File: images/mos_train_set.pdf Graphic file (type pdf)
 <use images/mos_train_set.pdf>
 Package pdftex.def Info: images/mos_train_set.pdf  used on input line 25.
 (pdftex.def)             Requested size: 345.98302pt x 259.44563pt.
-<images/mos_test_set.pdf, id=782, 357.58594pt x 1072.005pt>
+<images/mos_test_set.pdf, id=795, 357.58594pt x 1072.005pt>
 File: images/mos_test_set.pdf Graphic file (type pdf)
 <use images/mos_test_set.pdf>
 Package pdftex.def Info: images/mos_test_set.pdf  used on input line 31.
 (pdftex.def)             Requested size: 86.49748pt x 259.31477pt.
- [21
-
-]
-<images/005_StegaStamp_1.4.jpg, id=798, 1355.0625pt x 1355.0625pt>
+<images/005_StegaStamp_1.4.jpg, id=797, 1355.0625pt x 1355.0625pt>
 File: images/005_StegaStamp_1.4.jpg Graphic file (type jpg)
 <use images/005_StegaStamp_1.4.jpg>
-Package pdftex.def Info: images/005_StegaStamp_1.4.jpg  used on input line 50.
-(pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_CodeFace_1.4.jpg, id=799, 1355.0625pt x 1355.0625pt>
+Package pdftex.def Info: images/005_StegaStamp_1.4.jpg  used on input line 43.
+(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
+<images/005_CodeFace_1.4.jpg, id=798, 1355.0625pt x 1355.0625pt>
 File: images/005_CodeFace_1.4.jpg Graphic file (type jpg)
 <use images/005_CodeFace_1.4.jpg>
-Package pdftex.def Info: images/005_CodeFace_1.4.jpg  used on input line 56.
-(pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_RiemStega_1.4.jpg, id=800, 1355.0625pt x 1355.0625pt>
+Package pdftex.def Info: images/005_CodeFace_1.4.jpg  used on input line 49.
+(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
+<images/005_RiemStega_1.4.jpg, id=799, 1355.0625pt x 1355.0625pt>
 File: images/005_RiemStega_1.4.jpg Graphic file (type jpg)
 <use images/005_RiemStega_1.4.jpg>
-Package pdftex.def Info: images/005_RiemStega_1.4.jpg  used on input line 62.
-(pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
-<images/005_StampOne_1.4.jpg, id=801, 1355.0625pt x 1355.0625pt>
+Package pdftex.def Info: images/005_RiemStega_1.4.jpg  used on input line 55.
+(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
+<images/005_StampOne_1.4.jpg, id=800, 1355.0625pt x 1355.0625pt>
 File: images/005_StampOne_1.4.jpg Graphic file (type jpg)
 <use images/005_StampOne_1.4.jpg>
-Package pdftex.def Info: images/005_StampOne_1.4.jpg  used on input line 68.
-(pdftex.def)             Requested size: 91.04742pt x 91.0389pt.
- [22 <./images/mos_train_set.pdf> <./images/mos_test_set.pdf>]
-<images/db_conceptual.png, id=827, 1217.54875pt x 936.49875pt>
-File: images/db_conceptual.png Graphic file (type png)
-<use images/db_conceptual.png>
-Package pdftex.def Info: images/db_conceptual.png  used on input line 78.
-(pdftex.def)             Requested size: 364.19667pt x 280.12299pt.
-<images/db_physical.png, id=828, 1251.67625pt x 959.585pt>
-File: images/db_physical.png Graphic file (type png)
-<use images/db_physical.png>
-Package pdftex.def Info: images/db_physical.png  used on input line 84.
-(pdftex.def)             Requested size: 364.19667pt x 279.20961pt.
-<images/webapp_test.png, id=832, 656.4525pt x 718.685pt>
+Package pdftex.def Info: images/005_StampOne_1.4.jpg  used on input line 61.
+(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
+ [23
+
+] [24 <./images/mos_train_set.pdf> <./images/mos_test_set.pdf> <./images/005_StegaStamp_1.4.jpg (PNG copy)> <./images/005_CodeFace_1.4.jpg (PNG copy)> <./images/005_RiemStega_1.4.jpg (PNG copy)> <./images/005_StampOne_1.4.jpg>]
+<images/webapp_test.png, id=836, 656.4525pt x 718.685pt>
 File: images/webapp_test.png Graphic file (type png)
 <use images/webapp_test.png>
-Package pdftex.def Info: images/webapp_test.png  used on input line 94.
+Package pdftex.def Info: images/webapp_test.png  used on input line 75.
 (pdftex.def)             Requested size: 145.68144pt x 159.49294pt.
- [23 <./images/005_StegaStamp_1.4.jpg (PNG copy)> <./images/005_CodeFace_1.4.jpg (PNG copy)> <./images/005_RiemStega_1.4.jpg (PNG copy)> <./images/005_StampOne_1.4.jpg>] [24 <./images/db_conceptual.png> <./images/db_physical.png>] [25 <./images/webapp_test.png>]
-<images/mos_vs_iqa_grid.pdf, id=856, 1156.32pt x 1734.48pt>
+ [25
+
+ <./images/webapp_test.png>]
+<images/db_conceptual.png, id=844, 1217.54875pt x 936.49875pt>
+File: images/db_conceptual.png Graphic file (type png)
+<use images/db_conceptual.png>
+Package pdftex.def Info: images/db_conceptual.png  used on input line 87.
+(pdftex.def)             Requested size: 364.19667pt x 280.12299pt.
+<images/db_physical.png, id=845, 1251.67625pt x 959.585pt>
+File: images/db_physical.png Graphic file (type png)
+<use images/db_physical.png>
+Package pdftex.def Info: images/db_physical.png  used on input line 93.
+(pdftex.def)             Requested size: 364.19667pt x 279.20961pt.
+ [26 <./images/db_conceptual.png>] [27 <./images/db_physical.png>]
+<images/mos_vs_iqa_grid.pdf, id=863, 1156.32pt x 1734.48pt>
 File: images/mos_vs_iqa_grid.pdf Graphic file (type pdf)
 <use images/mos_vs_iqa_grid.pdf>
 Package pdftex.def Info: images/mos_vs_iqa_grid.pdf  used on input line 127.
 (pdftex.def)             Requested size: 409.71692pt x 614.56699pt.
- [26] [27 <./images/mos_vs_iqa_grid.pdf>]
-<images/variance.pdf, id=966, 505.89pt x 361.35pt>
+ [28] [29 <./images/mos_vs_iqa_grid.pdf>]
+<images/variance.pdf, id=974, 505.89pt x 361.35pt>
 File: images/variance.pdf Graphic file (type pdf)
 <use images/variance.pdf>
 Package pdftex.def Info: images/variance.pdf  used on input line 141.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/picard.pdf, id=967, 505.89pt x 361.35pt>
+<images/picard.pdf, id=975, 505.89pt x 361.35pt>
 File: images/picard.pdf Graphic file (type pdf)
 <use images/picard.pdf>
 Package pdftex.def Info: images/picard.pdf  used on input line 147.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
- [28 <./images/variance.pdf> <./images/picard.pdf>]) (./chapters/4-results.tex
-<images/shap_summary.png, id=1102, 578.16pt x 281.853pt>
+ [30 <./images/variance.pdf> <./images/picard.pdf>]) (./chapters/4-results.tex
+<images/shap_summary.png, id=1110, 578.16pt x 281.853pt>
 File: images/shap_summary.png Graphic file (type png)
 <use images/shap_summary.png>
 Package pdftex.def Info: images/shap_summary.png  used on input line 10.
 (pdftex.def)             Requested size: 318.66948pt x 155.35078pt.
- [29] [30 <./images/shap_summary.png>]
-<images/predictions_train.pdf, id=1130, 505.89pt x 361.35pt>
+ [31] [32 <./images/shap_summary.png>]
+<images/predictions_train.pdf, id=1137, 505.89pt x 361.35pt>
 File: images/predictions_train.pdf Graphic file (type pdf)
 <use images/predictions_train.pdf>
 Package pdftex.def Info: images/predictions_train.pdf  used on input line 42.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/predictions_test.pdf, id=1131, 505.89pt x 361.35pt>
+<images/predictions_test.pdf, id=1138, 505.89pt x 361.35pt>
 File: images/predictions_test.pdf Graphic file (type pdf)
 <use images/predictions_test.pdf>
 Package pdftex.def Info: images/predictions_test.pdf  used on input line 48.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-) (./chapters/5-conclusion.tex [31 <./images/predictions_train.pdf> <./images/predictions_test.pdf>]) [32]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 247.
+) (./chapters/5-conclusion.tex [33 <./images/predictions_train.pdf> <./images/predictions_test.pdf>]) [34]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 248.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [33
+) [35
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 247--247
+Underfull \hbox (badness 10000) in paragraph at lines 248--248
 []\T1/lmr/m/it/10.95 Amazon me-chan-i-cal turk\T1/lmr/m/n/10.95 , Ac-cessed: Aug. 20, 2019. [On-line]. Avail-able:
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 247--247
+Underfull \hbox (badness 1092) in paragraph at lines 248--248
 []\T1/lmr/m/n/10.95 Q. Li and Z. Wang, ^^P  Reduced-reference im-age qual-ity as-sess-ment us-ing di-vi-sive
  []
 
-[34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44
+[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46
 
 ]
 Appendix A.
-(./appendix/sample.tex) [45] (./main.aux)
+(./appendix/sample.tex) [47] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: CA2EADA74C3DE3C48AA83FAB173F66A3;5810.
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1510,20 +1512,20 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42261 strings out of 478287
- 841542 string characters out of 5849290
- 1584618 words of memory out of 5000000
- 59388 multiletter control sequences out of 15000+600000
+ 42277 strings out of 478287
+ 841773 string characters out of 5849290
+ 1586198 words of memory out of 5000000
+ 59403 multiletter control sequences out of 15000+600000
  563440 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  115i,17n,118p,1398b,2551s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{table.2.1} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (65 pages, 7707042 bytes).
+Output written on main.pdf (67 pages, 7709085 bytes).
 PDF statistics:
- 1477 PDF objects out of 1728 (max. 8388607)
- 1042 compressed objects within 11 object streams
- 289 named destinations out of 1000 (max. 500000)
+ 1485 PDF objects out of 1728 (max. 8388607)
+ 1048 compressed objects within 11 object streams
+ 290 named destinations out of 1000 (max. 500000)
  513 words of extra memory for PDF output out of 10000 (max. 10000000)
 

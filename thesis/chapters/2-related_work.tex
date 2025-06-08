@@ -45,11 +45,11 @@ These metrics can be further characterized by the domain in which they operate a
 The spectral representation, or color spectrum, denotes the channel configuration used by the metric. Many classical approaches focus solely on the luminance channel (Y), which aligns closely with human perception~\cite{sheikh_vif_2006, chandler2007vsnr}. Others compute scores over grayscale or full RGB images, as seen in FSIM~\cite{zhang2011fsim} and its color extension FSIMc. Some metrics operate in alternative color spaces such as YCbCr or CIELab~\cite{Wang2002PQM}, while hyperspectral or multiband metrics process dozens of spectral channels, particularly in remote sensing applications~\cite{Zhou1998SCC,Alparone2008QNR}. Table~\ref{tab:fr_iqa_metrics} summarizes the 40 IQA metrics considered in this work, detailing their reference type, computational domain, publication year, number of tested databases, and spectral characteristics.
 
 
-
+\begin{landscape}
 \begin{longtable}{l l l c c l}
-    \caption{Summary of the 41 IQA metrics used}\label{tab:fr_iqa_metrics}\\
+    \caption{Summary of the 40 IQA metrics used}\label{tab:fr_iqa_metrics}\\
     \hline % chktex 44
-    \textbf{Metric} & \textbf{Type} & \textbf{Domain} & \textbf{Year} & \textbf{Tested Databases} & \textbf{Spectrum}\\
+    \textbf{Metric} & \textbf{Type} & \textbf{Domain} & \textbf{Color Spectrum} & \textbf{Year} & \textbf{Tested DBs}\\
     \hline % chktex 44
     \endfirsthead % chktex 1
     \multicolumn{6}{r}{\small\itshape(continuation)}\\ % chktex 6
@@ -59,48 +59,61 @@ The spectral representation, or color spectrum, denotes the channel configuratio
     \endhead % chktex 1
     \hline % chktex 44
     \endfoot % chktex 1
-    
-    C-SSIM~\cite{Hassan2017CSSIM}          & FR   & spatial             & 2017 & 2    & RGB \\
-    CW-SSIM~\cite{Sampat2009CWSSIM}        & FR   & complex wavelet     & 2009 & 1    & grayscale \\
-    DISTS~\cite{Ding2020DISTS}             & FR   & deep features       & 2020 & 4    & RGB \\
-    DSSIM~\cite{Wang2004SSIM}              & FR   & spatial             & 2004 & ---  & grayscale \\
-    ERGAS~\cite{Ranchin2000ERGAS}          & FR   & spectral            & 2000 & 1    & multi-band \\
-    ESIM (ESSIM)~\cite{Zhang2013ESSIM}     & FR   & spatial (edges)     & 2013 & 2    & grayscale \\
-    FIQ (IFC)~\cite{Sheikh2005IFC}         & FR   & wavelet             & 2005 & 1    & Y (luma) \\
-    FSIM~\cite{Zhang2011FSIM}              & FR   & spatial             & 2011 & 3    & grayscale \\
-    FSIMc~\cite{Zhang2011FSIM}             & FR   & spatial             & 2011 & 3    & RGB \\
-    G-SSIM~\cite{Liu2012GSSIM}             & FR   & spatial (gradients) & 2012 & 2    & grayscale \\
-    GMS + CMS~\cite{Zhang2011FSIM}         & FR   & spatial             & 2011 & 3    & RGB \\
-    GMSD~\cite{Xue2014GMSD}                & FR   & spatial (gradients) & 2014 & 3    & grayscale \\
-    IW-SSIM~\cite{Li2011IWSSIM}            & FR   & spatial             & 2011 & 4    & grayscale \\
-    L-SSIM~\cite{Wang2004SSIM}             & FR   & spatial             & 2004 & ---  & grayscale \\
-    LPIPS-Alex~\cite{Zhang2018LPIPS}       & FR   & deep features       & 2018 & 4    & RGB \\
-    LPIPS-Squeeze~\cite{Zhang2018LPIPS}    & FR   & deep features       & 2018 & 4    & RGB \\
-    LPIPS-VGG~\cite{Zhang2018LPIPS}        & FR   & deep features       & 2018 & 4    & RGB \\
-    MAE~\cite{Gonzalez2008DIP}             & FR   & spatial             & N/A  & ---  & grayscale \\
-    MS-FSIM~\cite{Zhang2011FSIM}           & FR   & spatial             & 2011 & 3    & grayscale \\
-    MS-SSIM~\cite{Wang2003MSSSIM}          & FR   & spatial             & 2003 & 1    & grayscale \\
-    MSE~\cite{Gonzalez2008DIP}             & FR   & spatial             & N/A  & ---  & grayscale \\
-    PQM~\cite{Wang2002PQM}                 & NR   & spatial             & 2002 & 1    & Y (JPEG) \\
-    PSNR~\cite{Gonzalez2008DIP}            & FR   & spatial             & N/A  & ---  & grayscale \\
-    PSNR-B~\cite{Yim2011PSNRB}             & FR   & spatial             & 2011 & 1    & Y (luma) \\
-    R-SSIM~\cite{Malpica2008RSSIM}         & FR   & spatial (depth)     & 2009 & 1    & depth map \\
-    RMSE~\cite{Gonzalez2008DIP}            & FR   & spatial             & N/A  & ---  & grayscale \\
-    SAM~\cite{Kruse1993SAM}                & FR   & spectral            & 1993 & 1    & multi-band \\
-    SCC~\cite{Zhou1998SCC}                 & FR   & spectral/spatial    & 1998 & 1    & multi-band \\
-    SNR~\cite{Gonzalez2008DIP}             & FR   & spatial             & N/A  & ---  & grayscale \\
-    SPIQ~\cite{Chen2022SPIQ}               & NR   & deep features       & 2022 & 3    & RGB \\
-    SR-SIM~\cite{Zhang2012SRSIM}           & FR   & spatial             & 2012 & 3    & RGB \\
-    SSIM~\cite{Wang2004SSIM}               & FR   & spatial             & 2004 & 1    & grayscale \\
-    UQI~\cite{Wang2002UQI}                 & FR   & spatial             & 2002 & 1    & grayscale \\
-    VIF~\cite{Sheikh2006VIF}               & FR   & wavelet             & 2006 & 1    & Y (luma) \\
-    VIFc~\cite{Sheikh2006VIF}              & FR   & wavelet             & 2006 & 1    & Y/CbCr \\
-    VIFp~\cite{Sheikh2005VIFp}             & FR   & pixel-domain        & 2005 & 1    & Y (luma) \\
-    VSNR~\cite{chandler2007vsnr}           & FR   & wavelet             & 2007 & 1    & Y (luma) \\
-    WaDIQaM~\cite{Bosse2018WaDIQaM}        & FR   & deep features       & 2018 & 3    & RGB \\
-    W-SSIM~\cite{Engelke2011WSSIM}         & FR   & spatial             & 2011 & 1    & grayscale \\
-    $D_{\lambda}$ (QNR)~\cite{Alparone2008QNR} & FR & spectral/spatial  & 2008 & 1    & multi-band \\
+
+    MSE~\cite{Gonzalez2008DIP}, Mean Squared Error                      & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    MAE~\cite{Gonzalez2008DIP}, Mean Absolute Error                     & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    RMSE~\cite{Gonzalez2008DIP}, Root Mean Squared Error                & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    PSNR~\cite{Gonzalez2008DIP}, Peak Signal-to-Noise Ratio             & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
+    PSNR-B~\cite{}, Peak Signal-to-Noise Ratio with Blocking Effect     & Error-based & Spatial        & Grayscale / RGB & 2008 & Few  \\
+    SNR~\cite{}, Signal-to-Noise Ratio                                  & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
+    ERGAS~\cite{}, Erreur Relative Globale Adimensionnelle de Synthèse  & Error-based & Remote sensing & Multiband       & 2000 & Few  \\
+    $D_{\lambda}$~\cite{},Spectral Distortion, QNR component            & Error-based & Remote sensing & Multiband       & 2004 & Few  \\
+    SAM~\cite{}, Spectral Angle Mapper                                  & Error-based & Remote sensing & Multiband       & 1993 & Few  \\
+    SCC~\cite{}, Spatial Correlation Coefficient                        & Error-based & Spatial        & Grayscale / RGB & 1904 & Many \\
+
+
+    C-SSIM~\cite{Hassan2017CSSIM}              & FR   & spatial             & 2017 & 2    & RGB \\
+    CW-SSIM~\cite{Sampat2009CWSSIM}            & FR   & complex wavelet     & 2009 & 1    & grayscale \\
+    DISTS~\cite{Ding2020DISTS}                 & FR   & deep features       & 2020 & 4    & RGB \\
+    DSSIM~\cite{Wang2004SSIM}                  & FR   & spatial             & 2004 & ---  & grayscale \\
+    ERGAS~\cite{Ranchin2000ERGAS}              & FR   & spectral            & 2000 & 1    & multi-band \\
+    ESIM (ESSIM)~\cite{Zhang2013ESSIM}         & FR   & spatial (edges)     & 2013 & 2    & grayscale \\
+    FIQ (IFC)~\cite{Sheikh2005IFC}             & FR   & wavelet             & 2005 & 1    & Y (luma) \\
+    FSIM~\cite{Zhang2011FSIM}                  & FR   & spatial             & 2011 & 3    & grayscale \\
+    FSIMc~\cite{Zhang2011FSIM}                 & FR   & spatial             & 2011 & 3    & RGB \\
+    G-SSIM~\cite{Liu2012GSSIM}                 & FR   & spatial (gradients) & 2012 & 2    & grayscale \\
+    GMS + CMS~\cite{Zhang2011FSIM}             & FR   & spatial             & 2011 & 3    & RGB \\
+    GMSD~\cite{Xue2014GMSD}                    & FR   & spatial (gradients) & 2014 & 3    & grayscale \\
+    IW-SSIM~\cite{Li2011IWSSIM}                & FR   & spatial             & 2011 & 4    & grayscale \\
+    L-SSIM~\cite{Wang2004SSIM}                 & FR   & spatial             & 2004 & ---  & grayscale \\
+    LPIPS-Alex~\cite{Zhang2018LPIPS}           & FR   & deep features       & 2018 & 4    & RGB \\
+    LPIPS-Squeeze~\cite{Zhang2018LPIPS}        & FR   & deep features       & 2018 & 4    & RGB \\
+    LPIPS-VGG~\cite{Zhang2018LPIPS}            & FR   & deep features       & 2018 & 4    & RGB \\
+    MAE~\cite{Gonzalez2008DIP}                 & FR   & spatial             & N/A  & ---  & grayscale \\
+    PSNR~\cite{Gonzalez2008DIP}                & FR   & spatial             & N/A  & ---  & grayscale \\
+    PSNR-B~\cite{Yim2011PSNRB}                 & FR   & spatial             & 2011 & 2    & grayscale \\
+    SNR~\cite{Gonzalez2008DIP}                 & FR   & spatial             & N/A  & ---  & grayscale \\
+    SAM~\cite{Kruse1993SAM}                    & FR   & spectral            & 1993 & 1    & multi-band \\
+    SCC~\cite{Zhou1998SCC}                     & FR   & spectral            & 1998 & 1    & multi-band \\
+    R-SSIM~\cite{zhang2011fsim}                & FR   & spatial             & 2012 & 3    & RGB \\
+    RMSE~\cite{Gonzalez2008DIP}                & FR   & spatial             & N/A  & ---  & grayscale \\
+    PSM~\cite{Wang2002PQM}                     & FR   & spatial             & 2002 & 1    & grayscale \\
+    MS-FSIM~\cite{Zhang2011FSIM}               & FR   & spatial             & 2011 & 3    & grayscale \\
+    MS-SSIM~\cite{Wang2003MSSSIM}              & FR   & spatial             & 2003 & 1    & grayscale \\
+    MSE~\cite{Gonzalez2008DIP}                 & FR   & spatial             & N/A  & ---  & grayscale \\
+    SPIQ~\cite{Chen2022SPIQ}                   & NR   & deep features       & 2022 & 3    & RGB \\
+    SR-SIM~\cite{Zhang2012SRSIM}               & FR   & spatial             & 2012 & 3    & RGB \\
+    SSIM~\cite{Wang2004SSIM}                   & FR   & spatial             & 2004 & 1    & grayscale \\
+    UQI~\cite{Wang2002UQI}                     & FR   & spatial             & 2002 & 1    & grayscale \\
+    VIF~\cite{Sheikh2006VIF}                   & FR   & wavelet             & 2006 & 1    & Y (luma) \\
+    VIFc~\cite{Sheikh2006VIF}                  & FR   & wavelet             & 2006 & 1    & Y/CbCr \\
+    VIFp~\cite{Sheikh2005VIFp}                 & FR   & pixel-domain        & 2005 & 1    & Y (luma) \\
+    VSNR~\cite{chandler2007vsnr}               & FR   & wavelet             & 2007 & 1    & Y (luma) \\
+    WaDIQaM~\cite{Bosse2018WaDIQaM}            & FR   & deep features       & 2018 & 3    & RGB \\
+    W-SSIM~\cite{Engelke2011WSSIM}             & FR   & spatial             & 2011 & 1    & grayscale \\
+    $D_{\lambda}$ (QNR)~\cite{Alparone2008QNR} & FR   & spectral/spatial    & 2008 & 1    & multi-band \\
 \end{longtable}
+\end{landscape}
 
 \subsection{Full-Reference IQA}\label{sec:full_reference_iqa}
 
@@ -362,7 +375,7 @@ Steganography has evolved significantly with the rise of digital media and advan
 However current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as MRTDs. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
 
 \subsection{Printer-proof Steganography}
-Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images.
+Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on Generative Adversarial Networks (GANs)~\cite{gans2018} to encode and decode information, we can obtain various results depending on the method used.
 
 \subsubsection{StegaStamp}
 StegaStamp~\cite{stegastamp2020} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite these degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual LPIPS loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.

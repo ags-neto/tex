@@ -1,9 +1,9 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of the 41 IQA metrics used\relax }}{7}{table.2.1}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Summary of the 40 IQA metrics used\relax }}{8}{table.2.1}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces ANOVA~\blx@tocontentsinit {0}\cite {ross2017one} results for observer and image attributes. Before debiasing, several factors show statistically significant effects on MOS, p-value $< 0.05$.\spacefactor \@m {} After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.\relax }}{26}{table.caption.24}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Performance of our Fusion metric and the selected FR-IQA metrics. Higher PLCC and SRCC indicates better correlation with MOS.\spacefactor \@m {} Lower MSE and MAE indicate more accurate quality estimates.\relax }}{30}{table.caption.28}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Performance of our pMOS-Face compared to standard NR-IQA baselines.\relax }}{31}{table.caption.30}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces ANOVA~\blx@tocontentsinit {0}\cite {ross2017one} results for observer and image attributes. Before debiasing, several factors show statistically significant effects on MOS, p-value $< 0.05$.\spacefactor \@m {} After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.\relax }}{28}{table.caption.24}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Performance of our Fusion metric and the selected FR-IQA metrics. Higher PLCC and SRCC indicates better correlation with MOS.\spacefactor \@m {} Lower MSE and MAE indicate more accurate quality estimates.\relax }}{32}{table.caption.28}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Performance of our pMOS-Face compared to standard NR-IQA baselines.\relax }}{33}{table.caption.30}%
 \addvspace {10\p@ }

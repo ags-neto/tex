@@ -2,9 +2,9 @@
 
 \section{Dataset}
 
-Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102 adult faces, $1350 \times 1350$ pixels in full colour, frontal ICAO-compliant facial images. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well.
+Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well.
 
-Each image was encoded using four printer-proof steganographic methods, described ahead, each applied at nine different intensity levels, yielding a total of 3,672 distorted images.
+Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
 
 The dataset was partitioned into four subsets, as follows:
 
@@ -20,80 +20,80 @@ The dataset was partitioned into four subsets, as follows:
 
 \begin{figure}
     \centering
-    \begin{minipage}[t]{0.76\textwidth}
+    \begin{subfigure}[t]{0.76\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/mos_train_set.pdf}\\
-        \textbf{(a)} MOS train set % chktex 10
-    \end{minipage}
+        \caption{MOS train set}\label{fig:mos_set_train}
+    \end{subfigure}
     \hfill
-    \begin{minipage}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.19\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/mos_test_set.pdf}\\
-        \textbf{(b)} MOS test set % chktex 10
-    \end{minipage}
+        \caption{MOS test set}\label{fig:mos_set_test}
+    \end{subfigure}
     \caption{Reference images from the MOS set, comprising the selected subjects from the FRLL dataset.}\label{fig:mos_set}
 \end{figure}
 
-The printer-proof steganography methods used were based on Generative Adversarial Networks (GANs)~\cite{gans2018} to encode and decode information, illustrated in Fig.~\ref{fig:steganography}, we can obtain various results depending on the method used:
-
-\begin{itemize}
-    \item StegaStamp~\cite{stegastamp2020}: claims to be the first steganography model capable of decoding data from printed images. The authors show robust results in decoding data under physical transmission by adding printer noise in the training process.
-    \item Code\,Face~\cite{codeface2021}: encoder and decoder networks are trained using end-to-end GANs. It introduces a new security system for encoding and decoding facial images that are printed in common IDs and MRTDs.
-    \item RiemStega~\cite{cruz2025riemstega}: proposes a new loss function that extends the loss function based on the $L_2$ distance between images to the Riemannian manifold of symmetric and positive definite matrices.
-    \item StampOne~\cite{stampone2024}: focuses on high-level robust steganography, such as~\cite{codeface2021, stegastamp2020}, it balances between high-quality encoded images and decoding accuracy. It mitigates distortion-related issues like JPEG compression, camera sensors and printer's Gaussian noise by incorporating gradient transform and wavelet transform to normalize and balance frequencies of the inputs. 
-\end{itemize}
+The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the NR-IQA model.
 
 \begin{figure}[ht]
     \centering
-    \begin{minipage}[t]{0.2\textwidth}
+    \begin{subfigure}[t]{0.22\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_StegaStamp_1.4.jpg}\\
-        \textbf{(a)} StegaStamp
-    \end{minipage}
+        \caption{StegaStamp}\label{fig:steganography_a}
+    \end{subfigure}
     \hfill
-    \begin{minipage}[t]{0.2\textwidth}
+    \begin{subfigure}[t]{0.22\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_CodeFace_1.4.jpg}\\
-        \textbf{(b)} Code\,Face
-    \end{minipage}
+        \caption{Code\,Face}\label{fig:steganography_b}
+    \end{subfigure}
     \hfill
-    \begin{minipage}[t]{0.2\textwidth}
+    \begin{subfigure}[t]{0.22\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_RiemStega_1.4.jpg}\\
-        \textbf{(c)} RiemStega
-    \end{minipage}
+        \caption{RiemStega}\label{fig:steganography_c}
+    \end{subfigure}
     \hfill
-    \begin{minipage}[t]{0.2\textwidth}
+    \begin{subfigure}[t]{0.22\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_StampOne_1.4.jpg}\\
-        \textbf{(d)} StampOne
-    \end{minipage}
+        \caption{StampOne}\label{fig:steganography_d}
+    \end{subfigure}
     \caption{Steganographically distorted facial images from each method.}\label{fig:steganography}
 \end{figure}
 
 \section{Collection of Subjective Scores}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/db_conceptual.png}
-    \caption{dbconceptual.png.}\label{fig:db_conceptual}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/db_physical.png}
-    \caption{dbphysical.png.}\label{fig:db_physical}
-\end{figure}
-
 We followed the ITU-R BT.500--15~\cite{ITU-R-BT500} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
-Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of four participants.
+Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of one participant.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.32\textwidth]{images/webapp_test.png}
     \caption{Django-based webapp created for the Single Stimulus test.}\label{fig:webapp}
 \end{figure}
+
+The database was implemented using the Django web framework, which provides an object-relational mapping (ORM) layer that directly maps Python model classes to database tables. The ORM also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL.
+
+The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country, and device used. The ss\_session entity models individual test sessions and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type (distortion\_name), and distortion level (distortion\_level). The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary user\_feedback entity captures optional, anonymous, observer comments and critiques.
+
+The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset\_id and profile\_id fields in ss\_session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session (ss\_session\_id) and image (image\_id), enabling consistent aggregation of ratings into a statistical descriptors such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with ITU-R BT.500-15 recommendations.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/db_conceptual.png}
+    \caption{Conceptual database schema.}\label{fig:db_conceptual}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/db_physical.png}
+    \caption{Physical database schema.}\label{fig:db_physical}
+\end{figure}
+
 
 \section{Debiasing of Subjective Scores}
 
