@@ -32,12 +32,12 @@
 \contentsline {chapter}{\numberline {3}Methodology}{23}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Dataset}{23}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Collection of Subjective Scores}{25}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Debiasing of Subjective Scores}{27}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Correlation of FR-IQA Metrics with Human Perception}{28}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}{30}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Training a No-Reference IQA Model from Pseudo-MOS}{31}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Results}{31}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Full-Reference Fusion Metric Performance}{31}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}No-Reference Regression Model Performance}{32}{subsection.3.7.2}%
-\contentsline {section}{\numberline {3.8}Conclusion and Future Work}{34}{section.3.8}%
-\contentsline {chapter}{\numberline {A}Sample Appendix}{47}{appendix.A}%
+\contentsline {section}{\numberline {3.3}Debiasing of Subjective Scores}{29}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Correlation of FR-IQA Metrics with Human Perception}{30}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}{32}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Training a No-Reference IQA Model from Pseudo-MOS}{33}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Results}{33}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Full-Reference Fusion Metric Performance}{33}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}No-Reference Regression Model Performance}{34}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}Conclusion and Future Work}{36}{section.3.8}%
+\contentsline {chapter}{\numberline {A}Sample Appendix}{49}{appendix.A}%

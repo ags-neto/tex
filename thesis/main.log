@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  8 JUN 2025 06:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.6.3)  9 JUN 2025 19:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1395,100 +1395,102 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [17] [18] [19] [20] [21]) (./chapters/3-methodology.tex [22]
 Chapter 3.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 12.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 10.
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 <images/mos_train_set.pdf, id=794, 1429.59094pt x 1072.005pt>
 File: images/mos_train_set.pdf Graphic file (type pdf)
 <use images/mos_train_set.pdf>
-Package pdftex.def Info: images/mos_train_set.pdf  used on input line 25.
+Package pdftex.def Info: images/mos_train_set.pdf  used on input line 23.
 (pdftex.def)             Requested size: 345.98302pt x 259.44563pt.
 <images/mos_test_set.pdf, id=795, 357.58594pt x 1072.005pt>
 File: images/mos_test_set.pdf Graphic file (type pdf)
 <use images/mos_test_set.pdf>
-Package pdftex.def Info: images/mos_test_set.pdf  used on input line 31.
+Package pdftex.def Info: images/mos_test_set.pdf  used on input line 29.
 (pdftex.def)             Requested size: 86.49748pt x 259.31477pt.
-<images/005_StegaStamp_1.4.jpg, id=797, 1355.0625pt x 1355.0625pt>
-File: images/005_StegaStamp_1.4.jpg Graphic file (type jpg)
-<use images/005_StegaStamp_1.4.jpg>
-Package pdftex.def Info: images/005_StegaStamp_1.4.jpg  used on input line 43.
-(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
-<images/005_CodeFace_1.4.jpg, id=798, 1355.0625pt x 1355.0625pt>
-File: images/005_CodeFace_1.4.jpg Graphic file (type jpg)
-<use images/005_CodeFace_1.4.jpg>
-Package pdftex.def Info: images/005_CodeFace_1.4.jpg  used on input line 49.
-(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
-<images/005_RiemStega_1.4.jpg, id=799, 1355.0625pt x 1355.0625pt>
-File: images/005_RiemStega_1.4.jpg Graphic file (type jpg)
-<use images/005_RiemStega_1.4.jpg>
-Package pdftex.def Info: images/005_RiemStega_1.4.jpg  used on input line 55.
-(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
-<images/005_StampOne_1.4.jpg, id=800, 1355.0625pt x 1355.0625pt>
-File: images/005_StampOne_1.4.jpg Graphic file (type jpg)
-<use images/005_StampOne_1.4.jpg>
-Package pdftex.def Info: images/005_StampOne_1.4.jpg  used on input line 61.
-(pdftex.def)             Requested size: 100.15425pt x 100.13658pt.
  [23
 
-] [24 <./images/mos_train_set.pdf> <./images/mos_test_set.pdf> <./images/005_StegaStamp_1.4.jpg (PNG copy)> <./images/005_CodeFace_1.4.jpg (PNG copy)> <./images/005_RiemStega_1.4.jpg (PNG copy)> <./images/005_StampOne_1.4.jpg>]
-<images/webapp_test.png, id=836, 656.4525pt x 718.685pt>
+]
+<images/005_StegaStamp_1.4.jpg, id=804, 1355.0625pt x 1355.0625pt>
+File: images/005_StegaStamp_1.4.jpg Graphic file (type jpg)
+<use images/005_StegaStamp_1.4.jpg>
+Package pdftex.def Info: images/005_StegaStamp_1.4.jpg  used on input line 41.
+(pdftex.def)             Requested size: 104.7042pt x 104.68542pt.
+<images/005_CodeFace_1.4.jpg, id=805, 1355.0625pt x 1355.0625pt>
+File: images/005_CodeFace_1.4.jpg Graphic file (type jpg)
+<use images/005_CodeFace_1.4.jpg>
+Package pdftex.def Info: images/005_CodeFace_1.4.jpg  used on input line 47.
+(pdftex.def)             Requested size: 104.7042pt x 104.68542pt.
+<images/005_RiemStega_1.4.jpg, id=806, 1355.0625pt x 1355.0625pt>
+File: images/005_RiemStega_1.4.jpg Graphic file (type jpg)
+<use images/005_RiemStega_1.4.jpg>
+Package pdftex.def Info: images/005_RiemStega_1.4.jpg  used on input line 53.
+(pdftex.def)             Requested size: 104.7042pt x 104.68542pt.
+<images/005_StampOne_1.4.jpg, id=807, 1355.0625pt x 1355.0625pt>
+File: images/005_StampOne_1.4.jpg Graphic file (type jpg)
+<use images/005_StampOne_1.4.jpg>
+Package pdftex.def Info: images/005_StampOne_1.4.jpg  used on input line 59.
+(pdftex.def)             Requested size: 104.7042pt x 104.68542pt.
+ [24 <./images/mos_train_set.pdf> <./images/mos_test_set.pdf> <./images/005_StegaStamp_1.4.jpg (PNG copy)> <./images/005_CodeFace_1.4.jpg (PNG copy)> <./images/005_RiemStega_1.4.jpg (PNG copy)> <./images/005_StampOne_1.4.jpg>]
+<images/webapp_test.png, id=835, 656.4525pt x 718.685pt>
 File: images/webapp_test.png Graphic file (type png)
 <use images/webapp_test.png>
-Package pdftex.def Info: images/webapp_test.png  used on input line 75.
-(pdftex.def)             Requested size: 145.68144pt x 159.49294pt.
- [25
+Package pdftex.def Info: images/webapp_test.png  used on input line 71.
+(pdftex.def)             Requested size: 227.62206pt x 249.19675pt.
 
- <./images/webapp_test.png>]
-<images/db_conceptual.png, id=844, 1217.54875pt x 936.49875pt>
+Underfull \vbox (badness 3942) has occurred while \output is active []
+
+ [25] [26 <./images/webapp_test.png>]
+<images/db_conceptual.png, id=849, 1217.54875pt x 936.49875pt>
 File: images/db_conceptual.png Graphic file (type png)
 <use images/db_conceptual.png>
-Package pdftex.def Info: images/db_conceptual.png  used on input line 87.
+Package pdftex.def Info: images/db_conceptual.png  used on input line 190.
 (pdftex.def)             Requested size: 364.19667pt x 280.12299pt.
-<images/db_physical.png, id=845, 1251.67625pt x 959.585pt>
+<images/db_physical.png, id=850, 1251.67625pt x 959.585pt>
 File: images/db_physical.png Graphic file (type png)
 <use images/db_physical.png>
-Package pdftex.def Info: images/db_physical.png  used on input line 93.
+Package pdftex.def Info: images/db_physical.png  used on input line 195.
 (pdftex.def)             Requested size: 364.19667pt x 279.20961pt.
- [26 <./images/db_conceptual.png>] [27 <./images/db_physical.png>]
-<images/mos_vs_iqa_grid.pdf, id=863, 1156.32pt x 1734.48pt>
+ [27] [28 <./images/db_conceptual.png> <./images/db_physical.png>] [29]
+<images/mos_vs_iqa_grid.pdf, id=873, 1156.32pt x 1734.48pt>
 File: images/mos_vs_iqa_grid.pdf Graphic file (type pdf)
 <use images/mos_vs_iqa_grid.pdf>
-Package pdftex.def Info: images/mos_vs_iqa_grid.pdf  used on input line 127.
+Package pdftex.def Info: images/mos_vs_iqa_grid.pdf  used on input line 231.
 (pdftex.def)             Requested size: 409.71692pt x 614.56699pt.
- [28] [29 <./images/mos_vs_iqa_grid.pdf>]
-<images/variance.pdf, id=974, 505.89pt x 361.35pt>
+ [30] [31 <./images/mos_vs_iqa_grid.pdf>]
+<images/variance.pdf, id=983, 505.89pt x 361.35pt>
 File: images/variance.pdf Graphic file (type pdf)
 <use images/variance.pdf>
-Package pdftex.def Info: images/variance.pdf  used on input line 141.
+Package pdftex.def Info: images/variance.pdf  used on input line 245.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/picard.pdf, id=975, 505.89pt x 361.35pt>
+<images/picard.pdf, id=984, 505.89pt x 361.35pt>
 File: images/picard.pdf Graphic file (type pdf)
 <use images/picard.pdf>
-Package pdftex.def Info: images/picard.pdf  used on input line 147.
+Package pdftex.def Info: images/picard.pdf  used on input line 251.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
- [30 <./images/variance.pdf> <./images/picard.pdf>]) (./chapters/4-results.tex
-<images/shap_summary.png, id=1110, 578.16pt x 281.853pt>
+ [32]) (./chapters/4-results.tex
+<images/shap_summary.png, id=1026, 578.16pt x 281.853pt>
 File: images/shap_summary.png Graphic file (type png)
 <use images/shap_summary.png>
 Package pdftex.def Info: images/shap_summary.png  used on input line 10.
 (pdftex.def)             Requested size: 318.66948pt x 155.35078pt.
- [31] [32 <./images/shap_summary.png>]
-<images/predictions_train.pdf, id=1137, 505.89pt x 361.35pt>
+ [33 <./images/variance.pdf> <./images/picard.pdf>] [34 <./images/shap_summary.png>]
+<images/predictions_train.pdf, id=1146, 505.89pt x 361.35pt>
 File: images/predictions_train.pdf Graphic file (type pdf)
 <use images/predictions_train.pdf>
 Package pdftex.def Info: images/predictions_train.pdf  used on input line 42.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-<images/predictions_test.pdf, id=1138, 505.89pt x 361.35pt>
+<images/predictions_test.pdf, id=1147, 505.89pt x 361.35pt>
 File: images/predictions_test.pdf Graphic file (type pdf)
 <use images/predictions_test.pdf>
 Package pdftex.def Info: images/predictions_test.pdf  used on input line 48.
 (pdftex.def)             Requested size: 218.51521pt x 156.08322pt.
-) (./chapters/5-conclusion.tex [33 <./images/predictions_train.pdf> <./images/predictions_test.pdf>]) [34]
+) (./chapters/5-conclusion.tex [35 <./images/predictions_train.pdf> <./images/predictions_test.pdf>]) [36]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 248.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [35
+) [37
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 248--248
@@ -1500,11 +1502,11 @@ Underfull \hbox (badness 1092) in paragraph at lines 248--248
 []\T1/lmr/m/n/10.95 Q. Li and Z. Wang, ^^P  Reduced-reference im-age qual-ity as-sess-ment us-ing di-vi-sive
  []
 
-[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46
+[38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48
 
 ]
 Appendix A.
-(./appendix/sample.tex) [47] (./main.aux)
+(./appendix/sample.tex) [49] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: CA2EADA74C3DE3C48AA83FAB173F66A3;5810.
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1512,20 +1514,20 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42277 strings out of 478287
- 841773 string characters out of 5849290
- 1586198 words of memory out of 5000000
- 59403 multiletter control sequences out of 15000+600000
+ 42286 strings out of 478287
+ 841918 string characters out of 5849290
+ 1586744 words of memory out of 5000000
+ 59410 multiletter control sequences out of 15000+600000
  563440 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  115i,17n,118p,1398b,2551s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{table.2.1} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx8.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (67 pages, 7709085 bytes).
+Output written on main.pdf (69 pages, 7710757 bytes).
 PDF statistics:
- 1485 PDF objects out of 1728 (max. 8388607)
- 1048 compressed objects within 11 object streams
- 290 named destinations out of 1000 (max. 500000)
+ 1494 PDF objects out of 1728 (max. 8388607)
+ 1055 compressed objects within 11 object streams
+ 292 named destinations out of 1000 (max. 500000)
  513 words of extra memory for PDF output out of 10000 (max. 10000000)
 

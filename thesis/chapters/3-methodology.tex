@@ -2,9 +2,7 @@
 
 \section{Dataset}
 
-Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well.
-
-Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
+Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The FRLL dataset was selected for its high-fidelity ICAO-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
 
 The dataset was partitioned into four subsets, as follows:
 
@@ -20,13 +18,13 @@ The dataset was partitioned into four subsets, as follows:
 
 \begin{figure}
     \centering
-    \begin{subfigure}[t]{0.76\textwidth}
+    \begin{subfigure}{0.76\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/mos_train_set.pdf}\\
         \caption{MOS train set}\label{fig:mos_set_train}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}{0.19\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/mos_test_set.pdf}\\
         \caption{MOS test set}\label{fig:mos_set_test}
@@ -34,29 +32,29 @@ The dataset was partitioned into four subsets, as follows:
     \caption{Reference images from the MOS set, comprising the selected subjects from the FRLL dataset.}\label{fig:mos_set}
 \end{figure}
 
-The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the NR-IQA model.
+The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the NR-IQA model. The selected steganographic methods represent diverse classes of distortion processes (geometric, color-based, local texture perturbation) commonly encountered in practical steganographic applications. The chosen intensity levels ensure a broad perceptual range from barely noticeable to clearly visible distortions.
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
-    \begin{subfigure}[t]{0.22\textwidth}
+    \begin{subfigure}{0.23\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_StegaStamp_1.4.jpg}\\
         \caption{StegaStamp}\label{fig:steganography_a}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.22\textwidth}
+    \begin{subfigure}{0.23\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_CodeFace_1.4.jpg}\\
         \caption{Code\,Face}\label{fig:steganography_b}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.22\textwidth}
+    \begin{subfigure}{0.23\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_RiemStega_1.4.jpg}\\
         \caption{RiemStega}\label{fig:steganography_c}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.22\textwidth}
+    \begin{subfigure}{0.23\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/005_StampOne_1.4.jpg}\\
         \caption{StampOne}\label{fig:steganography_d}
@@ -68,30 +66,136 @@ The steganographic distortions are visible in Fig.~\ref{fig:steganography}, whic
 
 We followed the ITU-R BT.500--15~\cite{ITU-R-BT500} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
-Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of one participant.
-
 \begin{figure}
     \centering
-    \includegraphics[width=0.32\textwidth]{images/webapp_test.png}
+    \includegraphics[width=0.5\textwidth]{images/webapp_test.png}
     \caption{Django-based webapp created for the Single Stimulus test.}\label{fig:webapp}
 \end{figure}
 
+Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of one participant.
+
+\begin{table}
+    \centering
+    \caption{Demographic and non-demographic profile of the observers.}
+    \label{tab:demographics}
+
+    % First row of subtables
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Age group}
+        \begin{tabular}{lr}
+            \hline
+            Group & Count \\
+            \hline
+            18--25 & 85 \\
+            26--40 & 54 \\
+            41--60 & 52 \\
+            Above 60 & 9 \\
+            Under 18 & 2 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+    \hfill
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Gender}
+        \begin{tabular}{lr}
+            \hline
+            Gender & Count \\
+            \hline
+            Male & 143 \\
+            Female & 59 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+    \hfill
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Ethnicity}
+        \begin{tabular}{lr}
+            \hline
+            Group & Count \\
+            \hline
+            White & 177 \\
+            Latino & 8 \\
+            Black & 6 \\
+            Mixed / Multiple & 3 \\
+            Others & 7 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+
+    \vfill
+
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Education}
+        \begin{tabular}{lr}
+            \hline
+            Level & Count \\
+            \hline
+            Bachelor's & 92 \\
+            Master's & 63 \\
+            Doctorate & 29 \\
+            High School & 14 \\
+            Other & 4 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+    \hfill
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Country}
+        \begin{tabular}{lr}
+            \hline
+            Country & Count \\
+            \hline
+            Portugal & 170 \\
+            Brazil & 16 \\
+            Russia & 3  \\
+            India & 2 \\
+            Ghana & 2 \\
+            Others & 9 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+    \hfill
+    \begin{subtable}{0.3\textwidth}
+        \centering
+        \caption{Device Used}
+        \begin{tabular}{lr}
+            \hline
+            Device & Count \\
+            \hline
+            Laptop & 94 \\
+            Phone & 65 \\
+            Desktop & 42 \\
+            Other & 1 \\
+            \hline
+        \end{tabular}
+    \end{subtable}
+\end{table}
+
+
+
 The database was implemented using the Django web framework, which provides an object-relational mapping (ORM) layer that directly maps Python model classes to database tables. The ORM also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL.
 
-The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country, and device used. The ss\_session entity models individual test sessions and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type (distortion\_name), and distortion level (distortion\_level). The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary user\_feedback entity captures optional, anonymous, observer comments and critiques.
+The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The ss\_session entity models individual test sessions and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type (distortion\_name), and distortion level (distortion\_level). The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary user\_feedback entity captures optional, anonymous, observer comments and critiques.
 
 The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset\_id and profile\_id fields in ss\_session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session (ss\_session\_id) and image (image\_id), enabling consistent aggregation of ratings into a statistical descriptors such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with ITU-R BT.500-15 recommendations.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{images/db_conceptual.png}
-    \caption{Conceptual database schema.}\label{fig:db_conceptual}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/db_physical.png}
-    \caption{Physical database schema.}\label{fig:db_physical}
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{images/db_conceptual.png}
+        \caption{Conceptual database schema showing entity relationships and high-level structure.}\label{fig:db_conceptual}
+    \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{images/db_physical.png}
+        \caption{Physical database schema illustrating actual tables, columns, and implementation details.}\label{fig:db_physical}
+    \end{subfigure}
+    \caption{Conceptual and physical representations of the database schema.}\label{fig:db_schemas}
 \end{figure}
 
 
@@ -134,15 +238,15 @@ To identify which metrics align best with human perception, we compute both the 
 
 To validate this truncation point, we examined the Picard plot in Fig.~\ref{fig:svd_analysis}b, which compares singular values with the target projections. The stable ratio in the tail confirms that six components provide a good balance between expressiveness and stability. This supports a compact, informative subset of FR-IQA metrics.
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
-    \begin{minipage}[t]{0.48\textwidth}
+    \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/variance.pdf}
         \textbf{(a)} Cumulative variance explained by SVD components.
     \end{minipage}
     \hfill
-    \begin{minipage}[t]{0.48\textwidth}
+    \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/picard.pdf}
         \textbf{(b)} Magnitude of singular values and projected response.
