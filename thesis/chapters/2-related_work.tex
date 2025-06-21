@@ -45,7 +45,6 @@ These metrics can be further characterized by the domain in which they operate a
 The spectral representation, or color spectrum, denotes the channel configuration used by the metric. Many classical approaches focus solely on the luminance channel (Y), which aligns closely with human perception~\cite{sheikh_vif_2006, chandler2007vsnr}. Others compute scores over grayscale or full RGB images, as seen in FSIM~\cite{zhang2011fsim} and its color extension FSIMc. Some metrics operate in alternative color spaces such as YCbCr or CIELab~\cite{Wang2002PQM}, while hyperspectral or multiband metrics process dozens of spectral channels, particularly in remote sensing applications~\cite{Zhou1998SCC,Alparone2008QNR}. Table~\ref{tab:fr_iqa_metrics} summarizes the 40 IQA metrics considered in this work, detailing their reference type, computational domain, publication year, number of tested databases, and spectral characteristics.
 
 
-\begin{landscape}
 \begin{longtable}{l l l c c l}
     \caption{Summary of the 40 IQA metrics used}\label{tab:fr_iqa_metrics}\\
     \hline % chktex 44
@@ -60,16 +59,16 @@ The spectral representation, or color spectrum, denotes the channel configuratio
     \hline % chktex 44
     \endfoot % chktex 1
 
-    MSE~\cite{Gonzalez2008DIP}, Mean Squared Error                      & Error-based & Spatial        & Grayscale       & 1977 & Many \\
-    MAE~\cite{Gonzalez2008DIP}, Mean Absolute Error                     & Error-based & Spatial        & Grayscale       & 1977 & Many \\
-    RMSE~\cite{Gonzalez2008DIP}, Root Mean Squared Error                & Error-based & Spatial        & Grayscale       & 1977 & Many \\
-    PSNR~\cite{Gonzalez2008DIP}, Peak Signal-to-Noise Ratio             & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
-    PSNR-B~\cite{}, Peak Signal-to-Noise Ratio with Blocking Effect     & Error-based & Spatial        & Grayscale / RGB & 2008 & Few  \\
-    SNR~\cite{}, Signal-to-Noise Ratio                                  & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
-    ERGAS~\cite{}, Erreur Relative Globale Adimensionnelle de Synthèse  & Error-based & Remote sensing & Multiband       & 2000 & Few  \\
-    $D_{\lambda}$~\cite{},Spectral Distortion, QNR component            & Error-based & Remote sensing & Multiband       & 2004 & Few  \\
-    SAM~\cite{}, Spectral Angle Mapper                                  & Error-based & Remote sensing & Multiband       & 1993 & Few  \\
-    SCC~\cite{}, Spatial Correlation Coefficient                        & Error-based & Spatial        & Grayscale / RGB & 1904 & Many \\
+    MSE~\cite{Gonzalez2008DIP}, & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    MAE~\cite{Gonzalez2008DIP}, & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    RMSE~\cite{Gonzalez2008DIP} & Error-based & Spatial        & Grayscale       & 1977 & Many \\
+    PSNR~\cite{Gonzalez2008DIP} & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
+    PSNR-B & Error-based & Spatial        & Grayscale / RGB & 2008 & Few  \\
+    SNR  & Error-based & Spatial        & Grayscale / RGB & 1977 & Many \\
+    ERGAS & Error-based & Remote sensing & Multiband       & 2000 & Few  \\
+    $D_{\lambda}$ & Error-based & Remote sensing & Multiband       & 2004 & Few  \\
+    SAM & Error-based & Remote sensing & Multiband       & 1993 & Few  \\
+    SCC & Error-based & Spatial        & Grayscale / RGB & 1904 & Many \\
 
 
     C-SSIM~\cite{Hassan2017CSSIM}              & FR   & spatial             & 2017 & 2    & RGB \\
