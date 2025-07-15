@@ -4,21 +4,31 @@
 
 Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The FRLL dataset was selected for its high-fidelity ICAO-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
 
-The dataset was partitioned into four subsets, as follows:
+The dataset was partitioned to support both supervised learning and independent evaluation. A small, demographically diverse subset of 15 identities, shown in Fig.~\ref{fig:mos_set} was annotated with MOS through subjective tests. This set was split into a training portion (12 identities, Fig.~\ref{fig:mos_set_train}) used to fit the fusion model, and a disjoint test portion (3 identities, Fig.~\ref{fig:mos_set_test}) held out for final evaluation. The remaining 87 identities formed the unlabeled set, to which pseudo-MOS were later assigned. Together, the annotated and pseudo-labeled subsets were used to train the NR-IQA model. A summary of these partitions, including the number of subjects and images per subset, is presented in Table~\ref{tab:dataset_partition}.
 
-\begin{itemize}
-    \item MOS set (15 identities, 540 images): a core set of demographically diverse subjects, shown in Fig.~\ref{fig:mos_set}, with subjective MOS annotations. It is split into:
-    \begin{itemize}
-        \item MOS train set (12 identities): used to train the FR fusion model, regressing FR-IQA metrics to human MOS.\@
-        \item MOS test set (3 identities): held out from the framework and used only for final evaluation.
-    \end{itemize}
-    \item Pseudo-MOS set (87 identities, 3,132 images): no subjective scores were collected for these images. Pseudo-MOS are generated for this set using the trained fusion model.
-    \item NR train set: includes both the MOS train set and the pseudo-MOS set. It is used to train the NR regressor.
-\end{itemize}
+\begin{table}
+\centering
+\caption{Partitioning of the steganographically distorted dataset.}
+\label{tab:dataset_partition}
+\begin{tabular}{lccc}
+\hline
+\textbf{Subset}       & \textbf{Subjects} & \textbf{Images} & \textbf{Purpose} \\
+\hline
+MOS train set         & 12                & 432             & Train FR fusion model \\
+MOS test set          & 3                 & 108             & Final evaluation (disjoint) \\
+Pseudo-MOS set        & 87                & 3,132           & Generate pseudo-MOS labels \\
+NR train set (total)  & 99                & 3,564           & Train NR model (MOS train + pseudo-MOS) \\
+\hline
+\textbf{Total}        & \textbf{102}      & \textbf{3,672}  & Full dataset (all stego levels) \\
+\hline
+\end{tabular}
+\end{table}
+
 
 \begin{figure}
     \centering
     \begin{subfigure}{0.76\textwidth}
+        
         \centering
         \includegraphics[width=\textwidth]{images/mos_train_set.pdf}\\
         \caption{MOS train set}\label{fig:mos_set_train}
@@ -176,13 +186,11 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
     \end{subtable}
 \end{table}
 
-
-
 The database was implemented using the Django web framework, which provides an object-relational mapping (ORM) layer that directly maps Python model classes to database tables. The ORM also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL.
 
 The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The ss\_session entity models individual test sessions and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type (distortion\_name), and distortion level (distortion\_level). The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary user\_feedback entity captures optional, anonymous, observer comments and critiques.
 
-The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset\_id and profile\_id fields in ss\_session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session (ss\_session\_id) and image (image\_id), enabling consistent aggregation of ratings into a statistical descriptors such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with ITU-R BT.500-15 recommendations.
+The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset\_id and profile\_id fields in ss\_session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session (ss\_session\_id) and image (image\_id), enabling consistent aggregation of ratings into a statistical descriptor such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with ITU-R BT.500-15 recommendations.
 
 \begin{figure}
     \centering
@@ -267,5 +275,5 @@ Each regressor was trained using five-fold cross-validation with an exhaustive g
 
 \section{Training a No-Reference IQA Model from Pseudo-MOS}
 
-To enable NR quality prediction, we train a deep regression model end-to-end using pseudo-MOS scores as targets. The architecture is based on a ResNet-18 backbone~\cite{resnet} pretrained on ImageNet~\cite{imagenet}, with its final classification layer replaced by a lightweight multi-layer perceptron (MLP) regressor~\cite{bayesianridge}. All layers are fine-tuned during training to learn perceptual quality representations specific to our task. The training set consists of distorted facial images paired with either pseudo-MOS, from the FR fusion, or real MOS labels, when available. The model is optimized using MSE and evaluated on the, disjoint, MOS test set of labeled images. Once trained, the model infers image quality solely from the distorted input, enabling NR assessment aligned with human perception.
+To enable NR quality prediction, we train a deep regression model end-to-end using pseudo-MOS scores as targets. The architecture is based on a ResNet-18 backbone~\cite{resnet} pretrained on ImageNet~\cite{imagenet}, with its final classification layer replaced by a lightweight multi-layer perceptron (MLP) regressor~\cite{bayesianridge}. All layers are fine-tuned during training to learn perceptual quality representations specific to our task. The training set consists of distorted facial images paired with either pseudo-MOS, from the FR fusion, or real MOS labels, when available. The model is optimized using MSE and evaluated on the disjoint, MOS test set of labeled images. Once trained, the model infers image quality solely from the distorted input, enabling NR assessment aligned with human perception.
 
