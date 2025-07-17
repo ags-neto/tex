@@ -9,3 +9,9 @@
 *.toc
 *.synctex.gz
 *.bcf
+
+.vscode/
+
+main.*
+!main.tex
+!main.pdf
