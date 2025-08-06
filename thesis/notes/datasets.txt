@@ -1,0 +1,28 @@
+\begin{table}[ht]
+\centering
+\caption{IQA datasets}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Dataset} & \textbf{Score Type} & \textbf{Protocol / Test} & \textbf{Participants} & \textbf{Stimuli} & \textbf{Total Ratings} & \textbf{Notes} \\
+\midrule
+LIVE IQA         & MOS / DMOS & ACR + DSCQS (SS + DS)       & 29      & 779        & 22,591    & Classic lab dataset \\
+LIVE MD          & MOS        & SS (Hidden-ref single-stimulus) & Not stated & Not stated & Not stated & Multiply-distorted images :contentReference[oaicite:2]{index=2} \\
+MDID (MDID2017)  & MOS        & Pair Comparison Sorting (DS) & 192     & 1,600      & 307,200   & 20 refs × 80 distortions :contentReference[oaicite:3]{index=3} \\
+TID2008          & DMOS       & DSCQS (DS)                   & 838     & 1,700      & 1,424,600 & Wide use benchmark \\
+TID2013          & DMOS       & DSCQS (DS)                   & 654     & Not stated & Not stated & Extension of TID2008 \\
+CSIQ             & MOS        & 9‑point ACR (SS)             & 35      & 866        & 30,310    & Normalized 0–1 scores \\
+CIDIQ            & MOS        & 9‑point ACR (SS)             & ~15     & Not stated & Not stated & Lab-controlled small test set \\
+PIPAL            & MOS        & SS                           & 89      & Not stated & Not stated & High-rater DL dataset \\
+KADID‑10k        & MOS        & ACR (SS)                     & 30      & 810        & 24,300    & Many distortions per ref \\
+KonIQ‑10k        & MOS        & Crowdsourced ACR (SS)        & 1,467   & 10,073     & ~14.8M    & Large crowd study \\
+SPAQ             & MOS        & Crowdsourced ACR (SS)        & 1,136   & Not stated & Not stated & Cleaned for reliability \\
+CLIVE            & MOS        & Crowdsourced ACR (SS)        & 240     & 1,162      & ~278,880  & Real-world distortions \\
+FLIVE            & MOS        & SS                           & 120     & Not stated & Not stated & Smartphone images in lab \\
+MDIVL            & MOS        & Crowdsourced ACR (SS)        & 3,000+  & Not stated & 81,000+   & Large mobile image set \\
+BID              & MOS        & ACR (SS)                     & 90      & Not stated & Not stated & Blur-distorted smartphone captures \\
+AVT              & MOS        & Crowdsourced ACR (SS)        & Not stated & Not stated & Not stated & GUI & screen content images \\
+PaQ‑2‑PiQ        & MOS        & Patch-wise ACR (SS)          & 87      & ~40K       & ~3.48M    & Patch-level quality ratings \\
+\bottomrule
+\end{tabular}
+\label{tab:iqa_dataset_tests_extended}
+\end{table}
