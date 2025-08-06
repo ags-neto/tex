@@ -3,7 +3,7 @@
 \subsection{Full-Reference Fusion Metric Performance}
 
 
-To interpret feature contributions, we used SHAP~\cite{shap} (SHapley Additive exPlanations) values derived from CatBoost's internal structure. SHAP values quantify how much a feature pushes the model's output away from the expected value. As shown in Fig.~\ref{fig:shap_summary}, MS-SSIM~\cite{wang2003multiscale} (Multiscale SSIM) and UQI~\cite{wang2004ssim} (Universal Quality Index) had the largest positive impact on predictions, while PSNR-B~\cite{ma2011psnr}, VIF\cite{sheikh2006image}, (PSNR-Blocking), PSNR~\cite{pnsr2003} and SNR~\cite{gonzalez2002digital} (Signal-to-Noise Ratio) contributed with moderate influence. The color encoding further highlights how high and low feature values affect the model output.
+To interpret feature contributions, we used SHAP~\cite{shap} (SHapley Additive exPlanations) values derived from CatBoost's internal structure. SHAP values quantify how much a feature pushes the model's output away from the expected value. As shown in Fig.~\ref{fig:shap_summary}, MS-SSIM~\cite{wang2003multiscale} (Multiscale SSIM) and UQI~\cite{wang2004ssim} (Universal Quality Index) had the largest positive impact on predictions, while PSNR-B~\cite{ma2011psnr} (PSNR-Blocking), VIF\cite{sheikh2006image}, PSNR~\cite{pnsr2003} and SNR~\cite{gonzalez2002digital} (Signal-to-Noise Ratio) contributed with moderate influence. The color encoding further highlights how high and low feature values affect the model output.
 
 \begin{figure}
     \centering
