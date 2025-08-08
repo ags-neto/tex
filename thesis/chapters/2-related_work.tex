@@ -7,24 +7,75 @@ Subjective image quality assessment is grounded in human visual perception and r
 
 \subsection{Assessment Protocols}\label{sec:assessment_protocols}
 
-Assessment protocols are typically divided into two categories: quality assessment, which estimates the overall perceived quality of an image, and impairment assessment, which evaluates the severity of degradation relative to an undistorted reference. In image evaluation, two main methodological paradigms are used: Single Stimulus (SS), where one image is shown at a time and rated for quality; and Double Stimulus (DS), where both the reference and distorted images are shown together to assess perceptual difference. Rating scales can be numerical (e.g., 1 to 11, or 1 to 100) or categorical, with labels for quality (e.g., bad, poor, fair, good, excellent) or impairment (e.g., very annoying, annoying, slightly annoying, perceptible but not annoying, imperceptible). Each method differs in cognitive demand, sensitivity to bias, and statistical power, and the appropriate choice depends on the specific goals of the assessment.
+Subjective image quality assessment protocols are divided into two types: quality assessment, which captures the overall perceived quality of an image, and impairment assessment, which evaluates the degradation relative to a reference. These are implemented using two principal methodological paradigms: the Single Stimulus (SS) method, where each image is rated independently, and the Double Stimulus (DS) method, where two images are shown and rated comparatively.
 
-After subjective scores are collected, typically from at least thirty observers per image, the data undergo rigorous statistical screening to ensure reliability and consistency. The first step involves identifying and discarding outlier observers whose scoring behavior significantly deviates from the population. This is usually performed by computing the Pearson correlation coefficient between an observer's scores and the preliminary mean scores across all images. Observers whose correlation falls below a predefined threshold (e.g., $r < 0.75$) are flagged as unreliable and removed. Following outlier removal, the scores are averaged to compute the final Mean Opinion Score (MOS) or Difference Mean Opinion Score (DMOS), depending on whether quality or impairment was assessed.
+Rating scales may be numerical or categorical. Numerical scales range from 1 to 5, 1 to 11, or 0 to 100, and are used to express either quality (e.g., excellent to bad) or impairment (e.g., imperceptible to very annoying). Categorical scales use labeled intervals and are commonly found in ITU protocols. The choice of scale depends on the desired sensitivity and interpretability of the results.
 
-The MOS is computed as the arithmetic mean of all valid scores for a given image:
-
-\begin{equation}
-\text{MOS} = \frac{1}{N} \sum_{i=1}^{N} S_i
-\end{equation}
-where $S_i$ is the score given by the $i$-th subject, and $N$ is the number of valid observers.
-
-For double-stimulus tests, the DMOS reflects the perceptual degradation with respect to a reference:
+Each test consists of a set of $L$ individual presentations, each corresponding to the application of test condition $j$ to image or sequence $k$, potentially repeated $r$ times. For each presentation, subject $i$ provides a discrete score $u_{ijkr}$, forming a matrix of evaluations of dimension $N \times L$, where $N$ is the number of observers. The Mean Opinion Score (MOS) for a given presentation is defined as:
 
 \begin{equation}
-\text{DMOS} = \text{MOS}_{\text{reference}} - \text{MOS}_{\text{distorted}}
+\text{MOS}_{jkr} = \frac{1}{N} \sum_{i=1}^{N} u_{ijkr}
 \end{equation}
 
-Confidence intervals for MOS/DMOS are also computed, usually assuming a normal distribution. Statistical tests such as t-tests or ANOVA may be applied to assess differences between image groups or distortion types. This rigorous post-processing pipeline ensures that the final subjective scores are both perceptually meaningful and statistically valid.
+Global MOS values can be obtained by averaging across repetitions or test instances. In double-stimulus protocols, the Difference Mean Opinion Score (DMOS) is computed as:
+
+\begin{equation}
+\text{DMOS}_{jkr} = \text{MOS}_{\text{ref},jkr} - \text{MOS}_{\text{dist},jkr}
+\end{equation}
+
+
+To quantify uncertainty in MOS or DMOS, a 95\% confidence interval is computed using the sample standard deviation:
+
+\begin{equation}
+S_{jkr} = \sqrt{\frac{1}{N - 1} \sum_{i=1}^{N} \left( u_{ijkr} - \bar{u}_{jkr} \right)^2}
+\end{equation}
+
+The confidence interval is then given by:
+
+\begin{equation}
+\text{CI}_{95} = 2 \cdot \frac{S_{jkr}}{\sqrt{N}}
+\end{equation}
+
+This interval assumes a Gaussian distribution of scores and indicates that the true population mean lies within the range with 95\% probability. When averaging across multiple images, caution is advised as inter-image variability can dominate the standard deviation in small datasets.
+
+If the raw scores have been transformed, e.g., through boundary compensation or conversion to impairment response functions, the confidence intervals must be recomputed using transformed variables. In this case, the standard deviation becomes a function of each point on the transformed scale, and the confidence bands must reflect the statistical behavior of the mapped domain.
+
+After computing the initial MOS values, the dataset must undergo observer screening to eliminate unreliable participants whose scoring patterns deviate significantly from the overall distribution. According to ITU-R BT.500-15~\cite{ITU-R-BT500}, a kurtosis-based post-screening method is recommended for DSIS, DSCQS, and other alternative methods (excluding SSCQE), especially in studies with relatively few observers (e.g., $N < 20$) or non-expert participants.
+
+For each presentation defined by condition $j$, image or sequence $k$, and repetition $r$, the following statistics are computed: mean score, $\bar{u}_{jkr}$; standard deviation, $S_{jkr}$; and kurtosis coefficient, $\beta_{2,jkr}$, given by:
+
+\begin{equation}
+\beta_{2,jkr} = \frac{m_4}{(m_2)^2}, \quad \text{where } m_x = \frac{1}{N} \sum_{i=1}^{N} (u_{ijkr} - \bar{u}_{jkr})^x
+\end{equation}
+
+If $2 \leq \beta_{2,jkr} \leq 4$, the distribution is considered normal. Otherwise, it is treated as non-normal. For each observer $i$, two counters are defined: $P_i$ and $Q_i$, which count the number of times an observer's score is an outlier above or below the acceptable range, respectively.
+
+The outlier detection criteria per presentation are as follows:
+
+If the distribution is normal:
+\[
+\begin{cases}
+    u_{ijkr} \geq \bar{u}_{jkr} + 2 S_{jkr} & \Rightarrow P_i = P_i + 1 \\
+    u_{ijkr} \leq \bar{u}_{jkr} - 2 S_{jkr} & \Rightarrow Q_i = Q_i + 1
+\end{cases}
+\]
+
+If non-normal:
+
+\[
+\begin{cases}
+    u_{ijkr} \geq \bar{u}_{jkr} + \sqrt{20} \, S_{jkr} & \Rightarrow P_i = P_i + 1 \\
+    u_{ijkr} \leq \bar{u}_{jkr} - \sqrt{20} \, S_{jkr} & \Rightarrow Q_i = Q_i + 1
+\end{cases}
+\]
+
+After processing all presentations, observer $i$ is rejected if:
+\begin{equation*}
+\frac{P_i + Q_i}{L} > 0.05 \quad \text{and} \quad \left| \frac{P_i - Q_i}{P_i + Q_i} \right| < 0.3
+\end{equation*}
+where $L$ is the total number of presentations.
+
+This procedure ensures that only observers with balanced and statistically consistent scoring behavior are retained.
 
 
 \subsection{Crowdsourcing}\label{sec:crowdsourcing}

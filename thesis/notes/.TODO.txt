@@ -10,7 +10,7 @@
 # Metodologia
 - Explicar melhor o FRLL
 - Explicar todos os modelos de regressão
-- Experimentar com optimização com OPTUNA
+- Experimentar com optimização com OPTUNA (dashboard)
 
 # Resultados
 - Experimentar k 68% e 99.8%
