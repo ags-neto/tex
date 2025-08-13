@@ -11,18 +11,21 @@ Subjective image quality assessment protocols are divided into two types: qualit
 
 Rating scales may be numerical or categorical. Numerical scales range from 1 to 5, 1 to 11, or 0 to 100, and are used to express either quality (e.g., excellent to bad) or impairment (e.g., imperceptible to very annoying). Categorical scales use labeled intervals and are commonly found in ITU protocols. The choice of scale depends on the desired sensitivity and interpretability of the results.
 
-Each test consists of a set of $L$ individual presentations, each corresponding to the application of test condition $j$ to image or sequence $k$, potentially repeated $r$ times. For each presentation, subject $i$ provides a discrete score $u_{ijkr}$, forming a matrix of evaluations of dimension $N \times L$, where $N$ is the number of observers. The Mean Opinion Score (MOS) for a given presentation is defined as:
+Choosing an assessment methodology isn't as straightforward as ticking checkboxes on a list and going with the method that fits the best, we need to account also for what we want to calculate, this is MOS or DMOS, and also, one of the most important aspects, observer's assessibility, if we deploy a complex method this might confuse or throw off the observer, which damages the results.
+
+Many datasets have established a non-written consensus to go with SS methods, these are the most simple, less time consuming, and more versatile methodology, allowing for tests to avoid predefined presentations, or analysis that might tire/annoy observers.
+
+Each test consists of a set of $L$ individual presentations, each corresponding to the application of test condition $j$ to image or sequence $k$, potentially repeated $r$ times. For each presentation, subject $i$ provides a discrete score $u_{ijkr}$, forming a matrix of evaluations of dimension $N \times L$, where $N$ is the number of observers. The \acs{MOS} for a given presentation is defined as:
 
 \begin{equation}
 \text{MOS}_{jkr} = \frac{1}{N} \sum_{i=1}^{N} u_{ijkr}
 \end{equation}
 
-Global MOS values can be obtained by averaging across repetitions or test instances. In double-stimulus protocols, the Difference Mean Opinion Score (DMOS) is computed as:
+Global \acs{MOS} values can be obtained by averaging across repetitions or test instances. In double-stimulus protocols, the \acs{DMOS} is computed as:
 
 \begin{equation}
 \text{DMOS}_{jkr} = \text{MOS}_{\text{ref},jkr} - \text{MOS}_{\text{dist},jkr}
 \end{equation}
-
 
 To quantify uncertainty in MOS or DMOS, a 95\% confidence interval is computed using the sample standard deviation:
 
