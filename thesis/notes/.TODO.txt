@@ -1,12 +1,5 @@
 
 
-# Subjective assessment
-- Outros métodos (DS e SS roadmap)
-- Explicar postscreening mais a fundo
-
-# metricas
-- Explicar a fundo todas as metricas usadas
-
 # Metodologia
 - Explicar melhor o FRLL
 - Explicar todos os modelos de regressão
