@@ -99,26 +99,35 @@ These metrics can be further characterized by the domain in which they operate a
 The spectral representation, or color spectrum, denotes the channel configuration used by the metric. Many classical approaches focus solely on the luminance channel (Y), which aligns closely with human perception~\cite{sheikh_vif_2006, chandler2007vsnr}. Others compute scores over grayscale or full RGB images, as seen in FSIM~\cite{zhang2011fsim} and its color extension FSIMc. Some metrics operate in alternative color spaces such as YCbCr or CIELab~\cite{Wang2002PQM}, while hyperspectral or multiband metrics process dozens of spectral channels, particularly in remote sensing applications~\cite{Zhou1998SCC,Alparone2008QNR}. Table~\ref{tab:fr_iqa_metrics} summarizes the 40 IQA metrics considered in this work, detailing their reference type, computational domain, publication year, number of tested databases, and spectral characteristics.
 
 
-\begin{longtable}{c c c c}
-    \caption{Summary of the 40 IQA metrics used}\label{tab:fr_iqa_metrics}\\
+
+\begin{longtable}{
+  >{\centering\arraybackslash}p{0.15\textwidth}  % Metric
+  >{\centering\arraybackslash}p{0.10\textwidth}  % Category
+  >{\centering\arraybackslash}p{0.05\textwidth}  % Year
+  >{\centering\arraybackslash}p{0.55\textwidth}    % Tested Databases
+}
+    \caption{Summary of the 40 FR IQA metrics used}\label{tab:fr_iqa_metrics}\\
     \hline % chktex 44
-    \textbf{Metric} & \textbf{Type} & \textbf{Year} & \textbf{Tested Databases} \\
+    \textbf{Metric} & \textbf{Category} & \textbf{Year} & \textbf{Tested Databases} \\
     \hline % chktex 44
     \endfirsthead % chktex 1
     \multicolumn{4}{r}{\small\itshape(continuation)}\\ % chktex 6
     \hline % chktex 44
-    \textbf{Metric} & \textbf{Type} & \textbf{Year} & \textbf{Tested Databases} \\
+    \textbf{Metric} & \textbf{Category} & \textbf{Year} & \textbf{Tested Databases} \\
     \hline % chktex 44
     \endhead % chktex 1
     \hline % chktex 44
     \endfoot % chktex 1
 
-    MSE~\cite{gonzalez2002digital}, & Error-based & --- & LIVE, CSIQ, TID2008, TID2013 \\
-    RMSE~\cite{gonzalez2002digital}, & Error-based & --- & LIVE, CSIQ, TID2008, TID2013 \\ 
-    MAE~\cite{gonzalez2002digital}, & Error-based & --- & LIVE, CSIQ, TID2008, TID2013 \\
-
-
-
+    MSE~\cite{wang2004image} & Error & 2004 & LIVE IQA, CSIQ, TID2008, TID2013, KADID-10k \\
+    RMSE~\cite{wang2004image} & Error & 2004 & LIVE IQA, CSIQ, TID2008, TID2013, KADID-10k \\ 
+    MAE~\cite{wang2004image} & Error & 2004 & LIVE IQA, CSIQ, TID2008, TID2013, KADID-10k \\
+    PSNR~\cite{wang2004image} & Error & 2004 & LIVE IQA, CSIQ, TID2008, TID2013, KADID-10k \\
+    PSNR-B~\cite{ma2011psnrb} & Error & 2011 & LIVE IQA, CSIQ, TID2013 \\
+    SNR~\cite{wang2004image} & Error & 2004 & LIVE IQA, CSIQ, TID2008 \\
+    SAM~\cite{yuhas1992sam} & Spectral & 1992 & AVIRIS, HYDICE, ROSIS, TID2013 \\
+    ERGAS~\cite{wald2000ergas} & Spectral & 2000 & AVIRIS, ROSIS, TID2013,  KADID-10k \\
+    $D_\lambda$~\cite{wald2000ergas} & Spectral & 2000 & AVIRIS, ROSIS, TID2013, KADID-10k \\
 
 \end{longtable}
 
@@ -129,55 +138,83 @@ FR-IQA models estimate the perceptual quality of a distorted image by comparing 
 
 \subsubsection{Error-Based Metrics}\label{sec:error_based_metrics}
 
-Error-based metrics quantify distortion by measuring direct numerical differences between the reference and the distorted image, Let $X = \{x_i\}_{i=1}^N$ and $Y = \{y_i\}_{i=1}^N$ be two images with $N$ pixels each. The pixel-wise error can be defined as $E = \{e_i\}_{i=1}^N$, where $e_i = x_i - y_i$. 
+Error-based metrics quantify distortion by computing direct numerical differences between the reference and distorted images~\cite{wang2004image}. Let \( X = \{x_i\}_{i=1}^N \) and \( Y = \{y_i\}_{i=1}^N \) be two images with \( N \) pixels each. The pixel-wise error is defined as \( e_i = x_i - y_i \). These metrics are mathematically simple and computationally efficient but lack perceptual modeling.
 
-The most basic error-based metric is the Mean Squared Error (MSE)~\cite{gonzalez2002digital}, which quantifies the average squared difference between corresponding pixels in the reference and distorted images:
+It is important to note that although several error-based metrics are standard mathematical tools in signal processing, their use in IQA involves a shift in interpretation. In this context, they are repurposed to estimate perceptual image degradation based solely on numerical pixel differences. Despite lacking any perceptual modeling, these metrics are still treated as FR IQA methods and evaluated empirically against subjective human judgments.
+
+The most basic error-based metric is the Mean Squared Error (MSE)~\cite{wang2004image}, which quantifies the average squared difference between corresponding pixels in the reference and distorted images:
 
 \begin{equation}
 \text{MSE} = \frac{1}{N} \sum_{i=1}^{N} (x_i - y_i)^2
 \end{equation}
 
-Other related metrics include the Root Mean Squared Error (RMSE), which is simply the square root of MSE, and the Mean Absolute Error (MAE), which averages the absolute differences:
+The Root Mean Squared Error (RMSE)~\cite{wang2004image} is a direct extension of the mean squared error, obtained by taking its square root:
 
 \begin{equation}
 \text{RMSE} = \sqrt{\text{MSE}}
 \end{equation}
 
+By restoring the metric's scale to that of the original image intensities, RMSE offers more interpretable results than MSE, especially when comparing distortion magnitudes across images.
+
+The Mean Absolute Error (MAE)~\cite{wang2004image} measures the average absolute difference between the reference and distorted image pixels:
+
 \begin{equation}
 \text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
 \end{equation}
 
-The Peak Signal-to-Noise Ratio (PSNR) expresses the ratio between the maximum possible pixel value and the MSE, typically in decibels (dB):
+Unlike MSE and RMSE, MAE penalizes all errors linearly, making it less sensitive to large deviations and outliers. This results in a more stable error measure in scenarios with isolated distortions or non-Gaussian noise.
+
+The Peak Signal-to-Noise Ratio (PSNR)~\cite{wang2004image} expresses the fidelity between a reference and a distorted image using a logarithmic decibel (dB) scale. It is defined as:
 
 \begin{equation}
 \text{PSNR} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{MSE}} \right)
 \end{equation}
-where $MAX$ is the maximum pixel value (e.g., 255 for 8-bit images).
+where $MAX$ is the maximum possible pixel value (typically 255 for 8-bit images). PSNR remains popular due to its simplicity, ease of interpretation, and long-standing usage in compression evaluation.
 
-For block-based compression artifacts, PSNR-B introduces a blocking effect factor (BEF):
+The Blocking Effect Aware Peak Signal-to-Noise Ratio (PSNR-B)~\cite{ma2011psnrb, yim2011psnrb} was introduced to address one of the main weaknesses of PSNR, its insensitivity to compression artifacts such as blocking. PSNR-B extends the original formula by adding a blocking effect factor (BEF) to the denominator:
 
 \begin{equation}
 \text{PSNR-B} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{MSE} + \text{BEF}} \right)
 \end{equation}
 
-The Signal-to-Noise Ratio (SNR) compares the total signal power to the noise power:
+The blocking effect factor penalizes the presence of visible discontinuities along block boundaries, which commonly result from transform-based compression schemes.
+
+The Signal-to-Noise Ratio (SNR)~\cite{wang2004image} quantifies the proportion of signal power relative to noise power between a reference image and its distorted counterpart. It is computed as:
 
 \begin{equation}
 \text{SNR} = 10 \cdot \log_{10} \left( \frac{\sum x_i^2}{\sum (x_i - y_i)^2} \right)
 \end{equation}
 
-In remote sensing and hyperspectral imaging, metrics such as the Spectral Angle Mapper (SAM) and ERGAS are used. SAM measures the angle between spectral vectors:
+This metric provides a direct measure of how much of the original signal is preserved in the presence of distortion.
+
+\subsubsection{Spectral-based Metrics}\label{sec:spectral_based_metrics}
+
+Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. These methods are widely used in remote sensing and image fusion, where spectral integrity is critical.
+
+The Spectral Angle Mapper (SAM)~\cite{yuhas1992sam} computes the angular difference between spectral vectors from the reference and distorted images. For each pixel, the similarity is given by:
 
 \begin{equation}
-\text{SAM} = \cos^{-1} \left( \frac{\langle x, y \rangle}{\|x\| \cdot \|y\|} \right)
+\text{SAM} = \cos^{-1} \left( \frac{ \langle x, y \rangle }{ \|x\| \cdot \|y\| } \right)
 \end{equation}
+where \( x \) and \( y \) are the spectral vectors of the reference and distorted images, respectively. Smaller angles correspond to higher spectral similarity. This metric is commonly used in hyperspectral analysis due to its invariance to scaling and global intensity shifts.
 
-ERGAS quantifies the relative global error between multiband images:
+The Relative Dimensionless Global Error in Synthesis (ERGAS)~\cite{wald2000ergas,zhang2008ergas} measures the average relative root mean squared error across spectral bands. It is defined as:
 
 \begin{equation}
 \text{ERGAS} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{N} \sum_{i=1}^{N} \left( \frac{\text{RMSE}_i}{\mu_i} \right)^2 }
 \end{equation}
-where $h$ and $l$ are the spatial resolutions of the high and low resolution images, $\text{RMSE}_i$ is the RMSE for band $i$, and $\mu_i$ is the mean of the reference band.
+where $h$ and $l$ are the spatial resolutions of the high and low resolution images, $\text{RMSE}_i$ is the RMSE for band $i$, and $\mu_i$ is the mean of the reference band. ERGAS is widely used in image fusion and hyperspectral restoration tasks to quantify spectral distortion.
+
+The $D_\lambda$ metric~\cite{wald2000ergas} quantifies spectral distortion between the reference and distorted images by computing the average spectral distance across all bands. It is typically used in conjunction with a spatial distortion component, $D_s$, which evaluates edge and gradient similarity between the high-resolution reference and the fused image. The $D_\lambda$ metric is defined as:
+
+\begin{equation}
+D_\lambda = \frac{1}{B(B-1)} \sum_{i=1}^{B} \sum_{j=1, j \neq i}^{B} d(r_i, r_j)
+\end{equation}
+where $B$ is the number of spectral bands and $d(r_i, r_j)$ is a spectral distance measure (e.g., correlation or angle) between bands $i$ and $j$. Lower values indicate better spectral consistency.
+
+\subsubsection{Similarity-based metrics}
+
+Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. These methods often align more closely with the human visual system than purely error-based metrics~\cite{wang2004image, xue2014gmsd}.
 
 These error-based metrics are computationally efficient and interpretable, but often correlate poorly with human perception, especially when structural or semantic content is preserved despite pixel-level differences.
 
@@ -185,55 +222,6 @@ These error-based metrics are computationally efficient and interpretable, but o
 
 The Mean Squared Error (MSE)~\cite{gonzalez2002digital} measures the average squared pixel-wise difference:
 
-\begin{equation}
-\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} {x_i - y_i}^2
-\end{equation}
-
-The Root Mean Squared Error (RMSE) is the square root of MSE:\@
-
-\begin{equation}
-\text{RMSE} = \sqrt{\text{MSE}}
-\end{equation}
-
-The Mean Absolute Error (MAE) computes the average of absolute differences:
-
-\begin{equation}
-\text{MAE} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
-\end{equation}
-
-The Peak Signal-to-Noise Ratio (PSNR) expresses the logarithmic ratio between the maximum possible signal value and the MSE between a reference and a distorted image:
-
-\begin{equation}
-\text{PSNR} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{MSE}} \right)
-\end{equation}
-where $MAX$ is the maximum possible pixel value (typically 255 for 8-bit images). Although widely used for its simplicity and interpretability, PSNR correlates poorly with human perception, especially in the presence of structured distortions. 
-
-To address this limitation, PSNR-B extends the original formulation by incorporating a blocking effect factor (BEF), which penalizes compression artifacts such as those introduced by block-based codecs:
-
-\begin{equation}
-\text{PSNR-B} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{MSE} + \text{BEF}} \right)
-\end{equation}
-
-The Signal-to-Noise Ratio (SNR) compares the signal power to the noise power:
-
-\begin{equation}
-\text{SNR} = 10 \cdot \log_{10} \left( \frac{\sum x_i^2}{\sum {(x_i - y_i)}^2} \right)
-\end{equation}
-
-The Spectral Angle Mapper (SAM), often used in hyperspectral imagery, computes the angle between image vectors:
-
-\begin{equation}
-\text{SAM} = \cos^{-1} \left( \frac{\langle x, y \rangle}{\|x\| \cdot \|y\|} \right)
-\end{equation}
-
-The ERGAS (Erreur Relative Globale Adimensionnelle de Synthèse) metric expresses relative global error and is frequently used in image fusion and remote sensing:
-
-\begin{equation}
-\text{ERGAS} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{N} \sum_{i=1}^{N} {\left( \frac{\text{RMSE}_i}{\mu_i} \right)}^2 }
-\end{equation}
-where $h$ and $l$ are the spatial resolutions of the high and low resolution images respectively, $\text{RMSE}_i$ is the RMSE of band $i$, and $\mu_i$ is the mean of the reference band.
-
-These metrics are particularly useful when high pixel fidelity is essential, but they often fail to align with human perception, especially in cases where structural or semantic information is preserved.
 
 
 \subsubsection{Perceptual Similarity Metrics}\label{sec:perceptual_metrics}
