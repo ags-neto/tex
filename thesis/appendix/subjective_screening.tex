@@ -1,0 +1,69 @@
+This appendix reproduces the statistical screening and post-processing steps recommended by ITU-R BT.500 for subjective image quality assessment (IQA). These procedures were referenced in Chapter~\ref{chap:related_work} but are presented here in full detail for completeness.
+
+\section{Confidence Intervals}
+
+To quantify uncertainty in scores, the sample standard deviation is computed:
+
+\begin{equation}
+S_{jkr} = \sqrt{\frac{1}{N - 1} \sum_{i=1}^{N} \left( u_{ijkr} - \bar{u}_{jkr} \right)^2}.
+\end{equation}
+
+The $95\%$ confidence interval is then given by:
+
+\begin{equation}
+\text{CI}_{95} = 2 \cdot \frac{S_{jkr}}{\sqrt{N}}.
+\end{equation}
+
+This interval assumes approximate normality and indicates the range within which the true population mean lies with $95\%$ probability.
+
+\section{Observer Screening}
+
+After score aggregation, observers must be screened to eliminate inconsistent or unreliable participants. ITU-R BT.500 prescribes a kurtosis-based post-screening procedure, especially when the number of subjects is small ($N < 20$) or when non-expert assessors are involved.
+
+For each presentation $(j, k, r)$, the following statistics are computed:
+\begin{itemize}
+  \item Mean score $\bar{u}_{jkr}$  
+  \item Standard deviation $S_{jkr}$  
+  \item Kurtosis coefficient $\beta_{2,jkr}$, given by:
+\end{itemize}
+
+\begin{equation}
+\beta_{2,jkr} = \frac{m_4}{(m_2)^2}, 
+\quad 
+m_x = \frac{1}{N} \sum_{i=1}^{N} \left( u_{ijkr} - \bar{u}_{jkr} \right)^x.
+\end{equation}
+
+If $2 \leq \beta_{2,jkr} \leq 4$, the distribution is considered normal; otherwise, it is treated as non-normal.
+
+For each observer $i$, two counters are defined:
+\begin{itemize}
+  \item $P_i$: number of times the observer's score is an outlier above the acceptable range  
+  \item $Q_i$: number of times the observer's score is an outlier below the acceptable range  
+\end{itemize}
+
+\subsection{Outlier Detection}
+
+If the distribution is normal:
+\begin{itemize}
+  \item If $u_{ijkr} \geq \bar{u}_{jkr} + 2 S_{jkr}$, then $P_i = P_i + 1$  
+  \item If $u_{ijkr} \leq \bar{u}_{jkr} - 2 S_{jkr}$, then $Q_i = Q_i + 1$  
+\end{itemize}
+
+\noindent If the distribution is non-normal:
+\begin{itemize}
+  \item If $u_{ijkr} \geq \bar{u}_{jkr} + \sqrt{20} \, S_{jkr}$, then $P_i = P_i + 1$  
+  \item If $u_{ijkr} \leq \bar{u}_{jkr} - \sqrt{20} \, S_{jkr}$, then $Q_i = Q_i + 1$  
+\end{itemize}
+
+\subsection{Rejection Rule}
+
+After processing all presentations, observer $i$ is rejected if both conditions hold:
+\begin{itemize}
+  \item $\frac{P_i + Q_i}{L} > 0.05$  
+  \item $\left| \frac{P_i - Q_i}{P_i + Q_i} \right| < 0.3$  
+\end{itemize}
+where $L$ is the total number of presentations.
+
+\section{Summary}
+
+The post-screening protocol removes observers whose responses deviate excessively from the group distribution. This procedure improves the reliability of subjective scores and is widely used in IQA studies, particularly when the pool of assessors is small or the distortions under study are subtle.

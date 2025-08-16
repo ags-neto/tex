@@ -22,7 +22,7 @@ MDIVL            & MOS        & Crowdsourced ACR (SS)        & 3,000+  & Not sta
 BID              & MOS        & ACR (SS)                     & 90      & Not stated & Not stated & Blur-distorted smartphone captures \\
 AVT              & MOS        & Crowdsourced ACR (SS)        & Not stated & Not stated & Not stated & GUI & screen content images \\
 PaQ‑2‑PiQ        & MOS        & Patch-wise ACR (SS)          & 87      & ~40K       & ~3.48M    & Patch-level quality ratings \\
-\bottomrule
+AVIRIS, HYDICE, ROSIS
 \end{tabular}
 \label{tab:iqa_dataset_tests_extended}
 \end{table}
