@@ -33,19 +33,25 @@ However, uncontrolled environments introduce noise: participants use uncalibrate
 
 \subsection{Benchmark Datasets}\label{sec:benchmark_datasets}
 
-Several benchmark datasets have been curated to support the development and evaluation of \acs{IQA} models. Early datasets such as LIVE~\cite{livewebsite, sheikh2005live, sheikh2006live}, CSIQ~\cite{csiq}, TID2008~\cite{tid2008}, and TID2013~\cite{tid2013} follow \acs{ITU-R BT.500-15}-compliant protocols, providing high-quality MOS or DMOS annotations across a wide variety of synthetic distortion types. These databases remain the most widely used for evaluating traditional full-reference \acs{IQA} metrics.
+Several benchmark datasets have been curated to support the development and evaluation of \acs{IQA} models. Early datasets such as LIVE~\cite{livewebsite, sheikh2005live, sheikh2006live}, CSIQ~\cite{csiq}, TID2008~\cite{tid2008}, and TID2013~\cite{tid2013} follow \acs{ITU-R BT.500-15}-compliant protocols, providing high-quality \acs{MOS} or \acs{DMOS} annotations across a wide variety of synthetic distortion types. These databases remain the most widely used for evaluating traditional full-reference \acs{IQA} metrics.
 
 The IVC~\cite{ivc} dataset further contributed subjective quality scores for compression-related distortions, while SIQAD~\cite{siqad} targeted screen content images, extending \acs{IQA} research to non-natural imagery. KADID-10k~\cite{lin2019kadid} scaled this approach to 10,000 distorted images with 25 distortion types and multiple intensity levels, enabling large-scale training and fine-grained benchmarking. The Waterloo IAA database~\cite{waterloo} emphasized robustness testing through massive-scale synthetic distortions and helped reveal model overfitting issues to specific artifact distributions.
 
 More recent contributions shifted toward naturalistic and crowdsourced assessments. KonIQ-10k~\cite{koniq10k} introduced 10,073 images collected from the web with authentic distortions and over 1.2 million quality ratings, making it one of the largest ecologically valid \acs{IQA} resources. SPAQ~\cite{spaq} specifically addressed smartphone photography, collecting 11,125 images and crowdsourced perceptual scores to capture the variability of mobile imaging pipelines. PIPAL~\cite{pipal} targeted perceptual quality in image restoration, including outputs from generative models, and has become a key benchmark for deep learning-based perceptual metrics. Similarly, BAPPS~\cite{bapps} provided a large-scale pairwise comparison dataset for learning perceptual similarity directly from human judgments.
 
-Beyond general-purpose \acs{IQA}, domain-specific datasets remain critical. Remote sensing benchmarks such as ROSIS~\cite{rosis}, AVIRIS~\cite{aviris}, and HYDICE~\cite{hydice} provide hyperspectral imagery where distortions affect both perceptual and functional quality, but they lack standardized MOS or DMOS annotations. These datasets illustrate the difficulty of extending \acs{IQA} methodologies into application-driven contexts.
+Beyond general-purpose \acs{IQA}, domain-specific datasets remain critical. Remote sensing benchmarks such as ROSIS~\cite{rosis}, AVIRIS~\cite{aviris}, and HYDICE~\cite{hydice} provide hyperspectral imagery where distortions affect both perceptual and functional quality, but they lack standardized \acs{MOS} or \acs{DMOS} annotations. These datasets illustrate the difficulty of extending \acs{IQA} methodologies into application-driven contexts.
+
+The \acf{FRLL}~\cite{frll} represents a distinct contribution to IQA benchmarking, focusing on high-quality facial \acs{ICAO} compliant imagery. It contains 102 unique subjects photographed under controlled studio conditions, with consistent illumination, wearing plain white t-shirts, and neutral, frontal poses. In addition to meeting passport-style requirements, the dataset also includes self-reported age, gender, and ethnicity. Attractiveness ratings (on a 1-7 scale from “much less attractive than average” to “much more attractive than average”) for the neutral front faces, provided by 2513 raters aged 17-90, are also included.
+
+This combination of demographic attributes and attractiveness ratings enables not only research that bridges perceptual quality with subjective aesthetic judgments, but also systematic analysis of demographic bias in human evaluations of facial images. These dual annotations make the dataset particularly suitable for studies involving biometric verification and \acs{MRTDs}, where both technical quality and fairness considerations are critical.
+
+Unlike general-purpose IQA benchmarks, \acs{FRLL} does not include traditional synthetic distortions. Instead, its value lies in providing a pristine reference set of demographically diverse facial images, which can be systematically altered or embedded with task-driven degradations such as steganography, compression, or adversarial perturbations. This makes \acs{FRLL} an essential testbed for application-driven IQA, where the objective extends beyond generic perceptual fidelity to domain-specific measures of utility and fairness.
 
 Together, these databases trace the evolution of \acs{IQA} benchmarking from controlled laboratory studies with synthetic distortions to large-scale, crowdsourced, and application-specific datasets. This progression not only enabled the development of modern no-reference and deep learning-based \acs{IQA} models but also revealed persistent challenges in generalization to real-world, domain-critical scenarios.
 
 \section{Objective \acs{IQA}}\label{sec:objective_iqa}
 
-Objective \acs{IQA} refers to the automatic estimation of visual quality using computational models. Unlike subjective approaches that rely on human ratings, objective \acs{IQA} enables consistent and scalable evaluations, making it essential for applications such as compression, transmission, restoration, and enhancement~\cite{gonzalez2009digital,moorthy2011blind, lin2020surpassing}. Over the past decades, numerous methods have been proposed, shaped by different assumptions about the human visual system and the statistical properties of natural images. Surveys and comparative studies~\cite{wang2004image,liu2012fusion, ding2020dists, lin2020surpassing} summarize this evolution, showing a progression from simple error-based fidelity measures to advanced perceptual and learning-based frameworks. Although no metric fully replicates human judgment, objective \acs{IQA} provides a reproducible and low-cost alternative that supports large-scale benchmarking and real-time quality monitoring.
+Objective \acs{IQA} refers to the automatic estimation of visual quality using computational models. Unlike subjective approaches that rely on human ratings, objective \acs{IQA} enables consistent and scalable evaluations, making it essential for applications such as compression, transmission, restoration, and enhancement~\cite{gonzalez2009digital, moorthy2011blind, lin2020surpassing}. Over the past decades, numerous methods have been proposed, shaped by different assumptions about the \acf{HVS} and the statistical properties of natural images. Surveys and comparative studies~\cite{shahrukh2019survey, wang2004image, liu2012fusion, ding2020dists} summarize this evolution, showing a progression from simple error-based fidelity measures to advanced perceptual and learning-based frameworks. Although no metric fully replicates human judgment, objective \acs{IQA} provides a reproducible and low-cost alternative that supports large-scale benchmarking and real-time quality monitoring.
 
 A principled way to classify \acs{IQA} methods is through two dimensions: the computational domain in which comparisons are performed and the spectral representation adopted.
 
@@ -55,7 +61,7 @@ The computational domain defines the signal space where similarity is quantified
 
 \begin{itemize}
   \item Spatial domain: Early metrics such as MSE, RMSE, and PSNR operate directly on pixel intensities by measuring absolute differences or signal-to-noise ratios~\cite{gonzalez2009digital}. Despite their simplicity, they fail to account for perceptual masking and structural consistency.
-  \item Frequency domain: Transform-based methods use the discrete cosine transform (DCT), discrete Fourier transform (DFT), or wavelets to capture energy distributions across spatial frequencies. Examples include IFC~\cite{sheikh2005ifc} and VSNR~\cite{chandler2007vsnr}, which exploit properties of the human visual system such as contrast sensitivity.
+  \item Frequency domain: Transform-based methods use the discrete cosine transform (DCT), discrete Fourier transform (DFT), or wavelets to capture energy distributions across spatial frequencies. Examples include IFC~\cite{sheikh2005ifc} and VSNR~\cite{chandler2007vsnr}, which exploit properties of the \acs{HVS} such as contrast sensitivity.
   \item Gradient and saliency domains: These methods emphasize structural edges and perceptually important regions. The gradient magnitude similarity deviation (GMSD)~\cite{xue2014gmsd} measures gradient consistency, while saliency-based models~\cite{hou2007saliency} weight distortions according to visual attention maps.
   \item Information-theoretic domain: Some metrics interpret quality as the amount of shared information between reference and distorted images. VIF~\cite{sheikh2006vif} and related approaches build on mutual information, quantifying how much perceptual information can be extracted reliably from a degraded signal.
   \item Deep feature domain: More recent approaches leverage convolutional neural networks or vision transformers to learn perceptual embeddings. Metrics such as LPIPS~\cite{zhang2018lpips} and DISTS~\cite{ding2020dists} correlate strongly with human judgments by comparing features extracted from pre-trained networks.
@@ -66,13 +72,14 @@ The computational domain defines the signal space where similarity is quantified
 The spectral representation specifies the channel configuration used for quality computation.
 
 \begin{itemize}
-  \item Luminance-based: Many classical approaches, such as SSIM~\cite{wang2004image}, focus solely on the luminance channel (Y). This reflects the dominant role of brightness perception in the human visual system and simplifies computation.
+  \item Luminance-based: Many classical approaches, such as SSIM~\cite{wang2004image}, focus solely on the luminance channel (Y). This reflects the dominant role of brightness perception in the \acs{HVS} and simplifies computation.
   \item Color-based: Extensions to RGB or alternative color spaces, including YCbCr and CIELab, enable the incorporation of chromatic information. Examples include FSIM and its color extension FSIMc~\cite{zhang2011fsim}, or PQM~\cite{wang2002uqi}, which attempt to capture hue and saturation degradations alongside luminance.
   \item Multispectral and hyperspectral: In domains such as remote sensing, quality measures generalize to dozens or even hundreds of bands. Metrics like SAM~\cite{yuhas1992sam}, ERGAS~\cite{wald2000ergas}, and $D_\lambda$~\cite{ivc} ensure spectral consistency across wavelengths and are critical for preserving material properties.
 \end{itemize}
 
-This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 full-reference and 4 no-reference metrics considered in this work. Each metric is characterized by its reference type, computational domain, year of introduction, number of tested databases, and spectral configuration, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
+This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 4 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
 
+\subsection{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
 
 \begin{longtable}{
 p{0.13\linewidth}  % Metric
@@ -80,7 +87,7 @@ p{0.05\linewidth}  % Year
 p{0.22\linewidth}  % Category
 p{0.50\linewidth}  % Tested Databases
 }
-    \caption{Summary of the 40 FR \acs{IQA} metrics used}\label{tab:fr_iqa_metrics}\\
+    \caption{Summary of the 40 \acs{FR}-\acs{IQA} metrics used}\label{tab:fr_iqa_metrics}\\
     \hline % chktex 44
     \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
     \hline % chktex 44
@@ -134,8 +141,6 @@ p{0.50\linewidth}  % Tested Databases
     PSM & --- & --- & --- \\ \hline
     SPIQ & --- & --- & --- \\ \hline
 \end{longtable}
-
-\subsection{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
 
 \acs{FR}-\acs{IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR}-\acs{IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications~\cite{mittal2012making, hosu2020koniq}.
 
@@ -194,33 +199,36 @@ This metric provides a direct measure of how much of the original signal is pres
 
 Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. These methods are widely used in remote sensing and image fusion, where spectral integrity is critical.
 
-The Spectral Angle Mapper (SAM)~\cite{yuhas1992sam} computes the angular difference between spectral vectors from the reference and distorted images. For each pixel, the similarity is given by:
+\noindent\textbf{Notation.}  
+Let $x, y \in \mathbb{R}^B$ denote the spectral vectors of the reference and distorted images at a given pixel, where $B$ is the number of spectral bands. The Euclidean norm is denoted $\|\cdot\|$, the inner product by $\langle \cdot, \cdot \rangle$, and $\mu_i$ the mean of band $i$. Spatial resolutions of the high- and low-resolution images are $h$ and $l$, respectively. Pairwise spectral distances between bands $i$ and $j$ are written as $d(r_i, r_j)$, where $r_i$ is the $i$-th band.  
+
+The \acf{SAM}~\cite{yuhas1992sam} computes the angular difference between the spectral vectors of the reference and distorted images:
 \begin{equation}
-\text{SAM} = \cos^{-1} \left( \frac{ \langle x, y \rangle }{ \|x\| \cdot \|y\| } \right)
+\text{SAM}(x,y) = \cos^{-1} \left( \frac{ \langle x, y \rangle }{ \|x\| \cdot \|y\| } \right).
 \end{equation}
-where \( x \) and \( y \) are the spectral vectors of the reference and distorted images, respectively. Smaller angles correspond to higher spectral similarity. This metric is commonly used in hyperspectral analysis due to its invariance to scaling and global intensity shifts.
 
-The Relative Dimensionless Global Error in Synthesis (ERGAS)~\cite{wald2000ergas,zhang2008ergas} measures the average relative root mean squared error across spectral bands. It is defined as:
+The \acf{ERGAS}~\cite{wald2000ergas,zhang2008ergas} measures the average relative root mean squared error across spectral bands:
 \begin{equation}
-\text{ERGAS} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{N} \sum_{i=1}^{N} \left( \frac{\text{RMSE}_i}{\mu_i} \right)^2 }
+\text{ERGAS} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{B} \sum_{i=1}^{B} \left( \frac{\text{RMSE}_i}{\mu_i} \right)^2 } .
 \end{equation}
-where $h$ and $l$ are the spatial resolutions of the high and low resolution images, $\text{RMSE}_i$ is the RMSE for band $i$, and $\mu_i$ is the mean of the reference band. ERGAS is widely used in image fusion and hyperspectral restoration tasks to quantify spectral distortion.
 
-The $D_\lambda$ metric~\cite{wald2000ergas} quantifies spectral distortion between the reference and distorted images by computing the average spectral distance across all bands. It is typically used in conjunction with a spatial distortion component, $D_s$, which evaluates edge and gradient similarity between the high-resolution reference and the fused image. The $D_\lambda$ metric is defined as:
+The $D_\lambda$ metric~\cite{wald2000ergas} evaluates spectral distortion by averaging inter-band distances:
 \begin{equation}
-D_\lambda = \frac{1}{B(B-1)} \sum_{i=1}^{B} \sum_{j=1, j \neq i}^{B} d(r_i, r_j)
+D_\lambda = \frac{1}{B(B-1)} \sum_{i=1}^{B} \sum_{\substack{j=1 \\ j \neq i}}^{B} d(r_i, r_j) .
 \end{equation}
-where $B$ is the number of spectral bands and $d(r_i, r_j)$ is a spectral distance measure (e.g., correlation or angle) between bands $i$ and $j$. Lower values indicate better spectral consistency.
 
-\subsubsection{Similarity-bd metrics}\label{sec:similarity_based_metrics}
+\subsubsection{Similarity-based Metrics}\label{sec:similarity_based_metrics}
 
-Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. These methods often align more closely with the human visual system than purely error-based metrics~\cite{wang2004image, xue2014gmsd}.
+Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}.
 
-The Structural Similarity Index (SSIM)~\cite{wang2004image} is a perceptual metric designed to evaluate image quality by comparing structural information between a reference and a distorted image. Unlike traditional error-based metrics, SSIM models luminance, contrast, and structure in a local window. Given two image patches $x$ and $y$, SSIM is computed as:
+\noindent\textbf{Notation.}  
+Let $x$ and $y$ denote local patches from the reference and distorted images. Their means are $\mu_x$ and $\mu_y$, variances $\sigma_x^2$ and $\sigma_y^2$, and covariance $\sigma_{xy}$. Constants $C_1, C_2 > 0$ are used to avoid instabilities in divisions.
+
+The \acf{SSIM}~\cite{wang2004image} is a perceptual metric designed to evaluate image quality by comparing structural information between a reference and a distorted image. Unlike traditional error-based metrics, \acs{SSIM} models luminance, contrast, and structure in a local window. Given two image patches $x$ and $y$, \acs{SSIM} is computed as:
 \begin{equation}
 \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + C_1)(2 \sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)}
 \end{equation}
-where $\mu_x$, $\mu_y$ are the means, $\sigma_x^2$, $\sigma_y^2$ the variances, and $\sigma_{xy}$ the covariance of the two patches. Constants $C_1$ and $C_2$ stabilize the division. SSIM values range from 0 to 1, where 1 indicates perfect similarity.
+SSIM values range from 0 to 1, where 1 indicates perfect similarity.
 Multiscale SSIM (MS-SSIM) extends SSIM by computing similarity at multiple image scales. It is defined as:
 
 The Dissimilarity SSIM (DSSIM)~\cite{wang2004image} is a reformulation of SSIM that expresses dissimilarity rather than similarity. It is derived directly from the SSIM value by:
@@ -324,7 +332,7 @@ where $I_r(x)$ and $I_d(x)$ are the pixel intensities of the reference and disto
 Information-theoretic approaches to \acs{IQA} are grounded in Shannon's theory of communication~\cite{shannon1948mathematical,cover1999elements}. They model images as stochastic signals transmitted through a distortion channel, and quality is assessed by measuring how much mutual information between the reference and distorted image is preserved in the presence of perceptual noise. These methods provide a principled view of perceptual fidelity but are typically more computationally demanding than error- or similarity-based metrics.
 
 \noindent\textbf{Notation.} 
-Let $C_k$ and $D_k$ denote the wavelet-domain coefficients of the reference and distorted images in subband $k$, respectively. Natural scene statistics are modeled with Gaussian Scale Mixtures (GSM), with $s_k$ the scale factor at subband $k$. When modeling the human visual system (HVS), additive perceptual noise is introduced, denoted by $n_k$. Mutual information between random variables $X$ and $Y$ conditioned on $s_k$ is written as $I(X;Y \mid s_k)$.
+Let $C_k$ and $D_k$ denote the wavelet-domain coefficients of the reference and distorted images in subband $k$, respectively. Natural scene statistics are modeled with Gaussian Scale Mixtures (GSM), with $s_k$ the scale factor at subband $k$. When modeling the \acs{HVS}, additive perceptual noise is introduced, denoted by $n_k$. Mutual information between random variables $X$ and $Y$ conditioned on $s_k$ is written as $I(X;Y \mid s_k)$.
 
 The Information Fidelity Criterion (IFC)~\cite{sheikh2005ifc} quantifies the mutual information shared between the reference and distorted coefficients under the GSM model:
 
@@ -334,7 +342,7 @@ The Information Fidelity Criterion (IFC)~\cite{sheikh2005ifc} quantifies the mut
 
 Higher IFC values indicate greater preservation of the statistical information present in the reference image.
 
-The Visual Information Fidelity (VIF) index~\cite{sheikh2006vif} extends this framework by incorporating perceptual noise to account for the HVS. It is defined as the ratio between the mutual information preserved after distortion and the information available in the reference:
+The Visual Information Fidelity (VIF) index~\cite{sheikh2006vif} extends this framework by incorporating perceptual noise to account for the \acs{HVS}. It is defined as the ratio between the mutual information preserved after distortion and the information available in the reference:
 
 \begin{equation}
 \text{VIF} = 
@@ -442,6 +450,31 @@ During training, the network minimizes the error between predicted quality score
 In summary, full-reference IQA models span a spectrum from simple error-based metrics to perceptually and statistically grounded approaches. Fidelity-based methods offer computational efficiency but lack alignment with human perception. Perceptual similarity models incorporate structural and saliency cues to improve correlation with subjective quality. Information-theoretic metrics formalize quality as mutual information preservation under natural scene statistics. Learning-based models leverage deep features or end-to-end training to approximate perceptual similarity in high-dimensional spaces. Each class reflects a trade-off between interpretability, perceptual fidelity, and computational complexity, making their suitability highly context-dependent.
 
 \subsection{No-Reference IQA}\label{sec:no_reference_iqa}
+
+\begin{longtable}{
+p{0.13\linewidth}  % Metric
+p{0.05\linewidth}  % Year
+p{0.22\linewidth}  % Category
+p{0.50\linewidth}  % Tested Databases
+}
+    \caption{Summary of the 4 \acs{NR}-\acs{IQA} metrics used}\label{tab:nr_iqa_metrics}\\
+    \hline % chktex 44
+    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
+    \hline % chktex 44
+    \endfirsthead % chktex 1
+    \multicolumn{4}{r}{\small\itshape(continuation)}\\ % chktex 6
+    \hline % chktex 44
+    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
+    \hline % chktex 44
+    \endhead % chktex 1
+    \hline % chktex 44
+    \endfoot % chktex 1
+
+    PIQE~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
+    NIQE~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
+    SerFiq~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
+    MagFace~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
+\end{longtable}
 
 \subsubsection{Traditional NR-IQA}\label{sec:traditional_nr_iqa}
 

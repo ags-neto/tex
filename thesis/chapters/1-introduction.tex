@@ -48,6 +48,56 @@ This motivates the development of no-reference \acs{FIQA} methods explicitly sen
 
 
 
+% NEED TO READ THIS
+
+% \chapter{Introduction}\label{chap:introduction}
+
+% \section{Contextualization}\label{sec:contextualization}
+
+% Image quality refers to the degree to which a visual representation meets perceptual or functional expectations. It reflects the presence or absence of distortions, artifacts, or degradations that influence how images are perceived by humans or processed by machines. High-quality images preserve structural, textural, and color information in a way that aligns with human visual preferences and supports reliable computer vision performance~\cite{survey2019shahrukh, ma2025survey}.
+
+% \acf{IQA} seeks to quantify these notions of quality in a systematic and reproducible way. It plays a critical role in applications such as image acquisition~\cite{survey2017aquisition}, denoising~\cite{survey2023denoising}, compression~\cite{rabbani1991digital, survey2025compression}, transmission~\cite{chandra2016transmission, survey2019transmission}, and restoration~\cite{survey2025restoration}. Surveys and comparative studies~\cite{survey2019shahrukh, survey2006wang, survey2009thung, survey2020zhai} reveal the diversity of existing approaches, ranging from signal-based heuristics to data-driven learning, and highlight the difficulty of modeling human visual perception.
+
+% Two broad methodological paradigms dominate \acs{IQA}: subjective and objective. Subjective assessment, following protocols such as \acf{ITU-R BT.500-15}~\cite{itu2023r}, remains the gold standard because it directly reflects human perception. Yet, it is costly, time-consuming, and impractical at scale. Objective methods offer scalability and repeatability by automating the estimation process. Their challenge lies in how closely they can approximate subjective judgments, a problem still unresolved despite decades of research~\cite{survey2006wang}.
+
+% Objective approaches are further classified as full-reference (FR)~\cite{survey2019shahrukh}, reduced-reference (RR)~\cite{dost2022rriqa}, and no-reference (NR)~\cite{kamble2015nriqa}. FR methods assume access to pristine references, RR exploit partial information, and NR attempt the most difficult task, predicting quality without any reference image. NR methods are of particular importance in real-world deployments, where reference data are rarely available.
+
+% Within this landscape, \acf{FIQA} focuses on facial images, with the goal of quantifying not only perceptual fidelity but also biometric utility~\cite{survey2022fiqa}. Applications range from identity verification in border control to surveillance and forensics. Unlike general IQA, FIQA must handle challenges such as pose, occlusion, and demographic variability~\cite{abed2025fiqabiometric, survey2017fiqaattack}. This reflects a broader shift toward domain-specific IQA, in which quality is evaluated relative to the task at hand~\cite{survey2020zhai}.
+
+% International regulations codify technical baselines for biometric images. The \acf{ICAO}~\cite{icao2015} and the \acf{ISO/IEC} 19794--5 standard~\cite{iso2010iec} prescribe requirements on lighting, pose, and resolution for \acf{MRTDs}. These ensure uniform capture conditions but do not address perceptual bias or demographic fairness.
+
+% Indeed, FIQA algorithms have been shown to assign systematically lower quality scores to certain demographic groups~\cite{babnik2022bias, terhorst2020bias}. Darker skin tones, non-frontal poses, and female faces often receive poorer evaluations, largely due to imbalanced training data. This creates downstream risks: recognition performance becomes inconsistent, and vulnerable populations bear disproportionate errors. In high-stakes applications such as MRTDs, this inequity is not only technical but ethical, directly challenging principles of fairness.
+
+% Regulatory efforts seek to address these issues. Frameworks such as the European Convention on Human Rights (Article 14)~\cite{eu1950art14}, the GDPR (Article 22)~\cite{eu2016art22}, the AI Act (2024)~\cite{eu2024ai}, and U.S. legislative proposals~\cite{us2024ai} establish non-discrimination as a requirement for automated decision-making. Yet such policies cannot guarantee fairness if the underlying quality assessments themselves are biased. Since most FIQA systems ultimately inherit human labels, they also inherit human biases.
+
+% From a perceptual perspective, neuroscience shows that face processing engages specialized cortical areas such as the fusiform face area~\cite{kanwisher2006fusiform, tsao2008mechanisms}. This biological specialization underscores why faces are perceived differently depending on both stimulus attributes (age, gender, attractiveness) and observer demographics. These findings reinforce the difficulty of developing universally fair FIQA models.
+
+% A further, largely unexplored challenge is the assessment of steganographically distorted facial images. Steganography conceals information within images by minimally altering pixel values~\cite{morkel2005steganography}. Such modifications are imperceptible but can degrade biometric feature extraction. This creates a paradox: images may appear visually flawless to humans yet compromise recognition accuracy. Conventional NR-IQA methods are ill-suited to capture this type of distortion because they rely on visible degradations such as blur or compression.
+
+% This challenge is especially pressing for MRTDs. Fraud involving manipulated or stolen documents remains a top concern for agencies such as Frontex~\cite{frontex2023risk}, Europol~\cite{europol2022crime}, and INTERPOL~\cite{interpol2023sltd}. In 2023, identity fraud alone caused losses exceeding \$40 billion in the United States~\cite{javelin2023fraud}. Steganographic embedding of cryptographic markers in facial portraits provides an additional layer of defense against morphing~\cite{frontex2019morphing}, substitution~\cite{icao2015}, and other attacks. Yet without reliable quality assessment tailored to these distortions, the effectiveness of such security measures is undermined.
+
+% \section{Problem Statement}\label{sec:problem_statement}
+
+% Despite significant advances in FIQA, current methods are not designed to detect subtle but security-critical degradations introduced by steganography. Pixel-level perturbations imperceptible to humans can nonetheless impair biometric feature extraction. Traditional FIQA methods, whether handcrafted~\cite{henniger2020biosig}, supervised~\cite{hernandez2019faceqnet, meng2021magface, terhorst2020serfiq}, or ranking-based~\cite{liu2017rankiqa}, are trained on conventional distortions (blur, noise, compression) and fail to generalize to covert, task-relevant perturbations.
+
+% A second limitation lies in fairness. FIQA models systematically reflect demographic imbalances in their training sets, producing disparate quality scores for certain groups~\cite{babnik2022bias}. For MRTDs, where ICAO and ISO/IEC standards define technical baselines~\cite{icao2015, iso2010iec}, such disparities raise both ethical and legal concerns. Quality control that disadvantages specific subpopulations directly undermines the legitimacy of biometric security infrastructures.
+
+% Together, these limitations reveal a critical gap. What is needed is a \textbf{no-reference FIQA framework} capable of:
+% \begin{enumerate}
+%     \item Detecting imperceptible but recognition-relevant degradations, such as those introduced by steganography.
+%     \item Aligning predictions with perceptual judgments while mitigating demographic bias.
+%     \item Operating without reference images, to match the operational reality of border control and ID verification.
+% \end{enumerate}
+
+% This thesis addresses this gap through a \textbf{Full-to-No-Reference framework}. We first fuse multiple FR-IQA metrics into a proxy ground truth aligned with subjective judgments. These pseudo-MOS labels then supervise a NR-FIQA model trained specifically on steganographically modified facial images. By embedding considerations of perceptual validity, biometric utility, and demographic fairness, this framework aims to bridge human perception, system requirements, and operational security in MRTDs.
+
+
+
+
+
+
+
+
 
 
 
@@ -123,7 +173,7 @@ This motivates the development of no-reference \acs{FIQA} methods explicitly sen
 
 % \acs{IQA} metrics are generally categorized as subjective or objective. Subjective assessment involves human observers who rate the perceived quality of images, typically following standardized protocols such as ITU-R BT.500~\cite{itu_bt500_2023}. While subjective metrics are considered the gold standard due to their direct alignment with human perception, they are time-consuming, expensive, and not scalable. In contrast, objective metrics rely on computational models to estimate image quality automatically, aiming to approximate human judgment with high consistency and low cost~\cite{zaric_comparison_objective_subjective, sheikh_vif_2006}.
 
-% Subjective image quality assessment relies on human evaluations to generate ground-truth perceptual scores, often in the form of \acl{MOS} (\acs{MOS}) or \acl{DMOS} (\acs{DMOS}). These scores are typically collected under controlled conditions following international standards such as ITU-R BT.500 (International Telecommunication Union --- Raciocommunication Sector Recommendation --- Broadcasting service -- Television~\cite{itu_bt500_2023}. Subjective assessment captures nuances of human vision that are difficult to model algorithmically, making it essential for validating and benchmarking objective \acs{IQA} models~\cite{ponomarenko_tid2013, zaric_comparison_objective_subjective}. However, it is inherently limited by inter-observer variability, cultural or demographic bias, and the logistical costs associated with large-scale studies~\cite{ghadiyaram_crowdsourced_study_2016}. Crowdsourcing platforms like Amazon Mechanical Turk~\cite{amazon_mturk} have recently enabled more scalable data collection, though at the expense of environmental control and consistency.
+% Subjective image quality assessment relies on human evaluations to generate ground-truth perceptual scores, often in the form of \acl{MOS} (\acs{MOS}) or \acl{DMOS} (\acs{DMOS}). These scores are typically collected under controlled conditions following international standards such as ITU-R BT.500 (International Telecommunication Union ,  Raciocommunication Sector Recommendation ,  Broadcasting service -- Television~\cite{itu_bt500_2023}. Subjective assessment captures nuances of human vision that are difficult to model algorithmically, making it essential for validating and benchmarking objective \acs{IQA} models~\cite{ponomarenko_tid2013, zaric_comparison_objective_subjective}. However, it is inherently limited by inter-observer variability, cultural or demographic bias, and the logistical costs associated with large-scale studies~\cite{ghadiyaram_crowdsourced_study_2016}. Crowdsourcing platforms like Amazon Mechanical Turk~\cite{amazon_mturk} have recently enabled more scalable data collection, though at the expense of environmental control and consistency.
 
 % Objective \acs{IQA} methods are commonly divided into three categories: full-reference (FR), reduced-reference (RR), and no-reference (NR). FR-IQA assumes access to an undistorted reference image and compares it to the distorted version using perceptual models~\cite{wang_ssim_2004, sheikh_ifc_2005, zhang_fsim_2011}. RR-IQA methods extract partial information from the reference image, enabling a compromise between performance and practicality~\cite{wang_wavelet_statistics_2005, li_divisive_normalization_2009}. NR-IQA, also known as blind \acs{IQA}, operates without any reference and is considered the most challenging, requiring models to infer quality based solely on the distorted image~\cite{mittal_brisque_2012, bosse_deep_nriqa_2018}.
 
