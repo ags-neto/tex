@@ -138,8 +138,8 @@ p{0.50\linewidth}  % Tested Databases
     LPIPS-VGG~\cite{zhang2018lpips} & 2018 & Deep Learning & BAPPS, LIVE, CSIQ, TID2013 \\ \hline
     DISTS~\cite{ding2020dists} & 2020 & Deep Learning & LIVE, CSIQ, TID2013, KADID-10k \\ \hline
     WaDIQaM~\cite{bosse2017wadiqam} & 2017 & Deep Learning & LIVE, TID2013 \\ \hline
-    PSM & --- & --- & --- \\ \hline
-    SPIQ & --- & --- & --- \\ \hline
+    PSM~\cite{ghildyal2022psm} & 2022 & Deep Learning & BAPPS \\ \hline
+    SPIQ~\cite{chen2022spiq} & 2022 & Deep Learning & KADID-10k, KonIQ-10k \\ \hline
 \end{longtable}
 
 \acs{FR}-\acs{IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR}-\acs{IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications~\cite{mittal2012making, hosu2020koniq}.
@@ -287,7 +287,7 @@ where $l(x, y)$ is the luminance similarity, $C(x, y)$ is the contrast similarit
 
 The Weighted Structural Similarity (W-SSIM)~\cite{li2009wssim,li2010wssim} is a region-pooled extension of SSIM that emphasizes perceptually important areas of an image. Instead of computing a uniform average of local SSIM values, W-SSIM assigns a larger weight to a region of interest (ROI), such as the image center, and a smaller weight to the surrounding regions. The final score is given by:
 \begin{equation}
-\text{W-SSIM} = w \cdot \frac{\sum_{x} M(x)\,S(x)}{\sum_{x} M(x)} + (1-w) \cdot \frac{\sum_{x} (1-M(x))\,S(x)}{\sum_{x} (1-M(x))}.
+\text{W-SSIM} = w \cdot \frac{\sum_{x} M(x)\,S(x)}{\sum_{x} M(x)} + (1-w) \cdot \frac{\sum_{x} (1-M(x))\,S(x)}{\sum_{x} (1-M(x))}
 \end{equation}
 where $S(x)$ denotes the local SSIM value at pixel $x$, $M(x)$ is a binary mask equal to 1 in the ROI and 0 elsewhere, and $w$ is the weight assigned to the ROI. In the simple case where the ROI is defined as the central region and $w=0.7$, this formulation reduces to the implementation described, aligning with earlier region-weighted SSIM variants proposed in the literature.
 
@@ -391,73 +391,31 @@ WaDIQaM~\cite{bosse2017wadiqam} employs deep convolutional networks to learn a p
 \end{equation}
 where $q_p(x,y)$ is the predicted quality of patch $p$ and $w_p$ is its learned weight. By learning both local quality prediction and patch importance, WaDIQaM achieves state-of-the-art correlation with human opinion scores in a data-driven manner.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsubsection{Deep Learning-based Metrics}\label{sec:deep_learning_based_metrics}
-
-Learning-based full-reference IQA models leverage deep neural networks to capture perceptual similarity in a data-driven manner. Unlike traditional models that rely on handcrafted features or analytic formulations of human perception, these methods operate in learned feature spaces derived from large-scale image datasets. The central assumption is that perceptual similarity can be approximated by comparing intermediate activations of pretrained convolutional neural networks (CNNs)~\cite{Zhang2018LPIPS}. The Learned Perceptual Image Patch Similarity (LPIPS) metric exemplifies this approach by computing a weighted $L_2$ distance between feature maps extracted from networks such as VGG or AlexNet. Subsequent models, such as DISTS~\cite{ding2020dists}, refine this idea by balancing structural and texture similarity through adaptive weighting schemes. Other approaches, like WaDIQaM~\cite{Bosse2018WaDIQaM}, train task-specific regressors over deep features extracted from both the reference and distorted images. These models achieve high correlation with human opinion scores, particularly in cases involving complex or perceptually subtle distortions, but often require careful normalization and calibration of feature space distances.
-
-The LPIPS metric computes the distance between deep feature maps of a reference image $x$ and a distorted image $y$ as follows:
-
+PSM~\cite{ghildyal2022psm} builds on LPIPS to make full-reference perceptual similarity robust to small, imperceptible misalignments. It replaces shift-sensitive elements in the feature extractor with anti-aliased strided convolutions, anti-aliased pooling, reduced strides, and appropriate padding, then aggregates layerwise feature distances like LPIPS. Let $F_l(x)$ be shift-tolerant features at layer $l$ and $\hat{F}_l$ their channel-normalized maps; the score is
 \begin{equation}
-\text{LPIPS}(x, y) = \sum_{l} \frac{1}{H_l W_l} \sum_{h=1}^{H_l} \sum_{w=1}^{W_l} \| w_l \odot (\hat{f}_l^x(h, w) - \hat{f}_l^y(h, w)) \|_2^2
+\text{PSM}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l}\sum_{h,w} \big| \hat{F}_l(x)_{h,w}-\hat{F}_l(y)_{h,w}\big|_2^2,
 \end{equation}
-where $\hat{f}_l^x$ and $\hat{f}_l^y$ are the normalized feature maps at layer $l$ for images $x$ and $y$, respectively, with spatial dimensions $H_l \times W_l$. The weights $w_l$ are learned scalars for each channel, and $\odot$ denotes element-wise multiplication.
+where $w_l$ are learned weights. This preserves perceptual fidelity while reducing spurious changes under 1-2 pixel shifts.
 
-The DISTS metric combines feature similarity and texture similarity between corresponding feature maps:
-
+SPIQ~\cite{chen2022spiq} is an approach that first learns a quality-aware visual representation via self-supervised pretraining, then fits a lightweight regressor on top with limited \acs{MOS} labels. Two augmented views of the same image are encouraged to produce consistent features during pretraining; at inference a regressor maps features to a scalar quality:
 \begin{equation}
-\text{DISTS}(x, y) = \sum_{l} \alpha_l \cdot S_l(x, y) + \beta_l \cdot T_l(x, y)
+\text{SPIQ}(x) = g\big(f(x)\big),
 \end{equation}
-where $S_l(x, y)$ is the structure similarity component computed as the cosine similarity between deep features at layer $l$, and $T_l(x, y)$ is the texture similarity component, often based on the mean and variance of feature activations. The coefficients $\alpha_l$ and $\beta_l$ are learned to balance structure and texture contributions for each layer $l$.
+where $f$ is the self-supervised backbone and $g$ is a trained regression head. This decouples representation learning from scarce labels and transfers well across distortions.
 
-WaDIQaM-FR learns a patch-based quality prediction model using paired deep features from the reference image $x$ and the distorted image $y$. Given a patch pair $(x_i, y_i)$, deep features are extracted using a shared-weight CNN encoder, and the resulting representations are concatenated and passed through a regression network to predict a local quality score $q_i$. The final quality score is the weighted average over all patches:
+\subsection{\acl{NR} \acs{IQA}}\label{sec:no_reference_iqa}
 
-\begin{equation}
-Q(x, y) = \sum_{i=1}^{N} w_i \cdot q_i
-\end{equation}
-where $q_i = f_{\theta}(x_i, y_i)$ is the predicted quality for patch $i$, $w_i$ is a learned spatial weight indicating the perceptual relevance of patch $i$, and $N$ is the total number of patches. The function $f_{\theta}$ denotes the trained regression model with parameters $\theta$.
+\acs{NR}-\acs{IQA} estimates perceptual quality directly from a single image without requiring a pristine reference. Three modeling strategies are commonly distinguished. First, classical opinion-unaware methods rely on natural scene statistics or perceptually motivated features and operate without training on opinion scores, providing simple and interpretable baselines~\cite{mittal2012niqe,venka2015piqe}. Second, task-driven deep approaches exploit the robustness of embeddings from pretrained networks to derive quality scores without supervision, thereby aligning quality with representational stability rather than explicit perceptual labels~\cite{terhorst2020serfiq}. Third, supervised regressors adapt recognition backbones to annotated labels, explicitly learning to map features to continuous quality scores~\cite{hernandez2019faceqnet,meng2021magface}.  
 
-During training, the network minimizes the error between predicted quality scores and human-annotated MOS or DMOS labels using an appropriate loss function (e.g., MSE or Huber loss). Unlike LPIPS or DISTS, WaDIQaM does not rely on pretrained networks, allowing it to adapt feature representations to the task of quality prediction.
-
-In summary, full-reference IQA models span a spectrum from simple error-based metrics to perceptually and statistically grounded approaches. Fidelity-based methods offer computational efficiency but lack alignment with human perception. Perceptual similarity models incorporate structural and saliency cues to improve correlation with subjective quality. Information-theoretic metrics formalize quality as mutual information preservation under natural scene statistics. Learning-based models leverage deep features or end-to-end training to approximate perceptual similarity in high-dimensional spaces. Each class reflects a trade-off between interpretability, perceptual fidelity, and computational complexity, making their suitability highly context-dependent.
-
-\subsection{No-Reference IQA}\label{sec:no_reference_iqa}
+A complementary distinction concerns domain scope. Generic NR-IQA methods aim to capture perceptual fidelity across natural images, while face-specific approaches (\acs{FIQA}) target biometric utility, where quality is linked to recognition performance rather than aesthetics. The latter group has gained traction with the emergence of embedding-based models that quantify image suitability for reliable face recognition. Considering both modeling strategies and domain scope enables a nuanced comparison between general-purpose perceptual estimators and specialized, task-aligned FIQA signals.
 
 \begin{longtable}{
-p{0.13\linewidth}  % Metric
+p{0.15\linewidth}  % Metric
 p{0.05\linewidth}  % Year
-p{0.22\linewidth}  % Category
-p{0.50\linewidth}  % Tested Databases
+p{0.30\linewidth}  % Category
+p{0.38\linewidth}  % Tested Databases
 }
-    \caption{Summary of the 4 \acs{NR}-\acs{IQA} metrics used}\label{tab:nr_iqa_metrics}\\
+    \caption{Summary of the 5 \acs{NR}-\acs{IQA} metrics used}\label{tab:nr_iqa_metrics}\\
     \hline % chktex 44
     \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
     \hline % chktex 44
@@ -470,48 +428,57 @@ p{0.50\linewidth}  % Tested Databases
     \hline % chktex 44
     \endfoot % chktex 1
 
-    PIQE~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
-    NIQE~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
-    SerFiq~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
-    MagFace~\cite{wang2004image} & 2004 & Classical & LIVE, CSIQ, TID2008, TID2013, KADID-10k \\ \hline
+    NIQE~\cite{mittal2012niqe} & 2012 & Classical (opinion-unaware) & LIVE, CSIQ, TID2013, KonIQ-10k \\ \hline
+    PIQE~\cite{venka2015piqe} & 2015 & Classical (perception-based) & LIVE, CSIQ, TID2013, KADID-10k \\ \hline
+    FaceQnet~\cite{hernandez2019faceqnet} & 2019 & Face-specific (supervised regression) & VGGFace2, BioSecure, FRGC \\ \hline
+    SER-FIQ~\cite{terhorst2020serfiq} & 2020 & Face-specific (unsupervised) & LFW, VGGFace2, FRGC \\ \hline
+    MagFace~\cite{meng2021magface} & 2021 & Face-specific (supervised) & MS-Celeb-1M, IJB-C, LFW \\ \hline
+
 \end{longtable}
 
-\subsubsection{Traditional NR-IQA}\label{sec:traditional_nr_iqa}
+\subsubsection{Classical NR-IQA}\label{sec:classical_nr_iqa}
 
-Among traditional NR-IQA techniques, PIQE~\cite{piqe2016} (Perception-based Image Quality Evaluator) and NIQE~\cite{mittal2013making} (Natural Image Quality Evaluator) are widely used due to their computational simplicity. PIQE begins by dividing the input image into non-overlapping $16 \times 16$ blocks, denoted $B_i$, and identifying distorted blocks based on edge content and local variance thresholds. For each block, it computes perceptual features using the gradient magnitude:
-\begin{equation}
-S_i = \frac{1}{|B_i|} \sum_{(x,y) \in B_i} \sqrt{ {\left( \frac{\partial I}{\partial x} \right)}^2 + {\left( \frac{\partial I}{\partial y} \right)}^2 },
-\end{equation}
-and noise, estimated by subtracting a low-pass filtered (LPF) version of the block:
-\begin{equation}
-N_i = \text{std}\left( B_i - \text{LPF}(B_i) \right).
-\end{equation}
-The global PIQE score is computed via a weighted aggregation over the distorted blocks, $\mathcal{D}$:
-\begin{equation}
-\text{PIQE} = \frac{1}{|\mathcal{D}|} \sum_{i \in \mathcal{D}} w_i \cdot ( \alpha S_i + \beta N_i + \gamma C_i ),
-\end{equation}
-where $w_i$ are confidence weights and $\alpha, \beta, \gamma$ are scaling factors for sharpness, noise, and contrast, respectively. The final score is scaled between 0 (best quality) and 100 (worst quality).
+Classical \acs{NR}-\acs{IQA} methods operate without any training. These approaches rely on statistical regularities of natural images and perception-motivated cues to produce a scalar quality score that is easy to compute and interpret. They are attractive baselines because they generalize across content types and avoid dataset-specific supervision, but their assumptions can be violated in narrowly structured domains such as tightly cropped faces.
 
-In contrast, NIQE is grounded in natural scene statistics (NSS), using a statistical deviation model to quantify perceptual degradation. First, it applies Mean Subtracted Contrast Normalization (MSCN) to locally standardize luminance:
+\acf{NIQE}~\cite{mittal2012niqe} is grounded in \acf{NSS}, using a statistical deviation model to quantify perceptual degradation. First, it applies \acf{MSCN} to locally standardize luminance:
 \begin{equation}
 \hat{I}(x, y) = \frac{I(x, y) - \mu(x, y)}{\sigma(x, y) + \epsilon},
 \end{equation}
-from which it extracts statistical features associated with Generalized Gaussian Distributions (GGD) and Asymmetric GGD (AGGD). A multivariate Gaussian (MVG) model with mean $\mu_r$ and covariance $\Sigma_r$ is estimated to a set of pristine images. During inference, the Mahalanobis distance between the test image features $\mathbf{f}_t$ and the natural image model is used to compute the NIQE score:
+from which it extracts statistical features associated with \acf{GGD} and \acf{AGGD}. A \acf{MVG} model with mean $\mu_r$ and covariance $\Sigma_r$ is estimated from a set of pristine images. During inference, the Mahalanobis distance between the test image features $\mathbf{f}_t$ and the natural image model is used to compute the \acs{NIQE} score:
 \begin{equation}
 \text{NIQE}(\mathbf{f}_t) = \sqrt{ {(\mathbf{f}_t - \mu_r)}^T \Sigma_r^{-1} (\mathbf{f}_t - \mu_r) }.
 \end{equation}
-This formulation enables NIQE to operate in a completely opinion-unaware and unsupervised fashion, relying solely on deviations from natural image statistics to infer perceptual quality.
+Lower \acs{NIQE} values indicate statistics closer to the pristine manifold (better quality); higher values indicate stronger deviation.
+
+\acf{PIQE}~\cite{venka2015piqe} begins by dividing the input image into non-overlapping $16 \times 16$ blocks, denoted $B_i$, and identifying distorted blocks based on edge content and local variance thresholds. For each block, it computes perceptual features using the gradient magnitude:
+\begin{equation}
+S_i = \frac{1}{|B_i|} \sum_{(x,y) \in B_i} \sqrt{ {\left( \frac{\partial I}{\partial x} \right)}^2 + {\left( \frac{\partial I}{\partial y} \right)}^2 },
+\end{equation}
+and noise, estimated by subtracting a \acf{LPF} version of the block:
+\begin{equation}
+N_i = \text{std}\left( B_i - \text{LPF}(B_i) \right).
+\end{equation}
+The global \acs{PIQE} score is computed via a weighted aggregation over the distorted blocks, $\mathcal{D}$:
+\begin{equation}
+\text{PIQE} = \frac{1}{|\mathcal{D}|} \sum_{i \in \mathcal{D}} w_i \cdot ( \alpha S_i + \beta N_i + \gamma C_i ),
+\end{equation}
+where $w_i$ are confidence weights and $\alpha, \beta, \gamma$ are scaling factors for sharpness, noise, and contrast, respectively. The reported score is typically scaled to $[0,100]$, with larger values reflecting worse perceived quality.
 
 \subsubsection{Facial Image Quality Assessment}\label{sec:fiqa}
 
-FIQA refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic NR-IQA, FIQA does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{damer2021localfusion, best2018faceqnet}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
+\acs{FIQA} refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic \acs{NR}-\acs{IQA}, \acs{FIQA} does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{survey2022fiqa, abed2025fiqabiometric}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
 
-Traditional FIQA methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{grother2003facequality}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, terhorst2022quality}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
+Traditional \acs{FIQA} methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{phillips2003face}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, best2017facerecon}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
 
-FIQA is an inherently task-dependent quality problem. Unlike general-purpose IQA, it must account for the characteristics of the recognition model and dataset. Furthermore, FIQA methods often correlate poorly with perceptual quality metrics, as an image may appear visually high-quality but remain unsuitable for matching due to pose or occlusion. This motivates the need to explore perceptually grounded IQA models tailored to face data, and to investigate how traditional metrics can be adapted, fused, or compared against biometric-specific quality indicators.
+\acs{FIQA} is an inherently task-dependent quality problem. Unlike general-purpose \acs{IQA}, it must account for the characteristics of the recognition model and dataset. Furthermore, \acs{FIQA} methods often correlate poorly with perceptual quality metrics, as an image may appear visually high-quality but remain unsuitable for matching due to pose or occlusion~\cite{babnik2022bias}. This motivates the need to explore perceptually grounded \acs{IQA} models tailored to face data, and to investigate how traditional metrics can be adapted, fused, or compared against biometric-specific quality indicators.
 
+\acf{FaceQnet}~\cite{hernandez2019faceqnet} formulates \acs{FIQA} as regression trained on proxy targets derived from recognition performance rather than MOS. For each subject, an ICAO-compliant reference image \(\mathbf{x}_{\mathrm{ref}}\) is selected. A fixed face matcher \(F(\cdot,\cdot)\) computes a similarity score \(s(\mathbf{x})=F(\mathbf{x},\mathbf{x}_{\mathrm{ref}})\) between a candidate image \(\mathbf{x}\) and its reference. Scores are normalized to \([0,1]\) to form targets \(\tilde{s}(\mathbf{x})\). A regression network \(r_{\theta}\) takes either the image or a recognition embedding as input and predicts \(\hat{q}=r_{\theta}(\mathbf{x})\). Training minimizes
+\begin{equation}
+\mathcal{L}_{\mathrm{FaceQnet}}=\frac{1}{N}\sum_{n=1}^{N}\left(r_{\theta}(\mathbf{x}_n)-\tilde{s}(\mathbf{x}_n)\right)^2.
+\end{equation}
+At inference, \(r_{\theta}\) outputs a quality score \(q_{\mathrm{FQ}}\in[0,1]\). Because targets come from a matcher, FaceQnet quality is explicitly tied to verification utility, but remains dependent on the chosen backbone and matcher used to generate the proxy labels.
 
-In contrast to traditional statistical NR-IQA methods, recent approaches such as SER-FIQ~\cite{terhorst2020serfiq} (Stochastic Embedding Robustness for Face Image Quality) and MagFace~\cite{meng2021magface} adopt deep learning-based strategies tailored specifically for facial image quality. SER-FIQ builds on the intuition that high-quality facial images produce consistent embeddings under stochastic dropout perturbations, while low-quality images result in more variable and unstable representations. Given a face image, a pre-trained face recognition model (e.g., ArcFace) with dropout enabled generates $T$ stochastic embeddings $\{\mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_T\} \in \mathbb{R}^d$. The pairwise cosine similarities between these embeddings are then computed:
+\acf{SER-FIQ} builds on the intuition that high-quality facial images produce consistent embeddings under stochastic dropout perturbations, while low-quality images result in more variable and unstable representations. Given a face image, a pre-trained face recognition model (e.g., ArcFace) with dropout enabled generates $T$ stochastic embeddings $\{\mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_T\} \in \mathbb{R}^d$. The pairwise cosine similarities between these embeddings are then computed:
 \begin{equation}
 \text{sim}(\mathbf{e}_i, \mathbf{e}_j) = \frac{\mathbf{e}_i \cdot \mathbf{e}_j}{\|\mathbf{e}_i\| \|\mathbf{e}_j\|}, \quad \forall i,j \in \{1,\dots,T\}, i < j.
 \end{equation}
@@ -521,39 +488,160 @@ The final SER-FIQ score is derived from the mean or standard deviation of the si
 \end{equation}
 where higher scores indicate more stable (and thus higher-quality) facial representations. This method is fully unsupervised and exploits intrinsic model uncertainty as an indicator for quality.
 
-MagFace, on the other hand, is a supervised approach that explicitly learns a quality-aware embedding space. It introduces a margin-adaptive loss that couples facial feature magnitude with image quality. For an embedding \( \mathbf{e} \in \mathbb{R}^d \), its \( L_2 \)-norm \( \|\mathbf{e}\| \) is used as a measure for quality. The classification loss is modified as:
+\acf{MagFace}, on the other hand, is a supervised approach that explicitly learns a quality-aware embedding space. It introduces a margin-adaptive loss that couples facial feature magnitude with image quality. For an embedding \( \mathbf{e} \in \mathbb{R}^d \), its \( L_2 \)-norm \( \|\mathbf{e}\| \) is used as a measure for quality. The classification loss is modified as:
 \begin{equation}
 \mathcal{L}_{\text{MagFace}} = -\log \frac{e^{s \cdot (\cos(\theta_y + m(\|\mathbf{e}\|)))}}{e^{s \cdot (\cos(\theta_y + m(\|\mathbf{e}\|)))} + \sum_{j \neq y} e^{s \cdot \cos(\theta_j)}},
 \end{equation}
-where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector of the correct class, \( s \) is a scaling factor, and \( m(\|\mathbf{e}\|) \) is a dynamic margin that increases with quality. The final MagFace quality score is proportional to the magnitude \( \|\mathbf{e}\| \), constrained during training to lie within a fixed interval \([l, u]\) for regularization. Unlike SER-FIQ, MagFace learns to embed quality-awareness directly into the feature space through supervision, enabling both verification and quality prediction in a unified framework.
-
+where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector of the correct class, \( s \) is a scaling factor, and \( m(\|\mathbf{e}\|) \) is a dynamic margin that increases with quality. The final MagFace quality score is proportional to the magnitude \( \|\mathbf{e}\| \), constrained during training to lie within a fixed interval \([l, u]\) for regularization.
 
 \subsection{Fusion-Based IQA Models}\label{sec:fusion_iqa}
 
-To address the perceptual limitations of individual image quality metrics, several fusion-based approaches have been proposed. Liu et al.~\cite{liu2013mmf} introduced a multi-method fusion (MMF) framework that linearly combines full-reference IQA scores via supervised regression to better approximate MOS.\@ Henniger et al.~\cite{henniger2020biosig} developed a Random Forest model trained on handcrafted features derived from ISO-compliant facial images, improving performance in biometric settings. These works demonstrated that integrating complementary quality cues can significantly enhance perceptual alignment, outperforming standalone metrics in correlation with human judgment~\cite{robinson2020bias}.
+Individual \acs{FR} metrics capture different aspects of perceptual degradation. Error-based metrics respond to amplitude distortions, structure-based metrics track local similarity, and learning-based metrics correlate with semantic distortions. This complementarity motivates fusion: combining heterogeneous scores to approximate \acs{MOS} more faithfully than any single metric.
 
-In parallel, the scarcity of large-scale human-labeled datasets has motivated weakly supervised learning strategies. Chen et al.~\cite{chen2021pseudo} generated pseudo-MOS labels by averaging outputs of multiple FR-IQA metrics. RankIQA~\cite{liu2017rankiqa} applied relative ranking supervision on synthetically degraded images to learn ordinal quality representations. Wu et al.~\cite{wu2020cascaded} used cascaded convolutional regressors trained on pseudo-MOS labels, demonstrating that pseudo-supervision can bootstrap learning when subjective ground truth is limited.
+Early supervised fusion combined normalized metric scores linearly. \cite{liu2012fusion} introduced the \acf{MMF} framework, where a regression model learns weights that map a vector of \acs{FR}-\acs{IQA} scores to \acs{MOS}. Non-linear learners extend this principle by modeling interactions between metrics and mitigating collinearity. In a biometric setting, \cite{henniger2020assessment} demonstrated that tree ensembles trained on ISO-compliant facial images improve correlation with utility-focused targets. Subsequent studies confirmed that carefully designed fusion outperforms standalone metrics in \acf{PLCC} and \acf{SRCC} against human judgments~\cite{babnik2022bias}.
 
-These developments support the feasibility of learning perceptual quality through fusion, either via model ensembles or by generating training supervision. Our approach builds on this principle: we construct a regression-based fusion model that aggregates multiple FR-IQA scores to predict perceptual quality, using human-labeled MOS as supervision. This model is then applied to a larger unlabeled dataset to generate pseudo-MOS scores, which in turn are used to train a no-reference regressor. This hybrid full-to-no-reference framework enables scalable, perceptually grounded quality estimation even in the absence of pristine reference images.
+When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints: one line of work fuses multiple \acs{FR}-\acs{IQA} outputs into pseudo-\acs{MOS} via averaging or reliability-weighted fusion \cite{lai2022pseudomos}; another infers labels for unlabeled samples through semi-supervised and positive unlabeled objectives within \acs{FR}-\acs{IQA} \cite{cao2022semisupervied}; a complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations \cite{liu2017rankiqa}; and, building on these proxy signals, cascaded predictors trained on pseudo-\acs{MOS} can bootstrap quality estimation when subjective ground truth is limited \cite{wu2020cascaded}.
 
+\subsubsection{Regression Models}~\label{sec:regression_models}
 
-\section{Steganography}\label{sec:steganography}
+Fusion-based \acs{IQA} learns a mapping from heterogeneous \acs{IQA} scores to a single perceptual estimate. Let each image have a score vector \(\mathbf{x}\in\mathbb{R}^{p}\) collecting \(p\) harmonized metrics and a target \(y\in\mathbb{R}\) given by \acs{MOS}. We first align polarity so that larger scores mean better quality, then optionally standardize each metric. Fusion then solves empirical risk minimization
+\begin{equation}
+  \min_{\theta}\ \frac{1}{n}\sum_{i=1}^{n}\ell\!\left(y_i,\ f(\mathbf{x}_i;\theta)\right) \quad \text{with} \quad f:\mathbb{R}^{p}\to\mathbb{R}
+\end{equation}
+using squared or robust losses. To handle redundancy we may select the top \(k\) metrics or use a low-dimensional projection estimated from the score matrix. The learned fusion \(f\) combines complementary cues to approximate human judgment more faithfully than any single metric.
 
-Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through Least Significant Bit (LSB) substitution~\cite{steganography2017}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the Discrete Cosine Transform (DCT) or Discrete Wavelet Transform (DWT), embedding data in coefficients less sensitive to compression~\cite{steganography2016survey}. Adaptive methods further refine this by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{steganography2018adaptive}.
+There are four useful categories for fusion on tabular metric vectors. Linear models assume an approximately additive mapping and control complexity via shrinkage or sparsity \cite{linearregression, ridgeregression, bayesianridge, elasticnet}. Kernel methods capture smooth non-linear interactions through implicit feature maps with margin based objectives \cite{svr}. Bagging and gradient boosting ensembles model interactions and are robust to heterogeneous scales \cite{randomforest, ensembles, gradboosting, histboost}. Modern boosted-tree frameworks optimize second order objectives with explicit regularization and efficient growth strategies \cite{xgboost, lightgbm, catboost}.
 
-However, current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as MRTDs. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
+Linear Regression~\cite{linearregression} fits an affine predictor by minimizing squared residuals:
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2.
+\end{equation}
+The normal equations yield a closed form when \(\mathbf{X}\) is full rank. Coefficients provide direct attribution to each metric, but estimates can be unstable under collinearity.
 
-\subsection{Printer-proof Steganography}
-Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on Generative Adversarial Networks (GANs)~\cite{gans2018} to encode and decode information, we can obtain various results depending on the method used.
+Ridge Regression~\cite{ridgeregression} stabilizes linear fusion with \(L_2\) shrinkage
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2+\lambda\|\mathbf{w}\|_2^2,\quad \lambda>0.
+\end{equation}
+The solution \(\hat{\mathbf{w}}=(\mathbf{X}^{\top}\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^{\top}\mathbf{y}\) trades small bias for reduced variance and handles correlated metrics well.
+
+Bayesian Ridge~\cite{bayesianridge} is a probabilistic ridge with Gaussian prior and noise
+\begin{align}
+\mathbf{w}\mid\alpha &\sim \mathcal{N}(\mathbf{0},\,\alpha^{-1}\mathbf{I}), \quad
+y_i\mid\mathbf{x}_i,\mathbf{w},\beta \sim \mathcal{N}(\mathbf{w}^{\top}\mathbf{x}_i+b,\,\beta^{-1}),\\
+\mathbf{S} &= \left(\alpha\mathbf{I}+\beta \mathbf{X}^{\top}\mathbf{X}\right)^{-1},\quad
+\mathbf{m}=\beta\,\mathbf{S}\,\mathbf{X}^{\top}\mathbf{y}.
+\end{align}
+Posterior \(p(\mathbf{w}\mid\mathcal{D})=\mathcal{N}(\mathbf{m},\mathbf{S})\) gives predictive mean \(\hat{y}_*=\mathbf{m}^{\top}\mathbf{x}_*+b\) and variance \(\beta^{-1}+\mathbf{x}_*^{\top}\mathbf{S}\mathbf{x}_*\), useful to quantify uncertainty in fused quality.
+
+ElasticNet~\cite{elasticnet} promotes sparse yet stable linear fusion with mixed penalties
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2
++\alpha\left(\rho\|\mathbf{w}\|_{1}+\tfrac{1-\rho}{2}\|\mathbf{w}\|_{2}^{2}\right),
+\end{equation}
+with \(\alpha>0\) and \(\rho\in[0,1]\). It can drop redundant metrics while shrinking the rest to mitigate collinearity.
+
+\acf{SVR}~\cite{svr} fits \(f(\mathbf{x})\) with an \(\epsilon\)-insensitive loss and capacity control
+\begin{align}
+\min_{\mathbf{w},b,\boldsymbol{\xi},\boldsymbol{\xi}^*}\ &\tfrac{1}{2}\|\mathbf{w}\|_2^2 + C\sum_{i=1}^{n}(\xi_i+\xi_i^*)\\
+\text{s.t.}\ & y_i - f(\mathbf{x}_i) \le \epsilon + \xi_i,\quad
+f(\mathbf{x}_i) - y_i \le \epsilon + \xi_i^*,\quad
+\xi_i,\xi_i^* \ge 0,
+\end{align}
+with kernelized predictor \(f(\mathbf{x})=\sum_{j}(\alpha_j-\alpha_j^*)K(\mathbf{x},\mathbf{x}_j)+b\).
+Using the \acf{RBF} kernel \(K(\mathbf{x},\mathbf{x}')=\exp(-\gamma\|\mathbf{x}-\mathbf{x}'\|^2)\) captures smooth non-linear interactions between metrics.
+
+Random Forest~\cite{randomforest} employs bagging regression trees to reduce variance and requires minimal preprocessing. Nodes choose splits that maximize variance reduction
+\begin{equation}
+\Delta=\mathrm{Var}(S)-\frac{|S_L|}{|S|}\mathrm{Var}(S_L)-\frac{|S_R|}{|S|}\mathrm{Var}(S_R),
+\end{equation}
+and the fusion prediction averages \(T\) trees
+\begin{equation}
+\hat{y}(\mathbf{x})=\frac{1}{T}\sum_{t=1}^{T}h_t(\mathbf{x}).
+\end{equation}
+
+Extremely randomized trees~\cite{ensembles} sample split thresholds at random for each feature before selecting the best split, which increases diversity and often lowers variance. Aggregation is identical to Random Forest, with similar variance reduction analysis.
+
+Gradient Boosting~\cite{gradboosting} employs additive modeling to fit weak learners to pseudo residuals. For squared error, residuals are \(r_{im}=y_i-f_{m-1}(\mathbf{x}_i)\). Each stage fits a tree \(b_m\) to \(\{(\mathbf{x}_i,r_{im})\}\) and updates
+\begin{equation}
+f_m(\mathbf{x})=f_{m-1}(\mathbf{x})+\nu\,b_m(\mathbf{x}),
+\end{equation}
+with learning rate \(\nu\in(0,1]\). This captures non-linear metric interactions important in perceptual fusion.
+
+Histogram Gradient Boosting~\cite{histboost} is a histogram variant of gradient boosting that bins each feature into \(B\) buckets and accumulates gradient and Hessian statistics per bin to evaluate splits efficiently. It approximates standard boosting while improving speed and memory on many-metric settings.
+
+XGBoost~\cite{xgboost} optimizes a second-order regularized objective with per-leaf closed-form weights:
+\begin{equation}
+\mathcal{L}=\sum_{i=1}^{n}\ell(y_i,\hat{y}_i)+\sum_{t=1}^{T}\Omega(f_t),\qquad
+\Omega(f)=\gamma T+\tfrac{\lambda}{2}\sum_{j=1}^{L}w_j^2.
+\end{equation}
+With gradients \(g_i=\partial_{\hat{y}}\ell\) and Hessians \(h_i=\partial_{\hat{y}}^2\ell\), the optimal leaf weight and split gain are
+\begin{equation}
+w_j^{*}=-\frac{\sum_{i\in I_j} g_i}{\sum_{i\in I_j} h_i+\lambda},\qquad
+\mathrm{Gain}=\tfrac{1}{2}\left(\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}\right)-\gamma,
+\end{equation}
+where \(G_{\cdot}=\sum g_i\) and \(H_{\cdot}=\sum h_i\). This yields accurate and regularized fusion on small to medium labeled sets.
+
+LightGBM~\cite{lightgbm} builds trees leaf-wise (best-first) under depth or leaf constraints and uses gradient-based one-side sampling and exclusive feature bundling, selecting each split by maximizing a second-order regularized gain:
+\begin{equation}
+\mathrm{Gain}=\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}-\gamma,
+\end{equation}
+where $G_\cdot=\sum g_i$ and $H_\cdot=\sum h_i$ are the sums of first and second derivatives over the node and $\gamma$ penalizes splits.
+
+CatBoost~\cite{catboost} performs ordered boosting with symmetric trees to mitigate prediction shift by computing gradients on permutation prefixes and updating leaves with second-order estimates while optimizing a standard regression loss:
+\begin{align}
+f_t(\mathbf{x}) &= f_{t-1}(\mathbf{x}) + \nu\, b_t(\mathbf{x}), \\
+w_j^{*} &= -\frac{G_j}{H_j+\lambda},
+\end{align}
+where $G_j=\sum g_i$ and $H_j=\sum h_i$ are (ordered) gradient and Hessian sums over leaf $j$, $\nu$ is the learning rate, and $\lambda$ is the leaf regularization.
+
+\section{Image distortion types}\label{sec:distortions}
+
+Image distortions in IQA are typically organized into operational families that mirror failures across capture, processing, compression, transmission, and display, with taxonomies grounded in vision science and formal subjective testing protocols \cite{survey2006wang,survey2020zhai,ma2025survey,itu2023r}. Core classes include lossy compression artifacts from transform quantization and entropy coding, blur from optical defocus or motion, stochastic noise from sensor and electronics, geometric and resampling effects such as aliasing and interpolation blur, and photometric or color shifts induced by exposure, tone mapping, and white-balance errors; real acquisition pipelines often produce authentic mixtures of these mechanisms, especially in mobile, webcam, and surveillance scenarios \cite{kamble2015nriqa,dost2022rriqa,survey2017aquisition}.
+
+\subsection{Lossy compression}\label{sec:compression}
+
+Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate; JPEG is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode decode cycles may accumulate damage; the effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
+
+\subsection{Blur}\label{sec:blur}
+
+Blur covers optical defocus from finite depth of field and focusing errors, Gaussian like point spread from lens or sensor integration, and motion blur caused by camera or subject movement; all smear edges, reduce acutance, and degrade recognizability of small structures such as eyes or mouth corners \cite{gonzalez2009digital,survey2020zhai}. Real world drivers include handheld shooting, long exposures in low light, rolling shutter readout, and surveillance cameras with slow shutters or compression integrated stabilization \cite{survey2017aquisition,sheikh2006live}.
+
+\subsection{Additive noise}\label{sec:noise}
+
+Additive noise includes sensor read noise, signal dependent shot noise, thermal noise, and coarse impulse like contamination from faulty pixels or transmission induced bit flips; it manifests as grain, color speckle, or salt and pepper dots that mask texture and create false edges \cite{survey2023denoising,gonzalez2009digital}. Noise dominates in dim scenes, small pixel sensors, and high ISO capture and interacts nonlinearly with denoising and sharpening in the camera pipeline \cite{survey2017aquisition}. Lab datasets simulate Gaussian, Poisson, and impulse processes across standard deviations or rates \cite{sheikh2006live,tid2013,kadid10k}.
+
+\subsection{Resampling and resolution changes}\label{sec:resampling}
+
+Resampling and resolution changes introduce aliasing, moiré, interpolation blur, and haloing when images are downscaled or upscaled without ideal prefiltering; repeated resampling in social platforms or display adaptation pipelines compounds these effects \cite{gonzalez2009digital,waterloo}. Edge directed sharpening and unsharp masking can further create overshoot undershoot ripples, perceived as halos around high contrast structures \cite{survey2006wang}.
+
+\subsection{Photometric and color distortions}\label{sec:photometric}
+
+Photometric and color distortions cover exposure errors, gamma mis calibration, global and local contrast changes, white balance shifts, channel noise imbalance, and saturation clipping; these arise from auto exposure and auto white balance failures, tone mapping, display pipeline mismatches, and ad hoc enhancement filters \cite{survey2017aquisition,ntsc1953yiq}. Perceptually, these alter scene realism, skin tone fidelity, and local visibility of detail; benchmark datasets include luminance and contrast change variants, color shifts, and mean intensity shifts to probe metric sensitivity \cite{tid2013,kadid10k}.
+
+\subsection{Transmission and packet-level artifacts}\label{sec:transmission}
+
+Transmission and packet level artifacts occur when compressed bitstreams traverse unreliable channels; packet loss, bit errors, or jitter map to block corruption, freezing, or tearing in images and video, especially over wireless links or congested networks \cite{chandra2016transmission,survey2019transmission}. Although less common in still images than in streaming video, partial downloads and progressive JPEG decoding can leave visible blocky regions or coarse approximations that degrade perceived quality \cite{rabbani1991digital,livewebsite}.
+
+\subsection{Authentic mixtures}\label{sec:authentic_mixtures}
+
+Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high ISO noise, heavy denoising and sharpening, aggressive JPEG compression, slight motion blur, and color cast; in surveillance, long exposure blur, compression, and downsampling co occur \cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating IQA models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as ITU R BT.500 \cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families \cite{survey2019shahrukh,ma2025survey}.
+
+\subsection{Steganography}\label{sec:steganography}
+
+Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through \acf{LSB} substitution~\cite{steganography2018adaptive}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the \acf{DCT} or \acf{DWT}, embedding data in coefficients less sensitive to compression~\cite{survey2016steganography}. Adaptive methods further refine this by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{baluja2017steganography}.
+
+However, current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as \acs{MRTDs}. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
+
+Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on \acf{GANs}~\cite{heusel2017gans} to encode and decode information, we can obtain various results depending on the method used.
 
 \subsubsection{StegaStamp}
-StegaStamp~\cite{stegastamp2020} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite these degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual LPIPS loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
+StegaStamp~\cite{tancik2020stegastamp} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite these degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual LPIPS loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
 
-\subsubsection{CodeFace}
-CodeFace~\cite{codeface2021} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a Spatial Transformer Network (STN) for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. CodeFace proves effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
+\subsubsection{Code\,Face}
+Code\,Face~\cite{shadmand2021codeface} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a \acf{STN} for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. Code\,Face proves effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
 
 \subsubsection{RiemStega}
-RiemStega~\cite{cruz2025riemstega} innovates by introducing a Riemannian manifold-based loss. Instead of comparing pixel values, it represents images through symmetric positive definite (SPD) covariance matrices and minimizes the affine-invariant Riemannian distance between the cover and stego image descriptors. This statistical approach preserves global structural and texture patterns more robustly under degradation. The method maintains high visual fidelity while increasing message recoverability post-printing, and demonstrates strong performance on both generic and facial image datasets.
+RiemStega~\cite{cruz2025riemstega} innovates by introducing a Riemannian manifold-based loss. Instead of comparing pixel values, it represents images through \acf{SPD} covariance matrices and minimizes the affine-invariant Riemannian distance between the cover and stego image descriptors. This statistical approach preserves global structural and texture patterns more robustly under degradation. The method maintains high visual fidelity while increasing message recoverability post-printing, and demonstrates strong performance on both generic and facial image datasets.
 
 \subsubsection{StampOne}
-StampOne~\cite{stampone2024} incorporates frequency-domain awareness by applying DWT and gradient maps to both image and message during encoding. The model balances frequency bands via a learned attention mechanism and includes frequency-domain discriminators in its loss functions. This results in encoded images with spectral properties closely matching those of the original, enhancing resilience to printer-related distortions such as color shifts and sensor noise. StampOne outperforms prior methods in both visual similarity and decoding accuracy, especially for high-frequency facial features.
+StampOne~\cite{shadmand2024stampone} incorporates frequency-domain awareness by applying \acs{DWT} and gradient maps to both image and message during encoding. The model balances frequency bands via a learned attention mechanism and includes frequency-domain discriminators in its loss functions. This results in encoded images with spectral properties closely matching those of the original, enhancing resilience to printer-related distortions such as color shifts and sensor noise. StampOne outperforms prior methods in both visual similarity and decoding accuracy, especially for high-frequency facial features.
