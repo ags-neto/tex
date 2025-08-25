@@ -1,5 +1,9 @@
 \chapter{Methodology}\label{chap:methodology}
 
+\section{Methodology}\label{sec:methodology}
+
+This section describes the experimental framework adopted to develop and evaluate the proposed image quality assessment pipeline. The methodology integrates both subjective and objective approaches, structured into successive stages. First, we introduce the datasets and the subjective quality assessment protocols used to collect and process mean opinion scores (MOS). Next, we present the objective evaluation pipeline, including full-reference (FR) metrics grouped by category and no-reference (NR) facial image quality assessment (FIQA) methods. We then describe the generation of pseudo-MOS through fusion of FR metrics, which provides weak supervision for subsequent regression models. Different regression families, including linear, kernel-based, and tree-ensemble methods, are compared as fusion engines. Building on this, we detail the training of a convolutional neural network (CNN) for NR-IQA under pseudo-MOS supervision. To ensure fairness and robustness, a debiasing procedure based on multi-way ANOVA is applied to subjective scores. Finally, we define the evaluation protocol, reporting correlations and error measures on both labeled and disjoint test sets. This layered design ensures consistency across subjective, objective, and learned components of the study.
+
 \section{Dataset}
 
 Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The FRLL dataset was selected for its high-fidelity ICAO-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
@@ -74,7 +78,7 @@ The steganographic distortions are visible in Fig.~\ref{fig:steganography}, whic
 
 \section{Collection of Subjective Scores}
 
-We followed the ITU-R BT.500--15~\cite{ITU-R-BT500} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
+We followed the ITU-R BT.500--15~\cite{itu2023r} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
 
 Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
@@ -84,7 +88,7 @@ Each image was shown individually, with no time limit. Ratings were submitted us
     \caption{Django-based webapp created for the Single Stimulus test.}\label{fig:webapp}
 \end{figure}
 
-Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{ITU-R-BT500}, resulting in the exclusion of one participant.
+Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in ITU-R BT.500--15~\cite{itu2023r}, resulting in the exclusion of one participant.
 
 \begin{table}
     \centering
