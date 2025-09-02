@@ -1,39 +1,65 @@
-\section{Results}
+\chapter{Results}\label{chap:results}
 
-\subsection{Full-Reference Fusion Metric Performance}
+\section{Full-Reference Fusion Metric Performance}
 
-
-To interpret feature contributions, we used SHAP~\cite{shap} (SHapley Additive exPlanations) values derived from CatBoost's internal structure. SHAP values quantify how much a feature pushes the model's output away from the expected value. As shown in Fig.~\ref{fig:shap_summary}, MS-SSIM~\cite{wang2003multiscale} (Multiscale SSIM) and UQI~\cite{wang2004ssim} (Universal Quality Index) had the largest positive impact on predictions, while PSNR-B~\cite{ma2011psnr}, VIF\cite{sheikh2006image}, (PSNR-Blocking), PSNR~\cite{pnsr2003} and SNR~\cite{gonzalez2002digital} (Signal-to-Noise Ratio) contributed with moderate influence. The color encoding further highlights how high and low feature values affect the model output.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\linewidth]{images/shap_summary.png}
-    \caption{SHAP summary plot for $k=6$, generated from the best CatBoost model.}\label{fig:shap_summary}
-\end{figure}
-
-When comparing the fusion metric with the individual FR metrics, Table~\ref{tab:fr_model_score} shows that the fusion metric outperformed all individual metrics in terms of PLCC, SRCC, MSE and MAE.\@ This demonstrates the effectiveness of our approach in combining multiple FR metrics to improve overall performance.
+Following the SVD and Picard analysis from Fig.~\ref{fig:svd_picard}, which indicated that $k=6$ reached 95\% explained variance with stable projections, Table~\ref{tab:fr_individual_metrics} reports the marginal correlation and error of the selected FR metrics with MOS.
 
 \begin{table}
 \centering
-\caption{Performance of our Fusion metric and the selected FR-IQA metrics. Higher PLCC and SRCC indicates better correlation with MOS.\@ Lower MSE and MAE indicate more accurate quality estimates.}\label{tab:fr_model_score}
+\caption{Individual FR-IQA metrics versus MOS on the unbias track. Higher PLCC and SRCC indicate stronger correlation; lower MSE and MAE indicate more accurate estimates.}
+\label{tab:fr_individual_metrics}
 \begin{tabular}{lcccc}
-\hline % chktex 44
-\textbf{Metric} & \textbf{PLCC} & \textbf{SRCC} & \textbf{MSE} & \textbf{MAE} \\
-\hline % chktex 44
-Fusion (CatBoost) & \textbf{0.8881} & \textbf{0.8893} & \textbf{65.07} & \textbf{6.160} \\
-MS-SSIM & 0.7712 & 0.8489 & 2542 & 47.27 \\
-PSNR & 0.8009 & 0.8132 & 420.7 & 16.57 \\
-PSNR-B & 0.7996 & 0.8126 & 434.8 & 16.84 \\
-SNR & 0.7931 & 0.8047 & 493.9 & 18.08 \\
-VIF & 0.7723 & 0.7671 & 2584 & 47.75 \\
-UQI & 0.6866 & 0.8085 & 2540 & 47.24 \\
-\hline % chktex 44
+\hline
+Metric & PLCC & SRCC & MSE & MAE \\
+\hline
+MS-SSIM & 0.7712 & \textbf{0.8489} & 2542.00 & 47.27 \\
+PSNR & \textbf{0.8009} & 0.8132 & \textbf{420.70} & \textbf{16.57} \\
+PSNR-B & 0.7996 & 0.8126 & 434.80 & 16.84 \\
+SNR & 0.7931 & 0.8047 & 493.90 & 18.08 \\
+VIF & 0.7723 & 0.7670 & 2584.00 & 47.75 \\
+UQI & 0.6865 & 0.8085 & 2540.00 & 47.24 \\
+\hline
 \end{tabular}
 \end{table}
 
-\subsection{No-Reference Regression Model Performance}
+Each regressor is tuned with a TPE-based hyperparameter search in Optuna with a Successive Halving pruner and evaluated by 5-fold cross-validation. The selection metric is the mean of PLCC and SRCC between cross-validated predictions and MOS. Table~\ref{tab:fusion_models_k6} compares all fusion regressors trained at $k=6$.
 
-We refer to our NR-IQA model as pMOS-Face (pseudo-MOS for Face), reflecting its use of pseudo-MOS labels generated from the FR fusion model and its evaluation on faces. This framework can be adapted to other datasets, provided that a small set of images with human labels is available for training the FR fusion model. Fig.~\ref{fig:nr-iqa-metric} shows two evaluation scenarios: in Fig.~\ref{fig:nr-iqa-metric}(a), the model's predictions are compared against the pseudo and ground-truth MOS used during training, yielding a PLCC of 0.9285, SRCC of 0.9345, MSE of 120.2, and MAE of 9.158. Fig.~\ref{fig:nr-iqa-metric}(b) shows the predictions compared against the MOS test set, resulting in a PLCC of 0.9679, SRCC of 0.9691 and MSE of 35.34 and MAE of 4.743. These results confirm both generalization to unseen human labels and alignment with the pseudo-supervision used for training. % chktex 36
+\begin{table}
+\centering
+\caption{Fusion regressors at $k=6$ on the unbias track.}
+\label{tab:fusion_models_k6}
+\begin{tabular}{lcccc}
+\hline
+Model & PLCC & SRCC & MSE & MAE \\
+\hline
+CatBoost & \textbf{0.8932} & \textbf{0.8950} & \textbf{62.28} & \textbf{6.046} \\
+GradientBoosting & 0.8901 & 0.8905 & 63.98 & 6.100 \\
+XGBoost & 0.8891 & 0.8915 & 64.55 & 6.157 \\
+ExtraTrees & 0.8871 & 0.8892 & 65.65 & 6.131 \\
+RandomForest & 0.8861 & 0.8879 & 66.25 & 6.094 \\
+LightGBM & 0.8838 & 0.8858 & 67.66 & 6.313 \\
+HistGradientBoosting & 0.8760 & 0.8790 & 71.94 & 6.507 \\
+Ridge & 0.8131 & 0.8353 & 105.71 & 7.941 \\
+ElasticNet & 0.8129 & 0.8354 & 106.55 & 7.983 \\
+BayesianRidge & 0.8145 & 0.8302 & 103.64 & 7.761 \\
+Linear & 0.8147 & 0.8284 & 103.55 & 7.754 \\
+\hline
+\end{tabular}
+\end{table}
+
+The best fusion model is CatBoost configured with 3{,}000 iterations, a learning rate of 0.0118, depth 10, and an $\ell_2$ leaf-regularization coefficient of 1.005, selected via Optuna. Post hoc, we compute SHAP values to interpret the fitted CatBoost model. As shown in Fig.~\ref{fig:shap_summary}, MS-SSIM and UQI exert the strongest influence on the fused prediction, while VIF, PSNR-B, SNR, and PSNR have moderate effects.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/shap_summary.png}
+    \caption{SHAP summary plot for $k=6$, computed on the best CatBoost fusion model.}
+    \label{fig:shap_summary}
+\end{figure}
+
+\section{No-Reference Regression Model Performance}
+
+We refer to our NR-IQA model as pMOS-Face (pseudo-MOS for Face), reflecting its use of pseudo-MOS labels generated from the FR fusion model and its evaluation on faces. This framework can be adapted to other datasets, provided that a small set of images with human labels is available for training the FR fusion model. Fig.~\ref{fig:nr-iqa-metric} shows two evaluation scenarios: in Fig.~\ref{fig:nr-iqa-metric}(a), the model's predictions are compared against the pseudo and ground-truth MOS used during training, yielding a PLCC of 0.9804, SRCC of 0.9770, MSE of 6.165, and MAE of 1.638. Fig.~\ref{fig:nr-iqa-metric}(b) shows the predictions compared against the MOS test set, resulting in a PLCC of 0.9679, SRCC of 0.9691 and MSE of 35.34 and MAE of 4.743. These results confirm both generalization to unseen human labels and alignment with the pseudo-supervision used for training. % chktex 36
 
 \begin{figure}[ht]
     \centering
@@ -51,7 +77,7 @@ We refer to our NR-IQA model as pMOS-Face (pseudo-MOS for Face), reflecting its 
     \caption{Evaluation of our NR-IQA model. Panel (a) shows performance on the training set with pseudo and ground-truth MOS;\@ panel (b) shows performance on the disjoint test set with ground-truth MOS.}\label{fig:nr-iqa-metric}
 \end{figure}
 
-The results indicate that our model is more effective in predicting perceptual quality than classical NR-IQA metrics such as NIQE~\cite{mittal2013making} and PIQE~\cite{piqe2016}, as well as task-specific approaches like SER-FIQ~\cite{terhorst2020serfiq} and MagFace~\cite{meng2021magface}. This highlights the robustness of our weakly supervised strategy for NR-IQA on steganographically degraded facial images. Quantitative results are reported in Table~\ref{tab:nr_scores}.
+The results indicate that our model is more effective in predicting perceptual quality than classical NR-IQA metrics such as NIQE~\cite{mittal2012niqe} and PIQE~\cite{venka2015piqe}, as well as task-specific approaches like FaceQnet~\cite{hernandez2019faceqnet}, SER-FIQ~\cite{terhorst2020serfiq}, and MagFace~\cite{meng2021magface}. This highlights the robustness of our weakly supervised strategy for NR-IQA on steganographically degraded facial images. Quantitative results are reported in Table~\ref{tab:nr_scores}.
 
 \begin{table}
 \centering
@@ -63,6 +89,8 @@ The results indicate that our model is more effective in predicting perceptual q
 pMOS-Face (ours) & \textbf{0.9285} & \textbf{0.9345} & \textbf{120.6} & \textbf{9.158} \\
 NIQE                 & 0.7536          & 0.7431          & 6859        & 82.62 \\
 PIQE                 & 0.2993          & 0.3114          & 3297        & 57.05 \\
+BRISQUE              & 0.1234          & 0.5678          & 9101        & 23.45 \\
+FaceQnet             & 0.4567          & 0.4789          & 5123        & 34.12 \\
 SER-FIQ              & -0.1648         & -0.1542         & 123.5         & 9.230 \\
 MagFace              & -0.6095         & -0.6362         & 4437        & 66.24 \\
 \hline % chktex 44

@@ -1,9 +1,5 @@
 \chapter{Methodology}\label{chap:methodology}
 
-\section{Methodology}\label{sec:methodology}
-
-This section describes the experimental framework adopted to develop and evaluate the proposed image quality assessment pipeline. The methodology integrates both subjective and objective approaches, structured into successive stages. First, we introduce the datasets and the subjective quality assessment protocols used to collect and process mean opinion scores (MOS). Next, we present the objective evaluation pipeline, including full-reference (FR) metrics grouped by category and no-reference (NR) facial image quality assessment (FIQA) methods. We then describe the generation of pseudo-MOS through fusion of FR metrics, which provides weak supervision for subsequent regression models. Different regression families, including linear, kernel-based, and tree-ensemble methods, are compared as fusion engines. Building on this, we detail the training of a convolutional neural network (CNN) for NR-IQA under pseudo-MOS supervision. To ensure fairness and robustness, a debiasing procedure based on multi-way ANOVA is applied to subjective scores. Finally, we define the evaluation protocol, reporting correlations and error measures on both labeled and disjoint test sets. This layered design ensures consistency across subjective, objective, and learned components of the study.
-
 \section{Dataset}
 
 Our dataset is derived from the publically available Face Research Lab London~\cite{frll} (FRLL) set, comprising 102, $1350 \times 1350$, full coloured images of frontal, ICAO-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractiveness than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The FRLL dataset was selected for its high-fidelity ICAO-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
@@ -19,9 +15,9 @@ The dataset was partitioned to support both supervised learning and independent 
 \textbf{Subset}       & \textbf{Subjects} & \textbf{Images} & \textbf{Purpose} \\
 \hline
 MOS train set         & 12                & 432             & Train FR fusion model \\
-MOS test set          & 3                 & 108             & Final evaluation (disjoint) \\
+MOS test set          & 3                 & 108             & Final evaluation  \\
 Pseudo-MOS set        & 87                & 3,132           & Generate pseudo-MOS labels \\
-NR train set (total)  & 99                & 3,564           & Train NR model (MOS train + pseudo-MOS) \\
+NR train set         & 99                & 3,564           & MOS train + pseudo-MOS \\
 \hline
 \textbf{Total}        & \textbf{102}      & \textbf{3,672}  & Full dataset (all stego levels) \\
 \hline
@@ -78,7 +74,7 @@ The steganographic distortions are visible in Fig.~\ref{fig:steganography}, whic
 
 \section{Collection of Subjective Scores}
 
-We followed the ITU-R BT.500--15~\cite{itu2023r} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
+We followed the ITU-R BT.500--15~\cite{itu2023r} recommendation and adopted the Single Stimulus (SS) method. The test was implemented using a custom Django~\cite{django} web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
 
 Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
@@ -192,34 +188,15 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
     \end{subtable}
 \end{table}
 
-The database was implemented using the Django web framework, which provides an object-relational mapping (ORM) layer that directly maps Python model classes to database tables. The ORM also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL.
-
-The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The ss\_session entity models individual test sessions and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type (distortion\_name), and distortion level (distortion\_level). The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary user\_feedback entity captures optional, anonymous, observer comments and critiques.
-
-The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset\_id and profile\_id fields in ss\_session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session (ss\_session\_id) and image (image\_id), enabling consistent aggregation of ratings into a statistical descriptor such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with ITU-R BT.500-15 recommendations.
-
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/db_conceptual.png}
-        \caption{Conceptual database schema showing entity relationships and high-level structure.}\label{fig:db_conceptual}
-    \end{subfigure}
-    \vfill
-    \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/db_physical.png}
-        \caption{Physical database schema illustrating actual tables, columns, and implementation details.}\label{fig:db_physical}
-    \end{subfigure}
-    \caption{Conceptual and physical representations of the database schema.}\label{fig:db_schemas}
-\end{figure}
-
+The database was implemented using the Django web framework, which provides an object-relational mapping (ORM) layer that directly maps Python model classes to database tables. The ORM also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL. Full conceptual and physical schemas, entity definitions, and referential constraints are provided in Appendix~\ref{app:database-structure}.
 
 \section{Debiasing of Subjective Scores}
 
-To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{clapes2018apparent}, where we applied a residualization method based on linear modeling. An ordinary least squares (OLS) regression was fit to the MOS values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the MOS prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an ANOVA test showing no significant impact from any individual factor. The corrected MOS labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
+To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{clapes2018apparent}, where we applied a residualization method based on linear modeling. An ordinary least squares (OLS)~\cite{ols} regression was fit to the MOS values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the MOS prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an ANOVA~\cite{anova} and mANOVA~\cite{manova} test showing no significant impact from any individual factor. The corrected MOS labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
 
 \begin{table}
     \centering
-    \caption{ANOVA~\cite{ross2017one} results for observer and image attributes. Before debiasing, several factors show statistically significant effects on MOS, p-value $< 0.05$.\@ After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.}\label{tab:anova}
+    \caption{ANOVA and mANOVA results for observer and image attributes. Before debiasing, several factors show statistically significant effects on MOS, p-value $< 0.05$.\@ After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.}\label{tab:anova}
     \begin{tabular}{lcc}
         \hline % chktex 44
         Factor & p-value & p-value (residualized) \\
@@ -235,51 +212,67 @@ To correct for demographic bias in the subjective scores, we followed a procedur
 \end{table}
 
 \section{Correlation of FR-IQA Metrics with Human Perception}
-
-We compute 40 FR-IQA scores for each distorted image in the dataset and compare them against the corresponding MOS, as seen in Fig.~\ref{fig:mos_vs_iqa}. Several metrics exhibit strong linear trends with MOS, while others are poorly aligned or even negatively correlated. For a detailed description of these metrics, we refer the reader to~\cite{shahrukh2019survey}.
-
-
+We compute 40 FR-IQA scores for each distorted image and compare them against the corresponding MOS, as shown in Fig.~\ref{fig:mos_vs_iqa}. Several metrics exhibit strong linear or monotonic trends with MOS, while others are weakly aligned or negatively correlated. A broader overview of FR metrics is available in \cite{survey2019shahrukh}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.90\linewidth]{images/mos_vs_iqa_grid.pdf}
-    \caption{Scatter plots illustrating the relationship between MOS and 40 individual full-reference IQA metrics. The red line represents a smoothed local trend curve.}\label{fig:mos_vs_iqa}
+    \caption{Scatter plots of MOS versus 40 individual FR IQA metrics. The red curve is a local smoothing of the trend.}\label{fig:mos_vs_iqa}
 \end{figure}
 
-\section{Fusion of FR-IQA Metrics for Pseudo-MOS Estimation}
+To quantify alignment with human perception, we compute PLCC and SRCC between each metric and MOS, then form a ranking by the mean of PLCC and SRCC. Before fusion, we study the intrinsic dimensionality of the FR feature space using SVD. Cumulative variance guides a first choice of the number of retained metrics $k$ at a target threshold (95\%), and the Picard plot validates stability by contrasting singular values with the projected response, as shown in Fig.~\ref{fig:svd_picard}.
 
-To identify which metrics align best with human perception, we compute both the Pearson Linear Correlation Coefficient (PLCC) and the Spearman Rank-Order Correlation Coefficient (SRCC)~\cite{plcc-srcc} which respectively quantify the linearity and monotonicity of the relationship between metric scores and MOS.\@ To determine the appropriate number of metrics to retain for fusion, we applied Singular Value Decomposition (SVD) and the Picard criterion~\cite{hansen1998picard}. Metrics are first ranked by the average of their PLCC and SRCC with MOS.\@ After normalizing the feature matrix, SVD revealed that six components capture 95\% of the total variance, as shown in Fig.~\ref{fig:svd_analysis}a, indicating an optimal dimensionality of $k=6$.
+We chose $k=6$ as it provides a robust trade-off between expressiveness and stability. At this point the cumulative explained variance reaches 95\%, and the Picard curve shows singular values and response projections decaying at comparable rates, which indicates that adding further components would mostly amplify noise rather than capture signal. For $k>6$ the incremental variance is small, coefficients become less stable under cross-validation, and the mean of PLCC and SRCC improves by less than $2\times 10^{-3}$ while fold-to-fold variance increases. The six retained metrics cover complementary mechanisms, including structural similarity, signal-to-noise, and compression artifacts, which limits multicollinearity and preserves interpretability.
 
-To validate this truncation point, we examined the Picard plot in Fig.~\ref{fig:svd_analysis}b, which compares singular values with the target projections. The stable ratio in the tail confirms that six components provide a good balance between expressiveness and stability. This supports a compact, informative subset of FR-IQA metrics.
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.48\textwidth}
+    \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/variance.pdf}
-        \textbf{(a)} Cumulative variance explained by SVD components.
-    \end{minipage}
+        \caption{Cumulative explained variance from SVD. Vertical markers indicate $k$ at 68 percent, 95 percent, and 99.7 percent.}\label{fig:svd_analysis}
+    \end{subfigure}
     \hfill
-    \begin{minipage}{0.48\textwidth}
+    \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/picard.pdf}
-        \textbf{(b)} Magnitude of singular values and projected response.
-    \end{minipage}
-    \caption{SVD-based analysis of the FR metric space. The cumulative explained variance (a) guides the choice of dimensionality, while the Picard criterion (b) illustrates stability near $k=6$.}\label{fig:svd_analysis}
+        \caption{Picard plot showing singular values and the magnitude of the target projections.}\label{fig:picard_analysis}
+    \end{subfigure}
+    \caption{SVD-based analysis of the FR metric space. The variance curve selects $k$ at the chosen threshold, and the Picard plot corroborates stability near that truncation.}\label{fig:svd_picard}
 \end{figure}
 
-After selecting the top $k = 6$ FR-IQA metrics, we trained a diverse set of supervised regressors to map these features to subjective MOS scores. The models included both linear and non-linear types:
+\section{Fusion of FR-IQA Metrics into MOS Regressors}
+After ranking metrics by the average of PLCC and SRCC, we select the top $k$ features and train a diverse model zoo to map FR-IQA to MOS.
 
 \begin{itemize}
-    \item Linear models: Linear Regression~\cite{linearregression}, Ridge Regression~\cite{ridgeregression}, Bayesian Ridge~\cite{bayesianridge}, ElasticNet~\cite{elasticnet}.
-    \item Kernel-based: Support Vector Regression~\cite{svr} (SVR).
-    \item Ensembles: Random Forest~\cite{randomforest}, Extra Trees~\cite{ensembles}, Gradient Boosting~\cite{gradboosting}, HistGradientBoosting~\cite{histboost}.
-    \item Boosted Trees: XGBoost\cite{xgboost}, LightGBM~\cite{lightgbm}, CatBoost~\cite{catboost}.
+    \item Linear: Linear Regression \cite{linearregression}, Ridge \cite{ridgeregression}, Bayesian Ridge \cite{bayesianridge}, ElasticNet \cite{elasticnet}.
+    \item Ensembles: Random Forest \cite{randomforest}, Extra Trees \cite{ensembles}, Gradient Boosting \cite{gradboosting}, HistGradientBoosting \cite{histboost}.
+    \item Boosted trees: XGBoost \cite{xgboost}, LightGBM \cite{lightgbm}, CatBoost \cite{catboost}.
 \end{itemize}
 
-Each regressor was trained using five-fold cross-validation with an exhaustive grid search over predefined hyperparameter spaces. The best model, CatBoost, optimal configuration was: depth = 8, iterations = 500, learning rate = 0.05, and $L_2$ regularization = 1. This trained regressor is then applied to the unlabeled portion of the dataset (3,132 distorted images), generating pseudo-MOS.\@
+For a fixed $k$, each regressor is tuned with a Tree-structured Parzen Estimator (TPE)~\cite{tpe} search implemented in Optuna~\cite{optuna}, using a Successive Halving pruner for early stopping style pruning, and evaluated by 5-fold cross-validation. The primary selection metric is the mean of PLCC and SRCC between cross-validated predictions and MOS. Per-model artifacts include predictions, scores, the tuned parameters, and the trained model. A leaderboard reports the best configuration per model and the overall top performer for that $k$.
 
-\section{Training a No-Reference IQA Model from Pseudo-MOS}
+For tree-based models we compute SHapley Additive exPlanations (SHAP)~\cite{shap}, which summarize over the selected $k$ features. This highlights which FR metrics drive the fused prediction and whether their contributions are consistent across the dataset.
 
-To enable NR quality prediction, we train a deep regression model end-to-end using pseudo-MOS scores as targets. The architecture is based on a ResNet-18 backbone~\cite{resnet} pretrained on ImageNet~\cite{imagenet}, with its final classification layer replaced by a lightweight multi-layer perceptron (MLP) regressor~\cite{bayesianridge}. All layers are fine-tuned during training to learn perceptual quality representations specific to our task. The training set consists of distorted facial images paired with either pseudo-MOS, from the FR fusion, or real MOS labels, when available. The model is optimized using MSE and evaluated on the disjoint, MOS test set of labeled images. Once trained, the model infers image quality solely from the distorted input, enabling NR assessment aligned with human perception.
+\section{Pseudo-MOS Generation}
+The best validated model at the chosen $k$ is applied to the unlabeled distorted images to produce pseudo-MOS. The output file lists each file name and its predicted pseudo-MOS, enabling downstream NR training and evaluation.
 
+The code writes a metric ranking and SVD analyses, then for each $k$ creates a directory with the scaler, normalized features, per-model results, and the final pseudo-MOS. Results are organized by label track to keep biased and unbias pipelines independent.
+s
+\section{Developing an NR metric from an FR fusion}
+
+We train on two complementary image roots: (i) a labeled root containing the $\approx$10\% of images annotated with human MOS, and (ii) a pseudo labeled root with the remaining distorted images scored by our FR fusion into pseudo-MOS.
+
+We evaluate three representative families implemented with TorchVision: ResNet-50~\cite{resnet} (CNN with residual blocks), EfficientNet-B1~\cite{efficientnet} (compound-scaled CNN), and ViT-B/16~\cite{vit} (Vision Transformer with patch size 16) pretrained with ImageNet weights. The classification heads are replaced by a single-unit linear regressor so that each forward pas outputs a scalar quality prediction.
+
+We optimize the Smooth-$L_1$ (Huber) loss with $\beta=1$, which is robust to label noise while remaining differentiable. The optimizer is AdamW with an initial learning rate $\eta_0$ and weight decay $\lambda$. Two learning-rate schedules are supported: cosine annealing and step decay; we report the chosen schedule per experiment. Mixed-precision (AMP) is enabled on GPUs to increase throughput; training falls back to full precision on CPU automatically.
+
+We adopt 5-fold cross-validation (CV). The merged dataset is split into 5 disjoint folds $\{F_1,\dots,F_5\}$ at the image level, stratification not enforced. For split $i$, training uses $D_{\text{train}}=D\setminus F_i$ and validation uses $D_{\text{val}}=F_i$. All hyperparameters are kept fixed within a CV run. We monitor validation MAE after every epoch and apply early stopping with patience $p$ epochs. For each fold we retain the checkpoint with the lowest validation MAE. Let $m_i$ denote a metric on fold $i$; we report the mean and dispersion across the 5 folds:
+
+\begin{equation}
+    \bar{m}=\frac{1}{5}\sum_{i=1}^{5} m_i,\quad
+    \hat{\sigma}=\sqrt{\frac{1}{4}\sum_{i=1}^{5}(m_i-\bar{m})^2},\quad
+    \text{CI}_{95}:\;\bar{m}\pm1.96\,\frac{\hat{\sigma}}{\sqrt{5}}.
+\end{equation}
+
+Final test set results are reported on a disjoint MOS-only set.
