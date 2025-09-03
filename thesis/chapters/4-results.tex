@@ -22,7 +22,7 @@ Metric & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
 \end{tabular}
 \end{table}
 
-Each regressor is tuned with \acs{TPE} in Optuna using a Successive Halving pruner and 5-fold cross-validation. The selection metric is the mean of \acs{PLCC} and \acs{SRCC} between cross-validated predictions and \acs{MOS}. Table~\ref{tab:fusion_models_k6} compares fusion regressors trained at \(k=6\).
+Each regressor is tuned with \acs{TPE} in Optuna using a successive Halving pruner and 5-fold cross-validation. The selection metric is the mean of \acs{PLCC} and \acs{SRCC} between cross-validated predictions and \acs{MOS}. Table~\ref{tab:fusion_models_k6} compares fusion regressors trained at \(k=6\).
 
 \begin{table}
 \centering
@@ -60,19 +60,19 @@ The best fusion model is \acs{CatBoost} with 3{,}000 iterations, learning rate 0
 
 \begin{table}
 \centering
-\caption{Backbone comparison for pMOS-Face. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
+\caption{Backbone comparison for training pMOS-Face. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
 \label{tab:backbones}
 \begin{tabular}{lcccc}
 \hline
 Backbone        & \acs{PLCC} & \acs{SRCC} & \acs{MAE} & \acs{MSE} \\ \hline
-ResNet-50       & --         & --         & --        & --        \\
-EfficientNet-B1 & --         & --         & --        & --        \\
-ViT-B/16        & --         & --         & --        & --        \\
+ResNet-50       & \textbf{0.9765} & \textbf{0.9743} & $\mathbf{7.48 \times 10^{-4}}$ & \textbf{0.0194}   \\
+EfficientNet-B1 & 0.9509     & 0.9512     & $1.77 \times 10^{-3}$   & 0.0298   \\
+ViT-B/16        & 0.9705     & 0.9685     & $9.19 \times 10^{-4}$   & 0.0216   \\
 \hline
 \end{tabular}
 \end{table}
 
-Our \acs{NR}-\acs{IQA} model, pMOS-Face, uses pseudo-\acs{MOS} from the \acs{FR} fusion and evaluates on faces with human labels. Fig.~\ref{fig:nr-iqa-metric} shows two scenarios. On training data with pseudo and ground-truth \acs{MOS} we obtain \acs{PLCC} 0.9804, \acs{SRCC} 0.9770, \acs{MSE} 6.165, \acs{MAE} 1.638. On the disjoint test set we obtain \acs{PLCC} 0.9679, \acs{SRCC} 0.9691, \acs{MSE} 35.34, \acs{MAE} 4.743, confirming generalization to unseen human labels and alignment with the pseudo supervision.
+After adopting ResNet-50 as our \acs{NR}-\acs{IQA} model, pMOS-Face, uses pseudo-\acs{MOS} from the \acs{FR} fusion and evaluates on faces with human labels. Fig.~\ref{fig:nr-iqa-metric} shows two scenarios. On training data with pseudo and ground-truth \acs{MOS} we obtain \acs{PLCC} 0.9765, \acs{SRCC} 0.9743, \acs{MSE} $7.48 \times 10^{-4}$, \acs{MAE} 0.0194. On the disjoint test set we obtain \acs{PLCC} 0.8733, \acs{SRCC} 0.8722, \acs{MSE} 0.0118, \acs{MAE} 0.0882, confirming generalization to unseen human labels and alignment with the pseudo supervision.
 
 \begin{figure}[ht]
 \centering
@@ -91,7 +91,7 @@ Our \acs{NR}-\acs{IQA} model, pMOS-Face, uses pseudo-\acs{MOS} from the \acs{FR}
 \label{fig:nr-iqa-metric}
 \end{figure}
 
-Table~\ref{tab:nr_scores} compares pMOS-Face to standard \acs{NR}-\acs{IQA} baselines, showing clear gains.
+Table~\ref{tab:nr_scores} compares pMOS-Face predictions using ResNet-50 to standard \acs{NR}-\acs{IQA} metrics, showing clear gains.
 
 \begin{table}
 \centering
@@ -100,7 +100,7 @@ Table~\ref{tab:nr_scores} compares pMOS-Face to standard \acs{NR}-\acs{IQA} base
 \hline
 Metric                    & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
 \hline
-pMOS-Face (ours)          & \textbf{0.9285} & \textbf{0.9345} & \textbf{120.6} & \textbf{9.158} \\
+pMOS-Face (ours)          & \textbf{0.8733} & \textbf{0.8722} & \textbf{0.0118} & \textbf{0.0882} \\
 \acs{NIQE}                & 0.7536          & 0.7431          & 6859           & 82.62 \\
 \acs{PIQE}                & 0.2993          & 0.3114          & 3297           & 57.05 \\
 \acs{BRISQUE}             & 0.1234          & 0.5678          & 9101           & 23.45 \\
