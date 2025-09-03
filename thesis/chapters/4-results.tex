@@ -1,100 +1,156 @@
 \chapter{Results}\label{chap:results}
 
-\section{Full-Reference Fusion Metric Performance}
+\section{Full-reference fusion}\label{sec:fr-fusion}
 
-Following the SVD and Picard analysis from Fig.~\ref{fig:svd_picard}, which indicated that $k=6$ reached 95\% explained variance with stable projections, Table~\ref{tab:fr_individual_metrics} reports the marginal correlation and error of the selected FR metrics with MOS.
+Following the \acs{SVD} and Picard analyses in Fig.~\ref{fig:svd_picard}, the choice \(k=6\) reaches 95\% explained variance with stable projections. Table~\ref{tab:fr_individual_metrics} reports marginal correlation and error of selected \acs{FR} metrics against \acs{MOS}.
 
 \begin{table}
 \centering
-\caption{Individual FR-IQA metrics versus MOS on the unbias track. Higher PLCC and SRCC indicate stronger correlation; lower MSE and MAE indicate more accurate estimates.}
+\caption{Individual \acs{FR}-\acs{IQA} metrics versus MOS on the unbiased split. Higher \acs{PLCC} and \acs{SRCC} indicate stronger correlation; lower \acs{MSE} and \acs{MAE} indicate more accurate estimates.}
 \label{tab:fr_individual_metrics}
 \begin{tabular}{lcccc}
 \hline
-Metric & PLCC & SRCC & MSE & MAE \\
+Metric & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
 \hline
-MS-SSIM & 0.7712 & \textbf{0.8489} & 2542.00 & 47.27 \\
-PSNR & \textbf{0.8009} & 0.8132 & \textbf{420.70} & \textbf{16.57} \\
-PSNR-B & 0.7996 & 0.8126 & 434.80 & 16.84 \\
-SNR & 0.7931 & 0.8047 & 493.90 & 18.08 \\
-VIF & 0.7723 & 0.7670 & 2584.00 & 47.75 \\
-UQI & 0.6865 & 0.8085 & 2540.00 & 47.24 \\
+\acs{MS-SSIM} & 0.7712 & \textbf{0.8489} & 2542.00 & 47.27 \\
+\acs{PSNR}    & \textbf{0.8009} & 0.8132 & \textbf{420.70} & \textbf{16.57} \\
+\acs{PSNR-B}  & 0.7996 & 0.8126 & 434.80 & 16.84 \\
+\acs{SNR}     & 0.7931 & 0.8047 & 493.90 & 18.08 \\
+\acs{VIF}     & 0.7723 & 0.7670 & 2584.00 & 47.75 \\
+\acs{UQI}     & 0.6865 & 0.8085 & 2540.00 & 47.24 \\
 \hline
 \end{tabular}
 \end{table}
 
-Each regressor is tuned with a TPE-based hyperparameter search in Optuna with a Successive Halving pruner and evaluated by 5-fold cross-validation. The selection metric is the mean of PLCC and SRCC between cross-validated predictions and MOS. Table~\ref{tab:fusion_models_k6} compares all fusion regressors trained at $k=6$.
+Each regressor is tuned with \acs{TPE} in Optuna using a Successive Halving pruner and 5-fold cross-validation. The selection metric is the mean of \acs{PLCC} and \acs{SRCC} between cross-validated predictions and \acs{MOS}. Table~\ref{tab:fusion_models_k6} compares fusion regressors trained at \(k=6\).
 
 \begin{table}
 \centering
-\caption{Fusion regressors at $k=6$ on the unbias track.}
+\caption{Fusion regressors at \(k=6\) on the unbiased split.}
 \label{tab:fusion_models_k6}
 \begin{tabular}{lcccc}
 \hline
-Model & PLCC & SRCC & MSE & MAE \\
+Model & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
 \hline
-CatBoost & \textbf{0.8932} & \textbf{0.8950} & \textbf{62.28} & \textbf{6.046} \\
-GradientBoosting & 0.8901 & 0.8905 & 63.98 & 6.100 \\
-XGBoost & 0.8891 & 0.8915 & 64.55 & 6.157 \\
-ExtraTrees & 0.8871 & 0.8892 & 65.65 & 6.131 \\
-RandomForest & 0.8861 & 0.8879 & 66.25 & 6.094 \\
-LightGBM & 0.8838 & 0.8858 & 67.66 & 6.313 \\
-HistGradientBoosting & 0.8760 & 0.8790 & 71.94 & 6.507 \\
-Ridge & 0.8131 & 0.8353 & 105.71 & 7.941 \\
-ElasticNet & 0.8129 & 0.8354 & 106.55 & 7.983 \\
-BayesianRidge & 0.8145 & 0.8302 & 103.64 & 7.761 \\
-Linear & 0.8147 & 0.8284 & 103.55 & 7.754 \\
+\acs{CatBoost}            & \textbf{0.8932} & \textbf{0.8950} & \textbf{62.28} & \textbf{6.046} \\
+GradientBoosting          & 0.8901 & 0.8905 & 63.98 & 6.100 \\
+\acs{XGBoost}             & 0.8891 & 0.8915 & 64.55 & 6.157 \\
+ExtraTrees                & 0.8871 & 0.8892 & 65.65 & 6.131 \\
+RandomForest              & 0.8861 & 0.8879 & 66.25 & 6.094 \\
+\acs{LightGBM}            & 0.8838 & 0.8858 & 67.66 & 6.313 \\
+HistGradientBoosting      & 0.8760 & 0.8790 & 71.94 & 6.507 \\
+Ridge                     & 0.8131 & 0.8353 & 105.71 & 7.941 \\
+ElasticNet                & 0.8129 & 0.8354 & 106.55 & 7.983 \\
+BayesianRidge             & 0.8145 & 0.8302 & 103.64 & 7.761 \\
+Linear                    & 0.8147 & 0.8284 & 103.55 & 7.754 \\
 \hline
 \end{tabular}
 \end{table}
 
-The best fusion model is CatBoost configured with 3{,}000 iterations, a learning rate of 0.0118, depth 10, and an $\ell_2$ leaf-regularization coefficient of 1.005, selected via Optuna. Post hoc, we compute SHAP values to interpret the fitted CatBoost model. As shown in Fig.~\ref{fig:shap_summary}, MS-SSIM and UQI exert the strongest influence on the fused prediction, while VIF, PSNR-B, SNR, and PSNR have moderate effects.
-
+The best fusion model is \acs{CatBoost} with 3{,}000 iterations, learning rate 0.0118, depth 10, and \(\ell_2\) leaf regularization 1.005, selected by Optuna. We compute \acs{SHAP} values to interpret the fitted model. As shown in Fig.~\ref{fig:shap_summary}, \acs{MS-SSIM} and \acs{UQI} contribute most to the fused prediction, while \acs{VIF}, \acs{PSNR-B}, \acs{SNR}, and \acs{PSNR} have moderate effects.
 
 \begin{figure}
-    \centering
-    \includegraphics[width=0.9\linewidth]{images/shap_summary.png}
-    \caption{SHAP summary plot for $k=6$, computed on the best CatBoost fusion model.}
-    \label{fig:shap_summary}
+\centering
+\includegraphics[width=0.9\linewidth]{images/shap_summary.png}
+\caption{\acs{SHAP} summary plot for \(k=6\) on the best \acs{CatBoost} fusion model.}
+\label{fig:shap_summary}
 \end{figure}
 
-\section{No-Reference Regression Model Performance}
-
-We refer to our NR-IQA model as pMOS-Face (pseudo-MOS for Face), reflecting its use of pseudo-MOS labels generated from the FR fusion model and its evaluation on faces. This framework can be adapted to other datasets, provided that a small set of images with human labels is available for training the FR fusion model. Fig.~\ref{fig:nr-iqa-metric} shows two evaluation scenarios: in Fig.~\ref{fig:nr-iqa-metric}(a), the model's predictions are compared against the pseudo and ground-truth MOS used during training, yielding a PLCC of 0.9804, SRCC of 0.9770, MSE of 6.165, and MAE of 1.638. Fig.~\ref{fig:nr-iqa-metric}(b) shows the predictions compared against the MOS test set, resulting in a PLCC of 0.9679, SRCC of 0.9691 and MSE of 35.34 and MAE of 4.743. These results confirm both generalization to unseen human labels and alignment with the pseudo-supervision used for training. % chktex 36
-
-\begin{figure}[ht]
-    \centering
-    \begin{minipage}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/predictions_train.pdf}
-        \textbf{(a)} Training plot.\@
-    \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/predictions_test.pdf}
-        \textbf{(b)} Test plot.\@
-    \end{minipage}
-    \caption{Evaluation of our NR-IQA model. Panel (a) shows performance on the training set with pseudo and ground-truth MOS;\@ panel (b) shows performance on the disjoint test set with ground-truth MOS.}\label{fig:nr-iqa-metric}
-\end{figure}
-
-The results indicate that our model is more effective in predicting perceptual quality than classical NR-IQA metrics such as NIQE~\cite{mittal2012niqe} and PIQE~\cite{venka2015piqe}, as well as task-specific approaches like FaceQnet~\cite{hernandez2019faceqnet}, SER-FIQ~\cite{terhorst2020serfiq}, and MagFace~\cite{meng2021magface}. This highlights the robustness of our weakly supervised strategy for NR-IQA on steganographically degraded facial images. Quantitative results are reported in Table~\ref{tab:nr_scores}.
+\section{No-reference model}\label{sec:nr-model}
 
 \begin{table}
 \centering
-\caption{Performance of our pMOS-Face compared to standard NR-IQA baselines.}\label{tab:nr_scores}
+\caption{Backbone comparison for pMOS-Face. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
+\label{tab:backbones}
 \begin{tabular}{lcccc}
-\hline % chktex 44
-\textbf{Metric} & \textbf{PLCC} & \textbf{SRCC} & \textbf{MSE} & \textbf{MAE} \\
-\hline % chktex 44
-pMOS-Face (ours) & \textbf{0.9285} & \textbf{0.9345} & \textbf{120.6} & \textbf{9.158} \\
-NIQE                 & 0.7536          & 0.7431          & 6859        & 82.62 \\
-PIQE                 & 0.2993          & 0.3114          & 3297        & 57.05 \\
-BRISQUE              & 0.1234          & 0.5678          & 9101        & 23.45 \\
-FaceQnet             & 0.4567          & 0.4789          & 5123        & 34.12 \\
-SER-FIQ              & -0.1648         & -0.1542         & 123.5         & 9.230 \\
-MagFace              & -0.6095         & -0.6362         & 4437        & 66.24 \\
-\hline % chktex 44
+\hline
+Backbone        & \acs{PLCC} & \acs{SRCC} & \acs{MAE} & \acs{MSE} \\ \hline
+ResNet-50       & --         & --         & --        & --        \\
+EfficientNet-B1 & --         & --         & --        & --        \\
+ViT-B/16        & --         & --         & --        & --        \\
+\hline
 \end{tabular}
 \end{table}
 
-When considering a more generalized use, where observer bias is not accounted for, our NR-IQA model shows a major improvement over the baselines. This is particularly relevant for task specific applications, where the model can be trained on a small set of images with human labels and then applied to larger datasets without the need for additional supervision. This approach allows for a more scalable and efficient solution not only for FIQA but also for other domains where reference images are not available.
+Our \acs{NR}-\acs{IQA} model, pMOS-Face, uses pseudo-\acs{MOS} from the \acs{FR} fusion and evaluates on faces with human labels. Fig.~\ref{fig:nr-iqa-metric} shows two scenarios. On training data with pseudo and ground-truth \acs{MOS} we obtain \acs{PLCC} 0.9804, \acs{SRCC} 0.9770, \acs{MSE} 6.165, \acs{MAE} 1.638. On the disjoint test set we obtain \acs{PLCC} 0.9679, \acs{SRCC} 0.9691, \acs{MSE} 35.34, \acs{MAE} 4.743, confirming generalization to unseen human labels and alignment with the pseudo supervision.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/predictions_train.pdf}
+  \caption{Training.}\label{fig:nr-iqa-train}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/predictions_test.pdf}
+  \caption{Test.}\label{fig:nr-iqa-test}
+\end{subfigure}
+\caption{Evaluation of pMOS-Face. Panel (a) uses pseudo and ground-truth \acs{MOS}; panel (b) uses only ground-truth \acs{MOS} on a disjoint test set.}
+\label{fig:nr-iqa-metric}
+\end{figure}
+
+Table~\ref{tab:nr_scores} compares pMOS-Face to standard \acs{NR}-\acs{IQA} baselines, showing clear gains.
+
+\begin{table}
+\centering
+\caption{pMOS-Face versus \acs{NR}-\acs{IQA} baselines.}\label{tab:nr_scores}
+\begin{tabular}{lcccc}
+\hline
+Metric                    & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+\hline
+pMOS-Face (ours)          & \textbf{0.9285} & \textbf{0.9345} & \textbf{120.6} & \textbf{9.158} \\
+\acs{NIQE}                & 0.7536          & 0.7431          & 6859           & 82.62 \\
+\acs{PIQE}                & 0.2993          & 0.3114          & 3297           & 57.05 \\
+\acs{BRISQUE}             & 0.1234          & 0.5678          & 9101           & 23.45 \\
+\acs{FaceQnet}            & 0.4567          & 0.4789          & 5123           & 34.12 \\
+\acs{SER-FIQ}             & -0.1648         & -0.1542         & 123.5          & 9.230 \\
+\acs{MagFace}             & -0.6095         & -0.6362         & 4437           & 66.24 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+% \section{TID2013 subset validation}\label{sec:tid2013-reprod}
+
+% The \acs{TID}2013 database provides reference images with controlled synthetic distortions and human opinion scores, making it a standard bench for \acs{FR}-\acs{IQA} and a clean testbed for cross-dataset validation. It covers a broad set of classical impairments with multiple severity levels, enabling stress tests that are complementary to our face-centric steganographic degradations.
+
+% We use \acs{TID}2013 to probe robustness and reproducibility of the framework in a domain with known references and well-characterized distortions. A compact subset is selected to keep compute and runtime modest while preserving diversity across reference content, distortion types, and levels. This setting isolates the contribution of the fusion stage and the \acs{NR} learner from dataset-specific biases.
+
+% The experimental protocol follows the main results unchanged. Scores are harmonized so that higher means better: \acs{DMOS} is inverted to \acs{MOS} and linearly mapped to [0,100]. We compute the \acs{FR} metric bank, fix \(k=\) as in Section~\ref{sec:fr-fusion}, and train the fusion regressor with the same Optuna setup. The resulting pseudo-\acs{MOS} supervise pMOS-Face trained with the three backbones and the default hyperparameters from Section~\ref{sec:nr-model}. Results are summarized in Tables~\ref{tab:tid2013-fusion} and \ref{tab:tid2013-nr}.
+
+
+% \begin{table}
+% \centering
+% \caption{\acs{FR} fusion on TID2013 subset at \(k=6\).}
+% \label{tab:tid2013-fusion}
+% \begin{tabular}{lcccc}
+% \hline
+% Model          & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+% \hline
+% CatBoost       & -- & -- & -- & -- \\
+% XGBoost        & -- & -- & -- & -- \\
+% LightGBM       & -- & -- & -- & -- \\
+% Linear/Ridge   & -- & -- & -- & -- \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \begin{table}
+% \centering
+% \caption{pMOS-Face on TID2013 subset. Five-fold mean scores.}
+% \label{tab:tid2013-nr}
+% \begin{tabular}{lcccc}
+% \hline
+% Backbone        & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+% \hline
+% ResNet-50       & -- & -- & -- & -- \\
+% EfficientNet-B1 & -- & -- & -- & -- \\
+% ViT-B/16        & -- & -- & -- & -- \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \paragraph{Notes.}
+% State the precise mapping used for \acs{DMOS}\(\to\)\acs{MOS}, the distortion types and levels included, and the random seed. Release the subset list and the training logs to ensure exact reproducibility.
