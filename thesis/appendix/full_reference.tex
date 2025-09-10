@@ -1,0 +1,278 @@
+\section{Error-based Metrics}\label{app:sec:error_based_metrics}
+
+\noindent \textbf{Notation.}  
+Let $X = \{x_i\}_{i=1}^N$ and $Y = \{y_i\}_{i=1}^N$ be two images with $N$ pixels each, where $x_i$ and $y_i$ are corresponding pixel intensities. The pixel-wise error is defined as $e_i = x_i - y_i$.
+
+The most basic error-based metric is the \acf{MSE}~\cite{wang2004image}, which quantifies the average squared difference between corresponding pixels in the reference and distorted images:
+\begin{equation}
+\text{\acs{MSE}} = \frac{1}{N} \sum_{i=1}^{N} (x_i - y_i)^2
+\end{equation}
+
+The \acf{RMSE}~\cite{wang2004image} is a direct extension of the mean squared error, obtained by taking its square root:
+\begin{equation}
+\text{\acs{RMSE}} = \sqrt{\text{\acs{MSE}}}
+\end{equation}
+
+By restoring the metric's scale to that of the original image intensities, \acs{RMSE} offers more interpretable results than \acs{MSE}, especially when comparing distortion magnitudes across images.
+
+The \acf{MAE}~\cite{wang2004image} measures the average absolute difference between the reference and distorted image pixels:
+\begin{equation}
+\text{\acs{MAE}} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
+\end{equation}
+
+\acs{MAE} penalizes all errors linearly, making it less sensitive to large deviations and outliers. This results in a more stable error measure in scenarios with isolated distortions or non-Gaussian noise.
+
+The \acf{PSNR}~\cite{wang2004image} expresses the fidelity between a reference and a distorted image using a logarithmic decibel (dB) scale. It is defined as:
+\begin{equation}
+\text{\acs{PSNR}} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{\acs{MSE}}} \right)
+\end{equation}
+where $MAX$ is the maximum possible pixel value (typically 255 for 8-bit images). \acs{PSNR} remains popular due to its simplicity, ease of interpretation, and long-standing usage in compression evaluation.
+
+The \acf{PSNR-B}~\cite{ma2011psnrb, yim2011psnrb} was introduced to address one of the main weaknesses of \acs{PSNR}, its insensitivity to compression artifacts such as blocking. \acs{PSNR-B} extends the original formula by adding a \acf{BEF} to the denominator:
+
+\begin{equation}
+\text{\acs{PSNR-B}} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{\acs{MSE}} + \text{\acs{BEF}}} \right)
+\end{equation}
+
+The \acs{BEF} penalizes the presence of visible discontinuities along block boundaries, which commonly result from transform-based compression schemes.
+
+The \acf{SNR}~\cite{wang2004image} quantifies the proportion of signal power relative to noise power between a reference image and its distorted counterpart. It is computed as:
+
+\begin{equation}
+\text{\acs{SNR}} = 10 \cdot \log_{10} \left( \frac{\sum x_i^2}{\sum (x_i - y_i)^2} \right)
+\end{equation}
+
+This metric provides a direct measure of how much of the original signal is preserved in the presence of distortion.
+
+\section{Spectral-based Metrics}\label{app:sec:spectral_based_metrics}
+
+\noindent\textbf{Notation.}  
+Let $x, y \in \mathbb{R}^B$ denote the spectral vectors of the reference and distorted images at a given pixel, where $B$ is the number of spectral bands. The Euclidean norm is denoted $\|\cdot\|$, the inner product by $\langle \cdot, \cdot \rangle$, and $\mu_i$ the mean of band $i$. Spatial resolutions of the high- and low-resolution images are $h$ and $l$, respectively. Pairwise spectral distances between bands $i$ and $j$ are written as $d(r_i, r_j)$, where $r_i$ is the $i$-th band.  
+
+The \acf{SAM}~\cite{yuhas1992sam} is one of the earliest spectral similarity measures. 
+It computes the angular difference between the spectral vectors of the reference and distorted images, 
+treating each pixel as a vector in the spectral domain:
+\begin{equation}
+\text{\acs{SAM}}(x,y) = \cos^{-1} \left( \frac{ \langle x, y \rangle }{ \|x\| \cdot \|y\| } \right).
+\end{equation}
+By focusing on the spectral angle rather than magnitude, \acs{SAM} is insensitive to brightness variations 
+and primarily reflects spectral shape consistency, making it a standard in hyperspectral image analysis.
+
+The \acf{ERGAS}~\cite{wald2000ergas,zhang2008ergas} measures the average relative root mean squared error across spectral bands:
+\begin{equation}
+\text{\acs{ERGAS}} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{B} \sum_{i=1}^{B} \left( \frac{\text{\acs{RMSE}}_i}{\mu_i} \right)^2 } .
+\end{equation}
+It accounts for differences in spatial resolution between reference and distorted images through the $\tfrac{h}{l}$ factor. 
+Lower values indicate better spectral fidelity, and it is widely adopted in image fusion and pansharpening tasks 
+to evaluate global relative errors.
+
+The \acs{Dlambda} metric~\cite{wald2000ergas} evaluates spectral distortion by averaging inter-band distances:
+\begin{equation}
+\acs{Dlambda} = \frac{1}{B(B-1)} \sum_{i=1}^{B} \sum_{\substack{j=1 \\ j \neq i}}^{B} d(r_i, r_j) .
+\end{equation}
+Here, $d(r_i, r_j)$ is a distance between spectral bands $i$ and $j$. 
+\acs{Dlambda} emphasizes how well the relationships between spectral bands are preserved, 
+providing a complementary perspective to per-band error metrics like \acs{ERGAS}. 
+Together, these measures capture both absolute spectral distortions and relative inter-band consistency.
+
+\section{Similarity-based Metrics}\label{app:sec:similarity_based_metrics}
+
+Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}.
+
+\noindent\textbf{Notation.}  
+Let $x$ and $y$ denote local patches from the reference and distorted images. Their means are $\mu_x$ and $\mu_y$, variances $\sigma_x^2$ and $\sigma_y^2$, and covariance $\sigma_{xy}$. Constants $C_1, C_2 > 0$ are used to avoid instabilities in divisions.
+
+The \acf{SSIM}~\cite{wang2004image} is a perceptual metric designed to evaluate image quality by comparing structural information between a reference and a distorted image. Unlike traditional error-based metrics, \acs{SSIM} models luminance, contrast, and structure in a local window. Given two image patches $x$ and $y$, \acs{SSIM} is computed as:
+\begin{equation}
+\text{\acs{SSIM}}(x, y) = \frac{(2 \mu_x \mu_y + C_1)(2 \sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)}
+\end{equation}
+\acs{SSIM} values range from 0 to 1, where 1 indicates perfect similarity.
+
+The \acf{MS-SSIM}~\cite{wang2003multiscale} extends \acs{SSIM} by computing the structural similarity at multiple scales, capturing both fine and coarse details. This is achieved by iteratively downsampling the input images and evaluating luminance, contrast, and structure components at each level. The final score is a weighted geometric mean of the similarity scores across scales:
+\begin{equation}
+\text{\acs{MS-SSIM}}(x, y) = [l_M(x, y)]^{\alpha_M} \prod_{j=1}^{M} [c_j(x, y)]^{\beta_j} [s_j(x, y)]^{\gamma_j}
+\end{equation}
+where $l$, $c$, and $s$ represent luminance, contrast, and structure components at scale $j$, and $\alpha_j$, $\beta_j$, $\gamma_j$ are weighting factors. \acs{MS-SSIM} has been shown to better correlate with human perception across varying resolutions and distortion types.
+
+The \acf{DSSIM}~\cite{wang2004image} is a reformulation of \acs{SSIM} that expresses dissimilarity rather than similarity. It is derived directly from the \acs{SSIM} value by:
+\begin{equation}
+\text{\acs{DSSIM}}(x, y) = \frac{1 - \text{\acs{SSIM}}(x, y)}{2}
+\end{equation}
+This transformation enables \acs{DSSIM} to behave like a distance function, where 0 represents identical images and higher values indicate greater perceptual difference. Despite its simplicity, \acs{DSSIM} is sometimes preferred in optimization and comparison tasks where dissimilarity is more intuitive.
+
+The \acf{IW-SSIM}~\cite{li2011iwssim} modifies \acs{MS-SSIM} by incorporating local information content as a weighting mechanism. The intuition is that regions of an image with higher information density (e.g., textures or edges) are more perceptually important and should contribute more to the quality score. \acs{IW-SSIM} applies a \acs{MS-SSIM} computation, weighted by the local mutual information between reference and distorted images:
+\begin{equation}
+\text{\acs{IW-SSIM}}(x, y) = \sum_{i} w_i \cdot \text{\acs{SSIM}}_i(x, y)
+\end{equation}
+where $w_i$ is the information content weight at region $i$, and $\text{\acs{SSIM}}_i$ is the local \acs{SSIM} score. This approach improves correlation with human judgments, particularly for images with non-uniform content distribution.
+
+The \acf{CW-SSIM}~\cite{sampat2009cwssim} adapts the \acs{SSIM} formulation to the complex wavelet domain, which is more robust to small geometric distortions such as translations and rotations. Instead of comparing pixel intensities directly, \acs{CW-SSIM} compares the phase and magnitude of complex wavelet coefficients between reference and distorted images:
+\begin{equation}
+\text{\acs{CW-SSIM}}(x, y) = \frac{2 \sum_{i} |c_{x,i}||c_{y,i}| + K}{\sum_{i} |c_{x,i}|^2 + \sum_{i} |c_{y,i}|^2 + K}
+\cdot \frac{2 \left| \sum_{i} c_{x,i} c_{y,i}^* \right| + K}{\sum_{i} |c_{x,i} c_{y,i}^*| + K}
+\end{equation}
+where $c_{x,i}$ and $c_{y,i}$ are complex wavelet coefficients at position $i$, $^*$ denotes complex conjugation, and $K$ is a small stabilizing constant. By focusing on phase alignment, \acs{CW-SSIM} offers enhanced robustness in applications involving misregistration or alignment noise.
+
+The \acf{G-SSIM}~\cite{chen2006gssim} extends \acs{SSIM} by incorporating image gradient information into the structural comparison. The motivation is that gradients reflect edge strength and direction, which are more sensitive to visual structure than raw intensity values. \acs{G-SSIM} modifies the structure term in the \acs{SSIM} formula to include gradient magnitudes:
+\begin{equation}
+\text{\acs{G-SSIM}}(x, y) = l(x, y)^\alpha \cdot c(x, y)^\beta \cdot s(\nabla x, \nabla y)^\gamma
+\end{equation}
+where $l(x, y)$ and $c(x, y)$ are the luminance and contrast components as in \acs{SSIM}, and $s(\nabla x, \nabla y)$ is the structure similarity between the gradients of the two images. The exponents $\alpha$, $\beta$, and $\gamma$ control the relative importance of each component. \acs{G-SSIM} offers better sensitivity to blurring and small structural degradations.
+
+The \acf{R-SSIM}~\cite{yan2015rssim} focuses on evaluating image quality within a central region of interest. This approach assumes that viewers primarily attend to central areas of an image, and thus, distortions in these regions are more perceptually significant:
+\begin{equation}
+\text{\acs{R-SSIM}}(x, y) = \text{\acs{SSIM}}(x|_{\Omega_c}, y|_{\Omega_c})
+\end{equation}
+where $\Omega_c \subset \Omega$ be the central region of the image domain $\Omega$. This is often used in screen-centered applications, like the assessment of faces.
+
+The \acf{L-SSIM}~\cite{wang2004image} extends \acs{SSIM} by applying it over multiple small patches across the image and averaging the results. This local analysis allows for finer sensitivity to spatially localized distortions that may be overlooked by global quality metrics. Given a window $\omega_k$ centered at pixel $k$, \acs{L-SSIM} is computed as:
+\begin{equation}
+\text{\acs{L-SSIM}}(x, y) = \frac{1}{K} \sum_{k=1}^{K} \text{\acs{SSIM}}(x|_{\omega_k}, y|_{\omega_k})
+\end{equation}
+where $K$ is the total number of windows across the image.
+
+The \acf{C-SSIM}~\cite{hassan2017cssim} extends the traditional SSIM formulation by incorporating chromatic information alongside luminance, contrast, and structure. It proposes a four-component model that quantifies image distortion through a combination of local comparison functions, including a color fidelity term derived from the \acs{S-CIELAB} color space~\cite{zhang1997scielab}.
+
+\begin{equation}
+\text{\acs{C-SSIM}}(x, y) = l(x, y) \cdot C(x, y) \cdot S(x, y) \cdot \text{Cr}(x, y)
+\end{equation}
+\begin{equation}
+\text{Cr}(x, y) = 1 - \frac{1}{k} \Delta E(x, y)
+\end{equation}
+where $l(x, y)$ is the luminance similarity, $C(x, y)$ is the contrast similarity, $S(x, y)$ is the structure similarity, and $\text{Cr}(x, y)$ is the color fidelity term. The term $\Delta E(x, y)$ is the color difference between images $x$ and $y$ in the \acs{S-CIELAB} color space, and $k$ is a scaling constant.
+
+The \acf{W-SSIM}~\cite{li2009wssim,li2010wssim} is a region-pooled extension of \acs{SSIM} that emphasizes perceptually important areas of an image. Instead of computing a uniform average of local \acs{SSIM} values, \acs{W-SSIM} assigns a larger weight to a \acf{ROI}, such as the image center, and a smaller weight to the surrounding regions. The final score is given by:
+\begin{equation}
+\text{\acs{W-SSIM}} = w \cdot \frac{\sum_{x} M(x)\,S(x)}{\sum_{x} M(x)} + (1-w) \cdot \frac{\sum_{x} (1-M(x))\,S(x)}{\sum_{x} (1-M(x))}
+\end{equation}
+where $S(x)$ denotes the local SSIM value at pixel $x$, $M(x)$ is a binary mask equal to 1 in the \acs{ROI} and 0 elsewhere, and $w$ is the weight assigned to the \acs{ROI}. In the simple case where the \acs{ROI} is defined as the central region and $w=0.7$, this formulation reduces to the implementation described, aligning with earlier region-weighted \acs{SSIM} variants proposed in the literature.
+
+The \acf{GMS}~\cite{xue2014gmsd} quantifies local similarity of gradient magnitudes, which better reflect perceptual structure than raw intensities. Let $m_x$ and $m_y$ be gradient-magnitude maps of reference $x$ and distorted $y$ (e.g., from Sobel or Scharr). Define the per-pixel similarity
+\begin{equation}
+\mathrm{\acs{GMS}}_i = \frac{2\,m_x(i)\,m_y(i) + C}{m_x(i)^2 + m_y(i)^2 + C},
+\end{equation}
+with small $C>0$. The image-level score is the spatial average
+\begin{equation}
+\mathrm{\acs{GMS}}(x,y) = \frac{1}{N}\sum_{i=1}^{N} \mathrm{\acs{GMS}}_i,
+\end{equation}
+ranging in $[0,1]$ where higher is better. \acs{GMS} is sensitive to blur and edge losses while being less affected by uniform luminance changes.
+
+The \acf{GMSD}~\cite{xue2014gmsd} uses the same gradient-magnitude similarity map as \acs{GMS} but measures the spatial variation of quality rather than its mean. After computing $\mathrm{\acs{GMS}}_i$ and its mean $\overline{\mathrm{\acs{GMS}}}$, the final score is the standard deviation
+\begin{equation}
+\mathrm{\acs{GMSD}}(x,y) = \sqrt{\frac{1}{N}\sum_{i=1}^{N}\left(\mathrm{\acs{GMS}}_i - \overline{\mathrm{\acs{GMS}}}\right)^{2}}.
+\end{equation}
+Lower values indicate better quality. \acs{GMSD} emphasizes localized degradations by penalizing spatial nonuniformity in the similarity map.
+
+The \acf{VSNR}~\cite{chandler2007vsnr} is a perceptual metric that combines subthreshold detection and suprathreshold distortion modeling in the wavelet domain. Let $d = y - x$ be the distortion. After applying a contrast sensitivity function and contrast masking to the wavelet coefficients of $d$ to obtain a perceptual distortion $\tilde d$, \acs{VSNR} is defined as
+\begin{equation}
+\mathrm{\acs{VSNR}}(x,y) = 20 \log_{10}\!\left(\frac{\lVert x \rVert_{2}}{\lVert \tilde d \rVert_{2}}\right)\ \text{dB}.
+\end{equation}
+Larger values (in dB) indicate better quality. If the distortion is below detection thresholds, \acs{VSNR} becomes very large, reflecting near-invisibility; otherwise it decreases as perceptual distortion grows.
+
+The \acf{FSIM}~\cite{zhang2011fsim} assesses image quality by leveraging perceptually meaningful features. It uses \acf{PC} as the primary feature, which reflects the significance of local structure independent of luminance and contrast, and \acf{GM} as a secondary feature to weight salient regions. The local similarity map $S_{\text{FSIM}}(x)$ is defined as:
+\begin{equation}
+S_{\text{\acs{FSIM}}}(x) = \frac{S_{\text{\acs{PC}}}(x) \cdot S_{\text{\acs{GM}}}(x)}{\max(PC_{\text{ref}}(x), PC_{\text{dist}}(x)) + \epsilon}
+\end{equation}
+where $S_{\text{\acs{PC}}}(x)$ and $S_{\text{\acs{GM}}}(x)$ denote the \acs{PC} and \acs{GM} similarity between reference and distorted images at pixel $x$, and $\epsilon$ is a small constant to avoid division by zero. The final \acs{FSIM} score is computed as the weighted average of $S_{\text{\acs{FSIM}}}(x)$ over the image, using the \acs{PC} map as a weighting function.
+
+The \acf{FSIMc}~\cite{zhang2011fsim} is an extension of \acs{FSIM} that integrates color information to better evaluate the perceptual quality of color images. In addition to the \acs{PC} and \acs{GM} features used in \acs{FSIM}, \acs{FSIMc} includes chrominance similarity components derived from the I and Q channels of the YIQ color space~\cite{ntsc1953yiq}. The final \acs{FSIMc} score is given by:
+\begin{equation}
+\text{\acs{FSIM}}_c = \frac{\sum_{x \in \Omega} S_{\text{\acs{FSIM}}}(x) \cdot S_I(x) \cdot S_Q(x) \cdot \text{\acs{PC}}_{\max}(x)}{\sum_{x \in \Omega} \text{\acs{PC}}_{\max}(x)}
+\end{equation}
+where $S_I(x)$ and $S_Q(x)$ are the similarity measures for the I and Q chrominance components, and $\text{\acs{PC}}_{\max}(x)$ is the maximum phase congruency between the reference and distorted images at pixel $x$. This formulation enhances \acs{FSIM}'s sensitivity to color distortions while preserving its effectiveness in structural fidelity.
+
+The \acf{SR-SIM}~\cite{zhang2012srsim} leverages visual saliency derived from the spectral residual of the Fourier transform. The spectral residual highlights regions that are more likely to attract human attention, and \acs{SR-SIM} incorporates this information to weight structural similarity computations. The final score is defined as:
+\begin{equation}
+\text{\acs{SR-SIM}} = \frac{\sum_{x \in \Omega} S(x) \cdot \text{Sal}_{\min}(x)}{\sum_{x \in \Omega} \text{Sal}_{\min}(x)},
+\end{equation}
+where $S(x)$ denotes the local structural similarity at pixel $x$, and $\text{Sal}_{\min}(x)$ is the minimum saliency value between the reference and distorted images at that pixel. By emphasizing salient regions, \acs{SR-SIM} improves correlation with human perceptual quality judgments while maintaining low computational complexity.
+
+The \acf{ESSIM}~\cite{chen2006esim} improves \acs{SSIM} by emphasizing structural fidelity in edge regions, which are perceptually more sensitive to distortions. \acs{ESSIM} first extracts edge maps from the reference and distorted images using edge detectors such as Sobel or Canny, and then computes local \acs{SSIM} values restricted to these edge pixels. The final score is defined as:
+\begin{equation}
+\text{\acs{ESSIM}} = \frac{1}{N} \sum_{x \in \Omega_{\text{edge}}} S(x),
+\end{equation}
+where $S(x)$ is the local \acs{SSIM} value at pixel $x$, $\Omega_{\text{edge}}$ is the set of edge pixels, and $N$ is the number of pixels in this set. By focusing on edges, \acs{ESSIM} improves sensitivity to blur and compression artifacts that strongly affect edge integrity.
+
+The \acf{UQI}~\cite{wang2002uqi} models image distortion as a combination of three factors: loss of correlation, luminance distortion, and contrast distortion. \acs{UQI} is defined as:
+\begin{equation}
+\text{\acs{UQI}} = \frac{4 \sigma_{xy} \mu_x \mu_y}{\left( \sigma_x^2 + \sigma_y^2 \right)\left( \mu_x^2 + \mu_y^2 \right)},
+\end{equation}
+where $\mu_x$ and $\mu_y$ are the mean intensities of the reference and distorted images, $\sigma_x^2$ and $\sigma_y^2$ are their variances, and $\sigma_{xy}$ is the covariance between them. The index ranges from $-1$ to $1$, with higher values indicating greater similarity.
+
+The \acf{SCC}~\cite{eskicioglu1995scc} measures the linear correlation between the reference and distorted images. It is defined as:
+\begin{equation}
+\text{\acs{SCC}} = \frac{\sum_{x \in \Omega} (I_r(x) - \mu_r)(I_d(x) - \mu_d)}{\sqrt{\sum_{x \in \Omega} (I_r(x) - \mu_r)^2} \cdot \sqrt{\sum_{x \in \Omega} (I_d(x) - \mu_d)^2}},
+\end{equation}
+where $I_r(x)$ and $I_d(x)$ are the pixel intensities of the reference and distorted images at location $x$, $\mu_r$ and $\mu_d$ are their mean intensities, and $\Omega$ is the image domain. \acs{SCC} ranges from $-1$ to $1$, with higher values indicating stronger linear correlation and hence greater perceptual similarity. While simple and computationally efficient, \acs{SCC} is limited because it only captures linear relationships and does not account for structural or perceptual distortions.
+
+\section{Information-theoretic Metrics}\label{app:sec:information_theoretic_metrics}
+
+\noindent\textbf{Notation.} 
+Let $C_k$ and $D_k$ denote the wavelet-domain coefficients of the reference and distorted images in subband $k$, respectively. Natural scene statistics are modeled with \acf{GSM}, with $s_k$ the scale factor at subband $k$. When modeling the \acs{HVS}, additive perceptual noise is introduced, denoted by $n_k$. Mutual information between random variables $X$ and $Y$ conditioned on $s_k$ is written as $I(X;Y \mid s_k)$.
+
+The \acf{IFC}~\cite{sheikh2005ifc} quantifies the mutual information shared between the reference and distorted coefficients under the \acs{GSM} model:
+
+\begin{equation}
+\text{\acf{IFC}} = \sum_{k} I\!\left(C_k; D_k \mid s_k\right).
+\end{equation}
+
+Higher \acs{IFC} values indicate greater preservation of the statistical information present in the reference image.
+
+The \acf{VIF} index~\cite{sheikh2006vif} extends this framework by incorporating perceptual noise to account for the \acs{HVS}. It is defined as the ratio between the mutual information preserved after distortion and the information available in the reference:
+
+\begin{equation}
+\text{\acs{VIF}} = 
+\frac{\sum_{k} I\!\left(C_k; D_k \mid s_k\right)}
+     {\sum_{k} I\!\left(C_k; C_k + n_k \mid s_k\right)}.
+\end{equation}
+
+A value of $1$ denotes perfect fidelity, while lower values correspond to stronger degradation.
+
+\acf{VIFp}~\cite{sheikh2006vif} is a simplified pixel-domain version that avoids multiscale wavelet decomposition. Although less precise, it significantly reduces computational complexity and is useful in real-time applications.
+
+\acf{VIFc}~\cite{sheikh2006vif} extends the metric to color images by transforming them into the YUV color space. \acs{VIF} is computed independently on each channel, and the final score is given by:
+
+\begin{equation}
+\text{\acs{VIFc}} = \tfrac{1}{3}\left(\text{\acs{VIF}}_Y + \text{\acs{VIF}}_U + \text{\acs{VIF}}_V\right).
+\end{equation}
+
+This formulation incorporates chromatic information, providing a more complete measure of perceptual fidelity in color imagery.
+
+\section{Learning-based Metrics}\label{app:sec:learning_based_metrics}
+
+\noindent\textbf{Notation.} Let $\phi_l(x)$ denote the activation (feature map) of image $x$ at layer $l$ of a pretrained \acf{CNN} with spatial size $H_l \times W_l$ and $C_l$ channels. Features are channel-wise normalized, denoted by $\hat{\phi}_l(x)$. Channel weights are written as $w_l$, and similarity functions are applied element-wise over spatial positions $(h,w)$.
+
+\acf{LPIPS}~\cite{zhang2018lpips} measures perceptual similarity by comparing deep features extracted from pretrained networks such as AlexNet, SqueezeNet, or \acf{VGG}. The metric is defined as:
+
+\begin{equation}
+\text{\acs{LPIPS}}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l} 
+\sum_{h,w} \left\| \hat{\phi}_l(x)_{h,w} - \hat{\phi}_l(y)_{h,w} \right\|_2^2.
+\end{equation}
+
+Different backbones yield three common variants: \acs{LPIPS}-Alex, \acs{LPIPS}-Squeeze, and \acs{LPIPS}-\acs{VGG}.
+
+\acf{DISTS}~\cite{ding2020dists} combines structure and texture similarity in the deep feature space. For each layer $l$, structure similarity $S_l$ is computed from normalized feature statistics, and texture similarity $T_l$ is obtained from feature covariances. The final score is a convex combination:
+
+\begin{equation}
+\text{\acs{DISTS}}(x,y) = \sum_{l} \alpha_l S_l(x,y) + \beta_l T_l(x,y),
+\end{equation}
+where $\alpha_l$ and $\beta_l$ are learned weights. This design captures both structural fidelity and fine-grained textural consistency.
+
+\acf{WaDIQaM}~\cite{bosse2017wadiqam} employs deep convolutional networks to learn a patch-based representation of image quality. In the full-reference setting, reference and distorted patches are passed through a siamese network~\cite{bromley1993signature}, and local quality estimates are aggregated using a learned weighting mechanism:
+
+\begin{equation}
+\text{\acs{WaDIQaM}}(x,y) = \sum_{p} w_p \, q_p(x,y),
+\end{equation}
+where $q_p(x,y)$ is the predicted quality of patch $p$ and $w_p$ is its learned weight. By learning both local quality prediction and patch importance, \acs{WaDIQaM} achieves state-of-the-art correlation with human opinion scores in a data-driven manner.
+
+\acf{PSM}~\cite{ghildyal2022psm} builds on \acs{LPIPS} to make full-reference perceptual similarity robust to small, imperceptible misalignments. It replaces shift-sensitive elements in the feature extractor with anti-aliased strided convolutions, anti-aliased pooling, reduced strides, and appropriate padding, then aggregates layerwise feature distances like \acs{LPIPS}. Let $F_l(x)$ be shift-tolerant features at layer $l$ and $\hat{F}_l$ their channel-normalized maps; the score is
+\begin{equation}
+\text{\acs{PSM}}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l}\sum_{h,w} \big| \hat{F}_l(x)_{h,w}-\hat{F}_l(y)_{h,w}\big|_2^2,
+\end{equation}
+where $w_l$ are learned weights. This preserves perceptual fidelity while reducing spurious changes under 1-2 pixel shifts.
+
+\acf{SPIQ}~\cite{chen2022spiq} is an approach that first learns a quality-aware visual representation via self-supervised pretraining, then fits a lightweight regressor on top with limited \acs{MOS} labels. Two augmented views of the same image are encouraged to produce consistent features during pretraining; at inference a regressor maps features to a scalar quality:
+\begin{equation}
+\text{\acs{SPIQ}}(x) = g\big(f(x)\big),
+\end{equation}
+where $f$ is the self-supervised backbone and $g$ is a trained regression head. This decouples representation learning from scarce labels and transfers well across distortions.

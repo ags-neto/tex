@@ -58,7 +58,7 @@ A principled way to classify \acs{IQA} methods is through two dimensions: the co
 The computational domain defines the signal space where similarity is quantified.
 
 \begin{itemize}
-  \item Spatial domain: Early metrics such as MSE, RMSE, and PSNR operate directly on pixel intensities by measuring absolute differences or signal-to-noise ratios~\cite{gonzalez2009digital}. Despite their simplicity, they fail to account for perceptual masking and structural consistency.
+  \item Spatial domain: Early metrics such as \acf{MSE}, \acf{RMSE}, and \acf{PSNR} operate directly on pixel intensities by measuring absolute differences or signal-to-noise ratios~\cite{gonzalez2009digital}. Despite their simplicity, they fail to account for perceptual masking and structural consistency.
   \item Frequency domain: Transform-based methods use the \acf{DCT}, \acf{DFT}, or wavelets to capture energy distributions across spatial frequencies. Examples include \acf{IFC}~\cite{sheikh2005ifc} and \acf{VSNR}~\cite{chandler2007vsnr}, which exploit properties of the \acs{HVS} such as contrast sensitivity.
   \item Gradient and saliency domains: These methods emphasize structural edges and perceptually important regions. The \acf{GMSD}~\cite{xue2014gmsd} measures gradient consistency, while saliency-based models~\cite{hou2007saliency} weight distortions according to visual attention maps.
   \item Information-theoretic domain: Some metrics interpret quality as the amount of shared information between reference and distorted images. \acf{VIF}~\cite{sheikh2006vif} and related approaches build on mutual information, quantifying how much perceptual information can be extracted reliably from a degraded signal.
@@ -77,7 +77,7 @@ The spectral representation specifies the channel configuration used for quality
 
 This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 6 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
 
-\subsection{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
+\section{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
 
 \begin{longtable}{
 p{0.16\linewidth}  % Metric
@@ -142,290 +142,47 @@ p{0.50\linewidth}  % Tested Databases
 
 \acs{FR}-\acs{IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR}-\acs{IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications.
 
+A concise overview of each metric family, together with full notation, formal definitions, and implementation details for all 40 \acs{FR}-\acs{IQA} metrics in Table~\ref{tab:fr_iqa_metrics}, is provided in Appendix~\ref{app:full-ref-metrics}.
 
-\subsubsection{Error-Based Metrics}\label{sec:error_based_metrics}
+\subsection{Error-Based Metrics}\label{sec:error_based_metrics}
 
-Error-based metrics quantify distortion by computing direct numerical differences between the reference and distorted images~\cite{wang2004image}. These measures are mathematically simple and computationally efficient, but they lack perceptual modeling and therefore correlate poorly with human opinion scores. Despite this limitation, they are still treated as \acs{FR}-\acs{IQA} methods and remain widely used as baselines.
+Error-based metrics quantify distortion by computing direct numerical differences between the reference and distorted images~\cite{wang2004image}. Common examples include \acf{MSE}, \acf{RMSE}, \acf{MAE}, \acf{PSNR}, \acf{PSNR-B}, and \acf{SNR}, which are mathematically simple and computationally efficient. However, they lack perceptual modeling and therefore correlate poorly with human opinion scores. Despite this limitation, they are still treated as \acs{FR}-\acs{IQA} methods and remain widely used as baselines.
 
 It is important to note that although several error-based metrics are standard mathematical tools in signal processing, their use in \acs{IQA} involves a shift in interpretation. In this context, they are repurposed to estimate perceptual image degradation based solely on numerical pixel differences. Despite lacking any perceptual modeling, these metrics are still treated as \acs{FR}-\acs{IQA} methods and evaluated empirically against subjective human judgments.
 
-\noindent \textbf{Notation.}  
-Let $X = \{x_i\}_{i=1}^N$ and $Y = \{y_i\}_{i=1}^N$ be two images with $N$ pixels each, where $x_i$ and $y_i$ are corresponding pixel intensities. The pixel-wise error is defined as $e_i = x_i - y_i$.
+\subsection{Spectral-based Metrics}\label{sec:spectral_based_metrics}
 
-The most basic error-based metric is the \acf{MSE}~\cite{wang2004image}, which quantifies the average squared difference between corresponding pixels in the reference and distorted images:
-\begin{equation}
-\text{\acs{MSE}} = \frac{1}{N} \sum_{i=1}^{N} (x_i - y_i)^2
-\end{equation}
+Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. Representative measures include the \acf{SAM}, which computes the angular difference between spectral vectors; the \acf{ERGAS}, which measures average relative errors across spectral bands; and \acs{Dlambda}, which quantifies inter-band distortion. These methods are widely used in remote sensing and image fusion, where preserving spectral integrity is critical.
 
-The \acf{RMSE}~\cite{wang2004image} is a direct extension of the mean squared error, obtained by taking its square root:
-\begin{equation}
-\text{\acs{RMSE}} = \sqrt{\text{\acs{MSE}}}
-\end{equation}
+\subsection{Similarity-based Metrics}\label{sec:similarity_based_metrics}
 
-By restoring the metric's scale to that of the original image intensities, \acs{RMSE} offers more interpretable results than \acs{MSE}, especially when comparing distortion magnitudes across images.
+Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. 
+Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. 
+Prominent examples include the \acf{SSIM} family and its extensions such as \acs{MS-SSIM}, \acs{IW-SSIM}, and \acs{CW-SSIM}, 
+as well as gradient- and edge-based measures like \acs{G-SSIM}, \acs{GMS}, and \acs{ESSIM}, and feature-driven approaches such as \acs{FSIM} and \acs{SR-SIM}. 
+These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}, 
+and remain central in modern \acs{FR}-\acs{IQA} research. 
 
-The \acf{MAE}~\cite{wang2004image} measures the average absolute difference between the reference and distorted image pixels:
-\begin{equation}
-\text{\acs{MAE}} = \frac{1}{N} \sum_{i=1}^{N} |x_i - y_i|
-\end{equation}
 
-\acs{MAE} penalizes all errors linearly, making it less sensitive to large deviations and outliers. This results in a more stable error measure in scenarios with isolated distortions or non-Gaussian noise.
+\subsection{Information-theoretic Metrics}\label{sec:information_theoretic_metrics}
 
-The \acf{PSNR}~\cite{wang2004image} expresses the fidelity between a reference and a distorted image using a logarithmic decibel (dB) scale. It is defined as:
-\begin{equation}
-\text{\acs{PSNR}} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{\acs{MSE}}} \right)
-\end{equation}
-where $MAX$ is the maximum possible pixel value (typically 255 for 8-bit images). \acs{PSNR} remains popular due to its simplicity, ease of interpretation, and long-standing usage in compression evaluation.
+Information-theoretic approaches to \acs{IQA} are grounded in Shannon's theory of communication~\cite{shannon1948mathematical,cover1999elements}. 
+They model images as stochastic signals transmitted through a distortion channel, and quality is assessed by measuring how much mutual information between the reference and distorted images is preserved in the presence of perceptual noise. 
+Representative metrics include the \acf{IFC}, which quantifies shared mutual information between reference and distorted coefficients; the \acf{VIF}, which normalizes preserved information by that available in the reference; and its simplified or extended variants, \acs{VIFp} and \acs{VIFc}. 
+These methods provide a principled view of perceptual fidelity and often correlate well with subjective judgments, but they are typically more computationally demanding than error- or similarity-based metrics. 
 
-The \acf{PSNR-B}~\cite{ma2011psnrb, yim2011psnrb} was introduced to address one of the main weaknesses of \acs{PSNR}, its insensitivity to compression artifacts such as blocking. \acs{PSNR-B} extends the original formula by adding a \acf{BEF} to the denominator:
+\subsection{Deep Learning-Based Metrics}\label{sec:deep_metrics}
 
-\begin{equation}
-\text{\acs{PSNR-B}} = 10 \cdot \log_{10} \left( \frac{MAX^2}{\text{\acs{MSE}} + \text{\acs{BEF}}} \right)
-\end{equation}
+Deep learning-based approaches to \acs{IQA} exploit feature representations from convolutional neural networks pretrained on large-scale vision tasks. 
+These feature spaces capture high-level perceptual attributes such as texture, structure, and semantics, which align more closely with human visual perception than pixel-wise comparisons~\cite{gatys2016image,johnson2016perceptual,zhang2018lpips}. 
+Representative metrics include the \acf{LPIPS} family, which measures distances in deep feature space; \acf{DISTS}, which combines structure and texture similarity; \acf{WaDIQaM}, a data-driven patch-based model; \acf{PSM}, a shift-tolerant variant of LPIPS; and \acf{SPIQ}, which leverages self-supervised pretraining for quality-aware representations. 
+These methods have shown strong correlation with human opinion scores, particularly for complex and perceptually salient distortions, though they typically require higher computational resources.
 
-The \acs{BEF} penalizes the presence of visible discontinuities along block boundaries, which commonly result from transform-based compression schemes.
-
-The \acf{SNR}~\cite{wang2004image} quantifies the proportion of signal power relative to noise power between a reference image and its distorted counterpart. It is computed as:
-
-\begin{equation}
-\text{\acs{SNR}} = 10 \cdot \log_{10} \left( \frac{\sum x_i^2}{\sum (x_i - y_i)^2} \right)
-\end{equation}
-
-This metric provides a direct measure of how much of the original signal is preserved in the presence of distortion.
-
-\subsubsection{Spectral-based Metrics}\label{sec:spectral_based_metrics}
-
-Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. These methods are widely used in remote sensing and image fusion, where spectral integrity is critical.
-
-\noindent\textbf{Notation.}  
-Let $x, y \in \mathbb{R}^B$ denote the spectral vectors of the reference and distorted images at a given pixel, where $B$ is the number of spectral bands. The Euclidean norm is denoted $\|\cdot\|$, the inner product by $\langle \cdot, \cdot \rangle$, and $\mu_i$ the mean of band $i$. Spatial resolutions of the high- and low-resolution images are $h$ and $l$, respectively. Pairwise spectral distances between bands $i$ and $j$ are written as $d(r_i, r_j)$, where $r_i$ is the $i$-th band.  
-
-The \acf{SAM}~\cite{yuhas1992sam} computes the angular difference between the spectral vectors of the reference and distorted images:
-\begin{equation}
-\text{\acs{SAM}}(x,y) = \cos^{-1} \left( \frac{ \langle x, y \rangle }{ \|x\| \cdot \|y\| } \right).
-\end{equation}
-
-The \acf{ERGAS}~\cite{wald2000ergas,zhang2008ergas} measures the average relative root mean squared error across spectral bands:
-\begin{equation}
-\text{\acs{ERGAS}} = 100 \cdot \frac{h}{l} \cdot \sqrt{ \frac{1}{B} \sum_{i=1}^{B} \left( \frac{\text{\acs{RMSE}}_i}{\mu_i} \right)^2 } .
-\end{equation}
-
-The \acs{Dlambda} metric~\cite{wald2000ergas} evaluates spectral distortion by averaging inter-band distances:
-\begin{equation}
-\acs{Dlambda} = \frac{1}{B(B-1)} \sum_{i=1}^{B} \sum_{\substack{j=1 \\ j \neq i}}^{B} d(r_i, r_j) .
-\end{equation}
-
-\subsubsection{Similarity-based Metrics}\label{sec:similarity_based_metrics}
-
-Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}.
-
-\noindent\textbf{Notation.}  
-Let $x$ and $y$ denote local patches from the reference and distorted images. Their means are $\mu_x$ and $\mu_y$, variances $\sigma_x^2$ and $\sigma_y^2$, and covariance $\sigma_{xy}$. Constants $C_1, C_2 > 0$ are used to avoid instabilities in divisions.
-
-The \acf{SSIM}~\cite{wang2004image} is a perceptual metric designed to evaluate image quality by comparing structural information between a reference and a distorted image. Unlike traditional error-based metrics, \acs{SSIM} models luminance, contrast, and structure in a local window. Given two image patches $x$ and $y$, \acs{SSIM} is computed as:
-\begin{equation}
-\text{\acs{SSIM}}(x, y) = \frac{(2 \mu_x \mu_y + C_1)(2 \sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)}
-\end{equation}
-\acs{SSIM} values range from 0 to 1, where 1 indicates perfect similarity.
-
-The \acf{MS-SSIM}~\cite{wang2003multiscale} extends \acs{SSIM} by computing the structural similarity at multiple scales, capturing both fine and coarse details. This is achieved by iteratively downsampling the input images and evaluating luminance, contrast, and structure components at each level. The final score is a weighted geometric mean of the similarity scores across scales:
-\begin{equation}
-\text{\acs{MS-SSIM}}(x, y) = [l_M(x, y)]^{\alpha_M} \prod_{j=1}^{M} [c_j(x, y)]^{\beta_j} [s_j(x, y)]^{\gamma_j}
-\end{equation}
-where $l$, $c$, and $s$ represent luminance, contrast, and structure components at scale $j$, and $\alpha_j$, $\beta_j$, $\gamma_j$ are weighting factors. \acs{MS-SSIM} has been shown to better correlate with human perception across varying resolutions and distortion types.
-
-The \acf{DSSIM}~\cite{wang2004image} is a reformulation of \acs{SSIM} that expresses dissimilarity rather than similarity. It is derived directly from the \acs{SSIM} value by:
-\begin{equation}
-\text{\acs{DSSIM}}(x, y) = \frac{1 - \text{\acs{SSIM}}(x, y)}{2}
-\end{equation}
-This transformation enables \acs{DSSIM} to behave like a distance function, where 0 represents identical images and higher values indicate greater perceptual difference. Despite its simplicity, \acs{DSSIM} is sometimes preferred in optimization and comparison tasks where dissimilarity is more intuitive.
-
-The \acf{IW-SSIM}~\cite{li2011iwssim} modifies \acs{MS-SSIM} by incorporating local information content as a weighting mechanism. The intuition is that regions of an image with higher information density (e.g., textures or edges) are more perceptually important and should contribute more to the quality score. \acs{IW-SSIM} applies a \acs{MS-SSIM} computation, weighted by the local mutual information between reference and distorted images:
-\begin{equation}
-\text{\acs{IW-SSIM}}(x, y) = \sum_{i} w_i \cdot \text{\acs{SSIM}}_i(x, y)
-\end{equation}
-where $w_i$ is the information content weight at region $i$, and $\text{\acs{SSIM}}_i$ is the local \acs{SSIM} score. This approach improves correlation with human judgments, particularly for images with non-uniform content distribution.
-
-The \acf{CW-SSIM}~\cite{sampat2009cwssim} adapts the \acs{SSIM} formulation to the complex wavelet domain, which is more robust to small geometric distortions such as translations and rotations. Instead of comparing pixel intensities directly, \acs{CW-SSIM} compares the phase and magnitude of complex wavelet coefficients between reference and distorted images:
-\begin{equation}
-\text{\acs{CW-SSIM}}(x, y) = \frac{2 \sum_{i} |c_{x,i}||c_{y,i}| + K}{\sum_{i} |c_{x,i}|^2 + \sum_{i} |c_{y,i}|^2 + K}
-\cdot \frac{2 \left| \sum_{i} c_{x,i} c_{y,i}^* \right| + K}{\sum_{i} |c_{x,i} c_{y,i}^*| + K}
-\end{equation}
-where $c_{x,i}$ and $c_{y,i}$ are complex wavelet coefficients at position $i$, $^*$ denotes complex conjugation, and $K$ is a small stabilizing constant. By focusing on phase alignment, \acs{CW-SSIM} offers enhanced robustness in applications involving misregistration or alignment noise.
-
-The \acf{G-SSIM}~\cite{chen2006gssim} extends \acs{SSIM} by incorporating image gradient information into the structural comparison. The motivation is that gradients reflect edge strength and direction, which are more sensitive to visual structure than raw intensity values. \acs{G-SSIM} modifies the structure term in the \acs{SSIM} formula to include gradient magnitudes:
-\begin{equation}
-\text{\acs{G-SSIM}}(x, y) = l(x, y)^\alpha \cdot c(x, y)^\beta \cdot s(\nabla x, \nabla y)^\gamma
-\end{equation}
-where $l(x, y)$ and $c(x, y)$ are the luminance and contrast components as in \acs{SSIM}, and $s(\nabla x, \nabla y)$ is the structure similarity between the gradients of the two images. The exponents $\alpha$, $\beta$, and $\gamma$ control the relative importance of each component. \acs{G-SSIM} offers better sensitivity to blurring and small structural degradations.
-
-The \acf{R-SSIM}~\cite{yan2015rssim} focuses on evaluating image quality within a central region of interest. This approach assumes that viewers primarily attend to central areas of an image, and thus, distortions in these regions are more perceptually significant:
-\begin{equation}
-\text{\acs{R-SSIM}}(x, y) = \text{\acs{SSIM}}(x|_{\Omega_c}, y|_{\Omega_c})
-\end{equation}
-where $\Omega_c \subset \Omega$ be the central region of the image domain $\Omega$. This is often used in screen-centered applications, like the assessment of faces.
-
-The \acf{L-SSIM}~\cite{wang2004image} extends \acs{SSIM} by applying it over multiple small patches across the image and averaging the results. This local analysis allows for finer sensitivity to spatially localized distortions that may be overlooked by global quality metrics. Given a window $\omega_k$ centered at pixel $k$, \acs{L-SSIM} is computed as:
-\begin{equation}
-\text{\acs{L-SSIM}}(x, y) = \frac{1}{K} \sum_{k=1}^{K} \text{\acs{SSIM}}(x|_{\omega_k}, y|_{\omega_k})
-\end{equation}
-where $K$ is the total number of windows across the image.
-
-The \acf{C-SSIM}~\cite{hassan2017cssim} extends the traditional SSIM formulation by incorporating chromatic information alongside luminance, contrast, and structure. It proposes a four-component model that quantifies image distortion through a combination of local comparison functions, including a color fidelity term derived from the \acs{S-CIELAB} color space~\cite{zhang1997scielab}.
-
-\begin{equation}
-\text{\acs{C-SSIM}}(x, y) = l(x, y) \cdot C(x, y) \cdot S(x, y) \cdot \text{Cr}(x, y)
-\end{equation}
-\begin{equation}
-\text{Cr}(x, y) = 1 - \frac{1}{k} \Delta E(x, y)
-\end{equation}
-where $l(x, y)$ is the luminance similarity, $C(x, y)$ is the contrast similarity, $S(x, y)$ is the structure similarity, and $\text{Cr}(x, y)$ is the color fidelity term. The term $\Delta E(x, y)$ is the color difference between images $x$ and $y$ in the \acs{S-CIELAB} color space, and $k$ is a scaling constant.
-
-The \acf{W-SSIM}~\cite{li2009wssim,li2010wssim} is a region-pooled extension of \acs{SSIM} that emphasizes perceptually important areas of an image. Instead of computing a uniform average of local \acs{SSIM} values, \acs{W-SSIM} assigns a larger weight to a \acf{ROI}, such as the image center, and a smaller weight to the surrounding regions. The final score is given by:
-\begin{equation}
-\text{\acs{W-SSIM}} = w \cdot \frac{\sum_{x} M(x)\,S(x)}{\sum_{x} M(x)} + (1-w) \cdot \frac{\sum_{x} (1-M(x))\,S(x)}{\sum_{x} (1-M(x))}
-\end{equation}
-where $S(x)$ denotes the local SSIM value at pixel $x$, $M(x)$ is a binary mask equal to 1 in the \acs{ROI} and 0 elsewhere, and $w$ is the weight assigned to the \acs{ROI}. In the simple case where the \acs{ROI} is defined as the central region and $w=0.7$, this formulation reduces to the implementation described, aligning with earlier region-weighted \acs{SSIM} variants proposed in the literature.
-
-The \acf{GMS}~\cite{xue2014gmsd} quantifies local similarity of gradient magnitudes, which better reflect perceptual structure than raw intensities. Let $m_x$ and $m_y$ be gradient-magnitude maps of reference $x$ and distorted $y$ (e.g., from Sobel or Scharr). Define the per-pixel similarity
-\begin{equation}
-\mathrm{\acs{GMS}}_i = \frac{2\,m_x(i)\,m_y(i) + C}{m_x(i)^2 + m_y(i)^2 + C},
-\end{equation}
-with small $C>0$. The image-level score is the spatial average
-\begin{equation}
-\mathrm{\acs{GMS}}(x,y) = \frac{1}{N}\sum_{i=1}^{N} \mathrm{\acs{GMS}}_i,
-\end{equation}
-ranging in $[0,1]$ where higher is better. \acs{GMS} is sensitive to blur and edge losses while being less affected by uniform luminance changes.
-
-The \acf{GMSD}~\cite{xue2014gmsd} uses the same gradient-magnitude similarity map as \acs{GMS} but measures the spatial variation of quality rather than its mean. After computing $\mathrm{\acs{GMS}}_i$ and its mean $\overline{\mathrm{\acs{GMS}}}$, the final score is the standard deviation
-\begin{equation}
-\mathrm{\acs{GMSD}}(x,y) = \sqrt{\frac{1}{N}\sum_{i=1}^{N}\left(\mathrm{\acs{GMS}}_i - \overline{\mathrm{\acs{GMS}}}\right)^{2}}.
-\end{equation}
-Lower values indicate better quality. \acs{GMSD} emphasizes localized degradations by penalizing spatial nonuniformity in the similarity map.
-
-The \acf{VSNR}~\cite{chandler2007vsnr} is a perceptual metric that combines subthreshold detection and suprathreshold distortion modeling in the wavelet domain. Let $d = y - x$ be the distortion. After applying a contrast sensitivity function and contrast masking to the wavelet coefficients of $d$ to obtain a perceptual distortion $\tilde d$, \acs{VSNR} is defined as
-\begin{equation}
-\mathrm{\acs{VSNR}}(x,y) = 20 \log_{10}\!\left(\frac{\lVert x \rVert_{2}}{\lVert \tilde d \rVert_{2}}\right)\ \text{dB}.
-\end{equation}
-Larger values (in dB) indicate better quality. If the distortion is below detection thresholds, \acs{VSNR} becomes very large, reflecting near-invisibility; otherwise it decreases as perceptual distortion grows.
-
-The \acf{FSIM}~\cite{zhang2011fsim} assesses image quality by leveraging perceptually meaningful features. It uses \acf{PC} as the primary feature, which reflects the significance of local structure independent of luminance and contrast, and \acf{GM} as a secondary feature to weight salient regions. The local similarity map $S_{\text{FSIM}}(x)$ is defined as:
-\begin{equation}
-S_{\text{\acs{FSIM}}}(x) = \frac{S_{\text{\acs{PC}}}(x) \cdot S_{\text{\acs{GM}}}(x)}{\max(PC_{\text{ref}}(x), PC_{\text{dist}}(x)) + \epsilon}
-\end{equation}
-where $S_{\text{\acs{PC}}}(x)$ and $S_{\text{\acs{GM}}}(x)$ denote the \acs{PC} and \acs{GM} similarity between reference and distorted images at pixel $x$, and $\epsilon$ is a small constant to avoid division by zero. The final \acs{FSIM} score is computed as the weighted average of $S_{\text{\acs{FSIM}}}(x)$ over the image, using the \acs{PC} map as a weighting function.
-
-The \acf{FSIMc}~\cite{zhang2011fsim} is an extension of \acs{FSIM} that integrates color information to better evaluate the perceptual quality of color images. In addition to the \acs{PC} and \acs{GM} features used in \acs{FSIM}, \acs{FSIMc} includes chrominance similarity components derived from the I and Q channels of the YIQ color space~\cite{ntsc1953yiq}. The final \acs{FSIMc} score is given by:
-\begin{equation}
-\text{\acs{FSIM}}_c = \frac{\sum_{x \in \Omega} S_{\text{\acs{FSIM}}}(x) \cdot S_I(x) \cdot S_Q(x) \cdot \text{\acs{PC}}_{\max}(x)}{\sum_{x \in \Omega} \text{\acs{PC}}_{\max}(x)}
-\end{equation}
-where $S_I(x)$ and $S_Q(x)$ are the similarity measures for the I and Q chrominance components, and $\text{\acs{PC}}_{\max}(x)$ is the maximum phase congruency between the reference and distorted images at pixel $x$. This formulation enhances \acs{FSIM}'s sensitivity to color distortions while preserving its effectiveness in structural fidelity.
-
-The \acf{SR-SIM}~\cite{zhang2012srsim} leverages visual saliency derived from the spectral residual of the Fourier transform. The spectral residual highlights regions that are more likely to attract human attention, and \acs{SR-SIM} incorporates this information to weight structural similarity computations. The final score is defined as:
-\begin{equation}
-\text{\acs{SR-SIM}} = \frac{\sum_{x \in \Omega} S(x) \cdot \text{Sal}_{\min}(x)}{\sum_{x \in \Omega} \text{Sal}_{\min}(x)},
-\end{equation}
-where $S(x)$ denotes the local structural similarity at pixel $x$, and $\text{Sal}_{\min}(x)$ is the minimum saliency value between the reference and distorted images at that pixel. By emphasizing salient regions, \acs{SR-SIM} improves correlation with human perceptual quality judgments while maintaining low computational complexity.
-
-The \acf{ESSIM}~\cite{chen2006esim} improves \acs{SSIM} by emphasizing structural fidelity in edge regions, which are perceptually more sensitive to distortions. \acs{ESSIM} first extracts edge maps from the reference and distorted images using edge detectors such as Sobel or Canny, and then computes local \acs{SSIM} values restricted to these edge pixels. The final score is defined as:
-\begin{equation}
-\text{\acs{ESSIM}} = \frac{1}{N} \sum_{x \in \Omega_{\text{edge}}} S(x),
-\end{equation}
-where $S(x)$ is the local \acs{SSIM} value at pixel $x$, $\Omega_{\text{edge}}$ is the set of edge pixels, and $N$ is the number of pixels in this set. By focusing on edges, \acs{ESSIM} improves sensitivity to blur and compression artifacts that strongly affect edge integrity.
-
-The \acf{UQI}~\cite{wang2002uqi} models image distortion as a combination of three factors: loss of correlation, luminance distortion, and contrast distortion. \acs{UQI} is defined as:
-\begin{equation}
-\text{\acs{UQI}} = \frac{4 \sigma_{xy} \mu_x \mu_y}{\left( \sigma_x^2 + \sigma_y^2 \right)\left( \mu_x^2 + \mu_y^2 \right)},
-\end{equation}
-where $\mu_x$ and $\mu_y$ are the mean intensities of the reference and distorted images, $\sigma_x^2$ and $\sigma_y^2$ are their variances, and $\sigma_{xy}$ is the covariance between them. The index ranges from $-1$ to $1$, with higher values indicating greater similarity.
-
-The \acf{SCC}~\cite{eskicioglu1995scc} measures the linear correlation between the reference and distorted images. It is defined as:
-\begin{equation}
-\text{\acs{SCC}} = \frac{\sum_{x \in \Omega} (I_r(x) - \mu_r)(I_d(x) - \mu_d)}{\sqrt{\sum_{x \in \Omega} (I_r(x) - \mu_r)^2} \cdot \sqrt{\sum_{x \in \Omega} (I_d(x) - \mu_d)^2}},
-\end{equation}
-where $I_r(x)$ and $I_d(x)$ are the pixel intensities of the reference and distorted images at location $x$, $\mu_r$ and $\mu_d$ are their mean intensities, and $\Omega$ is the image domain. \acs{SCC} ranges from $-1$ to $1$, with higher values indicating stronger linear correlation and hence greater perceptual similarity. While simple and computationally efficient, \acs{SCC} is limited because it only captures linear relationships and does not account for structural or perceptual distortions.
-
-\subsubsection{Information-theoretic Metrics}\label{sec:information_theoretic_metrics}
-
-Information-theoretic approaches to \acs{IQA} are grounded in Shannon's theory of communication~\cite{shannon1948mathematical,cover1999elements}. They model images as stochastic signals transmitted through a distortion channel, and quality is assessed by measuring how much mutual information between the reference and distorted image is preserved in the presence of perceptual noise. These methods provide a principled view of perceptual fidelity but are typically more computationally demanding than error or similarity-based metrics.
-
-\noindent\textbf{Notation.} 
-Let $C_k$ and $D_k$ denote the wavelet-domain coefficients of the reference and distorted images in subband $k$, respectively. Natural scene statistics are modeled with \acf{GSM}, with $s_k$ the scale factor at subband $k$. When modeling the \acs{HVS}, additive perceptual noise is introduced, denoted by $n_k$. Mutual information between random variables $X$ and $Y$ conditioned on $s_k$ is written as $I(X;Y \mid s_k)$.
-
-The \acf{IFC}~\cite{sheikh2005ifc} quantifies the mutual information shared between the reference and distorted coefficients under the \acs{GSM} model:
-
-\begin{equation}
-\text{\acf{IFC}} = \sum_{k} I\!\left(C_k; D_k \mid s_k\right).
-\end{equation}
-
-Higher \acs{IFC} values indicate greater preservation of the statistical information present in the reference image.
-
-The \acf{VIF} index~\cite{sheikh2006vif} extends this framework by incorporating perceptual noise to account for the \acs{HVS}. It is defined as the ratio between the mutual information preserved after distortion and the information available in the reference:
-
-\begin{equation}
-\text{\acs{VIF}} = 
-\frac{\sum_{k} I\!\left(C_k; D_k \mid s_k\right)}
-     {\sum_{k} I\!\left(C_k; C_k + n_k \mid s_k\right)}.
-\end{equation}
-
-A value of $1$ denotes perfect fidelity, while lower values correspond to stronger degradation.
-
-\acf{VIFp}~\cite{sheikh2006vif} is a simplified pixel-domain version that avoids multiscale wavelet decomposition. Although less precise, it significantly reduces computational complexity and is useful in real-time applications.
-
-\acf{VIFc}~\cite{sheikh2006vif} extends the metric to color images by transforming them into the YUV color space. \acs{VIF} is computed independently on each channel, and the final score is given by:
-
-\begin{equation}
-\text{\acs{VIFc}} = \tfrac{1}{3}\left(\text{\acs{VIF}}_Y + \text{\acs{VIF}}_U + \text{\acs{VIF}}_V\right).
-\end{equation}
-
-This formulation incorporates chromatic information, providing a more complete measure of perceptual fidelity in color imagery.
-
-\subsubsection{Deep Learning-Based Metrics}\label{sec:deep_metrics}
-
-Deep learning-based approaches to \acs{IQA} exploit feature representations from convolutional neural networks pretrained on large-scale vision tasks. These feature spaces capture high-level perceptual attributes such as texture, structure, and semantics, which align more closely with human visual perception than pixel-wise comparisons~\cite{gatys2016image,johnson2016perceptual,zhang2018lpips}. Instead of relying on handcrafted similarity measures, these methods compute distances between deep features extracted from reference and distorted images. Such approaches have shown strong correlation with human opinion scores, particularly for complex and perceptually salient distortions.
-
-\noindent\textbf{Notation.} Let $\phi_l(x)$ denote the activation (feature map) of image $x$ at layer $l$ of a pretrained \acf{CNN} with spatial size $H_l \times W_l$ and $C_l$ channels. Features are channel-wise normalized, denoted by $\hat{\phi}_l(x)$. Channel weights are written as $w_l$, and similarity functions are applied element-wise over spatial positions $(h,w)$.
-
-\acf{LPIPS}~\cite{zhang2018lpips} measures perceptual similarity by comparing deep features extracted from pretrained networks such as AlexNet, SqueezeNet, or \acf{VGG}. The metric is defined as:
-
-\begin{equation}
-\text{\acs{LPIPS}}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l} 
-\sum_{h,w} \left\| \hat{\phi}_l(x)_{h,w} - \hat{\phi}_l(y)_{h,w} \right\|_2^2.
-\end{equation}
-
-Different backbones yield three common variants: \acs{LPIPS}-Alex, \acs{LPIPS}-Squeeze, and \acs{LPIPS}-\acs{VGG}.
-
-\acf{DISTS}~\cite{ding2020dists} combines structure and texture similarity in the deep feature space. For each layer $l$, structure similarity $S_l$ is computed from normalized feature statistics, and texture similarity $T_l$ is obtained from feature covariances. The final score is a convex combination:
-
-\begin{equation}
-\text{\acs{DISTS}}(x,y) = \sum_{l} \alpha_l S_l(x,y) + \beta_l T_l(x,y),
-\end{equation}
-where $\alpha_l$ and $\beta_l$ are learned weights. This design captures both structural fidelity and fine-grained textural consistency.
-
-\acf{WaDIQaM}~\cite{bosse2017wadiqam} employs deep convolutional networks to learn a patch-based representation of image quality. In the full-reference setting, reference and distorted patches are passed through a siamese network~\cite{bromley1993signature}, and local quality estimates are aggregated using a learned weighting mechanism:
-
-\begin{equation}
-\text{\acs{WaDIQaM}}(x,y) = \sum_{p} w_p \, q_p(x,y),
-\end{equation}
-where $q_p(x,y)$ is the predicted quality of patch $p$ and $w_p$ is its learned weight. By learning both local quality prediction and patch importance, \acs{WaDIQaM} achieves state-of-the-art correlation with human opinion scores in a data-driven manner.
-
-\acf{PSM}~\cite{ghildyal2022psm} builds on \acs{LPIPS} to make full-reference perceptual similarity robust to small, imperceptible misalignments. It replaces shift-sensitive elements in the feature extractor with anti-aliased strided convolutions, anti-aliased pooling, reduced strides, and appropriate padding, then aggregates layerwise feature distances like \acs{LPIPS}. Let $F_l(x)$ be shift-tolerant features at layer $l$ and $\hat{F}_l$ their channel-normalized maps; the score is
-\begin{equation}
-\text{\acs{PSM}}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l}\sum_{h,w} \big| \hat{F}_l(x)_{h,w}-\hat{F}_l(y)_{h,w}\big|_2^2,
-\end{equation}
-where $w_l$ are learned weights. This preserves perceptual fidelity while reducing spurious changes under 1-2 pixel shifts.
-
-\acf{SPIQ}~\cite{chen2022spiq} is an approach that first learns a quality-aware visual representation via self-supervised pretraining, then fits a lightweight regressor on top with limited \acs{MOS} labels. Two augmented views of the same image are encouraged to produce consistent features during pretraining; at inference a regressor maps features to a scalar quality:
-\begin{equation}
-\text{\acs{SPIQ}}(x) = g\big(f(x)\big),
-\end{equation}
-where $f$ is the self-supervised backbone and $g$ is a trained regression head. This decouples representation learning from scarce labels and transfers well across distortions.
-
-\subsection{\acl{NR} \acs{IQA}}\label{sec:no_reference_iqa}
+\section{\acl{NR} \acs{IQA}}\label{sec:no_reference_iqa}
 
 \acs{NR}-\acs{IQA} estimates perceptual quality directly from a single image without requiring a pristine reference. Three modeling strategies are commonly distinguished. First, classical opinion-unaware methods rely on natural scene statistics or perceptually motivated features and operate without training on opinion scores, providing simple and interpretable baselines~\cite{mittal2012niqe,venka2015piqe}. Second, task-driven deep approaches exploit the robustness of embeddings from pretrained networks to derive quality scores without supervision, thereby aligning quality with representational stability rather than explicit perceptual labels~\cite{terhorst2020serfiq}. Third, supervised regressors adapt recognition backbones to annotated labels, explicitly learning to map features to continuous quality scores~\cite{hernandez2019faceqnet,meng2021magface}.  
 
-A complementary distinction concerns domain scope. Generic \acs{NR}-\acs{IQA} methods aim to capture perceptual fidelity across natural images, while face-specific approaches (\acs{FIQA}) target biometric utility, where quality is linked to recognition performance rather than aesthetics. The latter group has gained traction with the emergence of embedding-based models that quantify image suitability for reliable face recognition. Considering both modeling strategies and domain scope enables a nuanced comparison between general-purpose perceptual estimators and specialized, task-aligned \acs{FIQA} signals.
+A complementary distinction concerns domain scope. Generic \acs{NR}-\acs{IQA} methods aim to capture perceptual fidelity across natural images, while face-specific approaches (\acs{FIQA}) target biometric utility, where quality is linked to recognition performance rather than aesthetics. The latter group has gained traction with the emergence of embedding-based models that quantify image suitability for reliable face recognition. Considering both modeling strategies and domain scope enables a nuanced comparison between general-purpose perceptual estimators and specialized, task-aligned \acs{FIQA} metrics.
 
 \begin{longtable}{
 p{0.15\linewidth}  % Metric
@@ -455,7 +212,7 @@ p{0.38\linewidth}  % Tested Databases
 
 \end{longtable}
 
-\subsubsection{Classical \acl{NR}-\acs{IQA}}\label{sec:classical_nr_iqa}
+\subsection{Classical \acl{NR} \acs{IQA}}\label{sec:classical_nr_iqa}
 
 Classical \acs{NR}-\acs{IQA} methods operate without any training. These approaches rely on statistical regularities of natural images and perception-motivated cues to produce a scalar quality score that is easy to compute and interpret. They are attractive baselines because they generalize across content types and avoid dataset-specific supervision, but their assumptions can be violated in narrowly structured domains such as tightly cropped faces.
 
@@ -463,6 +220,9 @@ Classical \acs{NR}-\acs{IQA} methods operate without any training. These approac
 \begin{equation}
 \hat{I}(x, y) = \frac{I(x, y) - \mu(x, y)}{\sigma(x, y) + \epsilon}.
 \end{equation}
+where, $\mu(x,y)$ and $\sigma(x,y)$ denote the local mean and standard deviation of pixel intensities in a neighborhood around location $(x,y)$, and $\epsilon$ is a small constant that prevents division by zero. 
+This normalization enhances structural regularities and makes subsequent natural scene statistics more discriminative for quality assessment.
+
 From the \acs{MSCN} field, \acs{BRISQUE} extracts parametric \acs{NSS} features at two scales (original and downsampled by 2). First, it fits a \acf{GGD} to the \acs{MSCN} coefficients to obtain shape and scale parameters. Second, it fits an \acf{AGGD} to four pairwise product maps that capture local dependencies:
 \begin{align}
 P_h(x,y)   &= \hat{I}(x,y)\,\hat{I}(x{+}1,y),\\
@@ -475,7 +235,7 @@ Each \acs{AGGD} fit contributes shape, mean, and left/right scale parameters. Co
 \begin{equation}
 \mathbf{f}(I) \in \mathbb{R}^{36}.
 \end{equation}
-A support vector regressor with \acf{RBF} kernel, trained on human opinion scores from \acs{LIVE}, maps these features to a scalar quality prediction:
+A \acf{SVR} with \acf{RBF} kernel, trained on human opinion scores from \acs{LIVE}, maps these features to a scalar quality prediction:
 \begin{equation}
 \text{\acs{BRISQUE}}(I) = \text{SVR}_{\text{\acs{RBF}}}\big(\mathbf{f}(I)\big).
 \end{equation}
@@ -505,9 +265,9 @@ The global \acs{PIQE} score is computed via a weighted aggregation over the dist
 \end{equation}
 where $w_i$ are confidence weights and $\alpha, \beta, \gamma$ are scaling factors for sharpness, noise, and contrast, respectively. The reported score is typically scaled to $[0,100]$, with larger values reflecting worse perceived quality.
 
-\subsubsection{Facial Image Quality Assessment}\label{sec:fiqa}
+\subsection{Facial Image Quality Assessment}\label{sec:fiqa}
 
-\acs{FIQA} refers to the estimation of biometric utility from face images, typically in the context of face recognition, verification, or detection pipelines. Unlike generic \acs{NR}-\acs{IQA}, \acs{FIQA} does not aim to measure aesthetic or perceptual quality, but rather the suitability of a face image for recognition purposes~\cite{survey2022fiqa, abed2025fiqabiometric}. This quality is influenced by a range of factors, including resolution, pose, occlusion, blur, compression, and illumination.
+\acs{FIQA} refers to the estimation of face image quality with respect to its biometric utility, most often in recognition, verification, or detection pipelines. While traditionally distinct from generic \acs{NR}-\acs{IQA}, recent work has highlighted the value of perceptual cues in predicting biometric utility~\cite{survey2022fiqa, abed2025fiqabiometric}. Factors such as resolution, pose, occlusion, blur, compression, and illumination jointly affect both human perception and algorithmic performance, motivating hybrid approaches that bridge perceptual and task-specific definitions of quality.
 
 Traditional \acs{FIQA} methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{phillips2003face}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, best2017facerecon}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
 
@@ -535,7 +295,7 @@ where higher scores indicate more stable, and thus higher-quality, facial repres
 \end{equation}
 where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector of the correct class, \( s \) is a scaling factor, and \( m(\|\mathbf{e}\|) \) is a dynamic margin that increases with quality. The final \acs{MagFace} quality score is proportional to the magnitude \( \|\mathbf{e}\| \), constrained during training to lie within a fixed interval \([l, u]\) for regularization.
 
-\subsection{Fusion-Based IQA Models}\label{sec:fusion_iqa}
+\section{Fusion-Based IQA Models}\label{sec:fusion_iqa}
 
 Individual \acs{FR} metrics capture different aspects of perceptual degradation. Error-based metrics respond to amplitude distortions, structure-based metrics track local similarity, and learning-based metrics correlate with semantic distortions. This complementarity motivates fusion: combining heterogeneous scores to approximate \acs{MOS} more faithfully than any single metric.
 
@@ -543,7 +303,7 @@ Early supervised fusion combined normalized metric scores linearly. \cite{liu201
 
 When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints: one line of work fuses multiple \acs{FR}-\acs{IQA} outputs into pseudo-\acs{MOS} via averaging or reliability-weighted fusion \cite{lai2022pseudomos}; another infers labels for unlabeled samples through semi-supervised and positive unlabeled objectives within \acs{FR}-\acs{IQA} \cite{cao2022semisupervied}; a complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations \cite{liu2017rankiqa}; and, building on these proxy signals, cascaded predictors trained on pseudo-\acs{MOS} can bootstrap quality estimation when subjective ground truth is limited \cite{wu2020cascaded}.
 
-\subsubsection{Regression Models}~\label{sec:regression_models}
+\subsection{Regression Models}~\label{sec:regression_models}
 
 Fusion-based \ac{IQA} learns a regression from heterogeneous metric scores to a single perceptual estimate.
 Let the dataset be \( \mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n} \) with \( \mathbf{x}_i \in \mathbb{R}^{p} \) the vector of \(p\) objective scores and \( y_i \in \mathbb{R} \) the \ac{MOS}.
@@ -636,7 +396,7 @@ Image distortions in \acs{IQA} are typically organized into operational families
 
 \subsection{Lossy compression}\label{sec:compression}
 
-Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate; JPEG is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
+Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate. JPEG is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode-decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
 
 \subsection{Blur}\label{sec:blur}
 
@@ -662,22 +422,22 @@ Transmission and packet level artifacts occur when compressed bit streams traver
 
 Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high \acs{ISO} noise, heavy denoising and sharpening, aggressive JPEG compression, slight motion blur, and color cast. In surveillance, long exposure blur, compression, and downsampling can occur \cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating \acs{IQA} models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as \acs{ITU-R BT.500-15} \cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families \cite{survey2019shahrukh,ma2025survey}.
 
-\subsection{Steganography}\label{sec:steganography}
+\section{Steganography}\label{sec:steganography}
 
-Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through least significant bit substitution~\cite{morkel2005steganography}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the \acs{DCT} or \acs{DWT}, embedding data in coefficients less sensitive to compression~\cite{survey2016steganography}. Adaptive methods further refine this by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{baluja2017steganography}.
+Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through least significant bit substitution~\cite{morkel2005steganography}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the \acs{DCT} or \acs{DWT}, embedding data in coefficients less sensitive to compression~\cite{survey2016steganography}. Adaptive methods further refine the previous approaches by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{baluja2017steganography}.
 
 However, current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as \acs{MRTDs}. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
 
-Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four such methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on \acf{GANs}~\cite{heusel2017gans} to encode and decode information, we can obtain various results depending on the method used.
+Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four of these methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on \acf{GANs}~\cite{heusel2017gans} to encode and decode information. Various results can be obtained depending on the method used.
 
-\subsubsection{StegaStamp}
-StegaStamp~\cite{tancik2020stegastamp} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite these degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual \acs{LPIPS} loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
+\subsection{StegaStamp}
+StegaStamp~\cite{tancik2020stegastamp} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite the aforementioned degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual \acs{LPIPS} loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
 
-\subsubsection{Code\,Face}
-Code\,Face~\cite{shadmand2021codeface} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a \acf{STN} for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. Code\,Face proves effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
+\subsection{CodeFace}
+Code\,Face~\cite{shadmand2021codeface} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a \acf{STN} for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. CodeFace proves to be effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
 
-\subsubsection{RiemStega}
+\subsection{RiemStega}
 RiemStega~\cite{cruz2025riemstega} innovates by introducing a Riemannian manifold-based loss. Instead of comparing pixel values, it represents images through \acf{SPD} covariance matrices and minimizes the affine-invariant Riemannian distance between the cover and stego image descriptors. This statistical approach preserves global structural and texture patterns more robustly under degradation. The method maintains high visual fidelity while increasing message recoverability post-printing, and demonstrates strong performance on both generic and facial image datasets.
 
-\subsubsection{StampOne}
+\subsection{StampOne}
 StampOne~\cite{shadmand2024stampone} incorporates frequency-domain awareness by applying \acs{DWT} and gradient maps to both image and message during encoding. The model balances frequency bands via a learned attention mechanism and includes frequency-domain discriminators in its loss functions. This results in encoded images with spectral properties closely matching those of the original, enhancing resilience to printer-related distortions such as color shifts and sensor noise. StampOne outperforms prior methods in both visual similarity and decoding accuracy, especially for high-frequency facial features.

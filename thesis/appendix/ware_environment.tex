@@ -1,12 +1,11 @@
-\section{Software and Hardware Environment}\label{app:env}
 
-\subsection{Hardware}
+\section{Hardware}
 \begin{itemize}
   \item GPU: NVIDIA GeForce RTX~5060~Ti (16\,GB)
   \item Host driver: NVIDIA 575.57.08
 \end{itemize}
 
-\subsection{Containerized Stack}
+\section{Containerized Stack}
 All experiments ran inside an NVIDIA NGC PyTorch container for CUDA/cuDNN compatibility:
 \begin{itemize}
   \item Container: \texttt{nvcr.io/nvidia/pytorch:25.06-py3}
@@ -24,7 +23,7 @@ All experiments ran inside an NVIDIA NGC PyTorch container for CUDA/cuDNN compat
 \paragraph{Note on NumPy.}
 The container's PyTorch is compiled against the NumPy~1.x C-API. Installing NumPy~2.x at user level will cause an ABI error during \texttt{import torch}. We therefore pin NumPy to 1.26.4.
 
-\subsection{Launch and Setup Commands}
+\section{Launch and Setup Commands}
 \begin{verbatim}
 # Start the container with GPU access and mount the project
 docker run --gpus all --ipc=host --rm -it \
@@ -38,5 +37,3 @@ python -m pip install --user "numpy==1.26.4" \
   timm albumentations opencv-python-headless tqdm
 \end{verbatim}
 
-\subsection{Citations}
-We cite the main software toolchains as follows: PyTorch, CUDA and cuDNN (NVIDIA), TorchVision, timm, scikit-learn, and Albumentations. The exact versions are listed above for reproducibility.

@@ -74,9 +74,9 @@ The steganographic distortions are visible in Fig.~\ref{fig:steganography}, whic
 
 \section{Collection of Subjective Scores}
 
-We followed the \acs{ITU-R BT.500-15}~\cite{itu2023r} recommendation and adopted the \acs{SS} method. The test was implemented using a custom Django~\cite{django} web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education, country of origin and ethnicity, and others. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
+We followed the \acs{ITU-R BT.500-15}~\cite{itu2023r} recommendation and adopted the \acl{SS} method. The test was implemented using a custom Django~\cite{django} web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education level, country of origin, ethnicity, type of device being used, and where they were located at the time of the test session. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
 
-Each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
+In the subjective assessment phase, each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
 \begin{figure}
     \centering
@@ -188,11 +188,49 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
     \end{subtable}
 \end{table}
 
-The database was implemented using the Django web framework, which provides an \acf{ORM} layer that directly maps Python model classes to database tables. The \acs{ORM} also enforces data integrity constraints and simplifies querying for statistical analysis. The database backend used was PostgreSQL. Full conceptual and physical schemas, entity definitions, and referential constraints are provided in Appendix~\ref{app:database-structure}.
+The database was implemented using the Django web framework, which provides an \acf{ORM} layer that directly maps Python model classes to database tables. The \acs{ORM} also enforces data integrity constraints and simplifies querying for statistical analysis. The database management system used was PostgreSQL.
+
+The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The session models individual tests and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type, and distortion level. The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary feedback entity captures optional, anonymous, observer comments and critiques.
+
+The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset and profile fields in session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session and image, enabling consistent aggregation of ratings into a statistical descriptor such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with \acs{ITU-R BT.500-15} recommendations.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{images/db_conceptual.png}
+        \caption{Conceptual database schema showing entity relationships and high-level structure.}\label{fig:db_conceptual}
+    \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{images/db_physical.png}
+        \caption{Physical database schema illustrating actual tables, columns, and implementation details.}\label{fig:db_physical}
+    \end{subfigure}
+    \caption{Conceptual and physical representations of the database schema.}\label{fig:db_schemas}
+\end{figure}
+
+We computed per-method descriptive statistics over the MOS subset. Table~\ref{tab:method_stats} reports the mean MOS and the mean of per-image standard deviations (mean std) for each steganographic method. Since all methods were evaluated under the same conditions and distortion levels, these aggregates enable a direct comparison of their perceptual impact. The results indicate a similar performance across methods, with Code\,Face achieving slightly higher mean MOS. Across all distorted images in the MOS subset, the overall standard deviation of MOS is 18.78.
+
+
+\begin{table}
+\centering
+\caption{Per-method descriptive statistics on the MOS subset.}
+\label{tab:method_stats}
+\begin{tabular}{lrr}
+\hline
+Method & mean MOS & mean std \\
+\hline
+Code\,Face & 63.10 & 20.69 \\
+RiemStega  & 42.89 & 19.98 \\
+StampOne   & 46.28 & 19.79 \\
+StegaStamp & 43.16 & 19.45 \\
+\hline
+\end{tabular}
+\end{table}
+
 
 \section{Debiasing of Subjective Scores}
 
-To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{ols}, where we applied a residualization method based on linear modeling. An \acf{OLS} regression was fit to the \acs{MOS} values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the \acs{MOS} prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an \acf{ANOVA}~\cite{anova} and \acf{mANOVA}~\cite{manova} test showing no significant impact from any individual factor. The corrected \acs{MOS} labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
+To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{ols}, where we applied a residualization method based on linear modeling. An \acf{OLS} regression was fit to the \acs{MOS} values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the \acs{MOS} prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an \acf{ANOVA}~\cite{anova} and \acf{mANOVA}~\cite{manova} test, showing no significant impact from any individual factor. The corrected \acs{MOS} labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
 
 \begin{table}
     \centering
