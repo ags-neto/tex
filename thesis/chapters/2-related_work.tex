@@ -29,7 +29,7 @@ While laboratory-based studies remain the benchmark for reliability, they are co
 
 The advantages of crowdsourcing lie in its scalability, ecological validity, and demographic diversity, which allow researchers to capture quality judgments from a broad spectrum of viewing conditions and cultural backgrounds. This is particularly relevant for applications where image quality intersects with biometric fairness, as demographic variability plays a significant role in subjective perception.
 
-However, uncontrolled environments introduce noise: participants use uncalibrated displays, ratings may be inconsistent, and some responses are malicious or inattentive. To mitigate these issues, robust post-screening strategies are employed, including consistency checks, gold-standard reference images, and statistical filtering~\cite{ghadiyaram2015massive, koniq10k}. Despite these limitations, crowdsourced \acs{IQA} datasets have proven critical for training modern deep learning-based models, as they provide both scale and diversity unavailable in controlled laboratory conditions.
+However, uncontrolled environments introduce noise: participants use uncalibrated displays, ratings might be inconsistent, and some responses are malicious or inattentive. To mitigate these issues, robust post-screening strategies are employed, including consistency checks, gold-standard reference images, and statistical filtering~\cite{ghadiyaram2015massive, koniq10k}. Despite these limitations, crowdsourced \acs{IQA} datasets have proven critical for training modern deep learning-based models, as they provide both scale and diversity unavailable in controlled laboratory conditions.
 
 \subsection{Benchmark Datasets}\label{sec:benchmark_datasets}
 
@@ -59,10 +59,10 @@ The computational domain defines the signal space where similarity is quantified
 
 \begin{itemize}
   \item Spatial domain: Early metrics such as MSE, RMSE, and PSNR operate directly on pixel intensities by measuring absolute differences or signal-to-noise ratios~\cite{gonzalez2009digital}. Despite their simplicity, they fail to account for perceptual masking and structural consistency.
-  \item Frequency domain: Transform-based methods use the discrete cosine transform (DCT), discrete Fourier transform (DFT), or wavelets to capture energy distributions across spatial frequencies. Examples include IFC~\cite{sheikh2005ifc} and VSNR~\cite{chandler2007vsnr}, which exploit properties of the \acs{HVS} such as contrast sensitivity.
-  \item Gradient and saliency domains: These methods emphasize structural edges and perceptually important regions. The gradient magnitude similarity deviation (GMSD)~\cite{xue2014gmsd} measures gradient consistency, while saliency-based models~\cite{hou2007saliency} weight distortions according to visual attention maps.
-  \item Information-theoretic domain: Some metrics interpret quality as the amount of shared information between reference and distorted images. VIF~\cite{sheikh2006vif} and related approaches build on mutual information, quantifying how much perceptual information can be extracted reliably from a degraded signal.
-  \item Deep feature domain: More recent approaches leverage convolutional neural networks or vision transformers to learn perceptual embeddings. Metrics such as LPIPS~\cite{zhang2018lpips} and DISTS~\cite{ding2020dists} correlate strongly with human judgments by comparing features extracted from pre-trained networks.
+  \item Frequency domain: Transform-based methods use the \acf{DCT}, \acf{DFT}, or wavelets to capture energy distributions across spatial frequencies. Examples include \acf{IFC}~\cite{sheikh2005ifc} and \acf{VSNR}~\cite{chandler2007vsnr}, which exploit properties of the \acs{HVS} such as contrast sensitivity.
+  \item Gradient and saliency domains: These methods emphasize structural edges and perceptually important regions. The \acf{GMSD}~\cite{xue2014gmsd} measures gradient consistency, while saliency-based models~\cite{hou2007saliency} weight distortions according to visual attention maps.
+  \item Information-theoretic domain: Some metrics interpret quality as the amount of shared information between reference and distorted images. \acf{VIF}~\cite{sheikh2006vif} and related approaches build on mutual information, quantifying how much perceptual information can be extracted reliably from a degraded signal.
+  \item Deep feature domain: More recent approaches leverage convolutional neural networks or vision transformers to learn perceptual embeddings. Metrics such as \acf{LPIPS}~\cite{zhang2018lpips} and \acf{DISTS}~\cite{ding2020dists} correlate strongly with human judgments by comparing features extracted from pre-trained networks.
 \end{itemize}
 
 \subsection{Spectral Representations}
@@ -70,12 +70,12 @@ The computational domain defines the signal space where similarity is quantified
 The spectral representation specifies the channel configuration used for quality computation.
 
 \begin{itemize}
-  \item Luminance-based: Many classical approaches, such as SSIM~\cite{wang2004image}, focus solely on the luminance channel (Y). This reflects the dominant role of brightness perception in the \acs{HVS} and simplifies computation.
-  \item Color-based: Extensions to RGB or alternative color spaces, including YCbCr and CIELab, enable the incorporation of chromatic information. Examples include FSIM and its color extension FSIMc~\cite{zhang2011fsim}, or PQM~\cite{wang2002uqi}, which attempt to capture hue and saturation degradations alongside luminance.
-  \item Multispectral and hyperspectral: In domains such as remote sensing, quality measures generalize to dozens or even hundreds of bands. Metrics like SAM~\cite{yuhas1992sam}, ERGAS~\cite{wald2000ergas}, and $D_\lambda$~\cite{ivc} ensure spectral consistency across wavelengths and are critical for preserving material properties.
+  \item Luminance-based: Many classical approaches, such as \acf{SSIM}~\cite{wang2004image}, focus solely on the luminance channel (Y). This reflects the dominant role of brightness perception in the \acs{HVS} and simplifies computation.
+  \item Color-based: Extensions to RGB or alternative color spaces, including YCbCr and CIELab, enable the incorporation of chromatic information. Examples include \acf{FSIM} and its color extension \acf{FSIMc}~\cite{zhang2011fsim}, or \acf{UQI}~\cite{wang2002uqi}, which attempt to capture hue and saturation degradations alongside luminance.
+  \item Multispectral and hyperspectral: In domains such as remote sensing, quality measures generalize to dozens or even hundreds of bands. Metrics like \acf{SAM}~\cite{yuhas1992sam}, \acf{ERGAS}~\cite{wald2000ergas}, and \acf{Dlambda}~\cite{ivc} ensure spectral consistency across wavelengths and are critical for preserving material properties.
 \end{itemize}
 
-This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 4 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
+This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 6 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
 
 \subsection{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
 
