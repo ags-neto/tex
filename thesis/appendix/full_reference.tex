@@ -131,7 +131,7 @@ The \acf{L-SSIM}~\cite{wang2004image} extends \acs{SSIM} by applying it over mul
 \end{equation}
 where $K$ is the total number of windows across the image.
 
-The \acf{C-SSIM}~\cite{hassan2017cssim} extends the traditional SSIM formulation by incorporating chromatic information alongside luminance, contrast, and structure. It proposes a four-component model that quantifies image distortion through a combination of local comparison functions, including a color fidelity term derived from the \acs{S-CIELAB} color space~\cite{zhang1997scielab}.
+The \acf{C-SSIM}~\cite{hassan2017cssim} extends the traditional SSIM formulation by incorporating chromatic information alongside luminance, contrast, and structure. It proposes a four-component model that quantifies image distortion through a combination of local comparison functions, including a color fidelity term derived from the \acf{S-CIELAB} color space~\cite{zhang1997scielab}.
 
 \begin{equation}
 \text{\acs{C-SSIM}}(x, y) = l(x, y) \cdot C(x, y) \cdot S(x, y) \cdot \text{Cr}(x, y)
@@ -175,6 +175,13 @@ S_{\text{\acs{FSIM}}}(x) = \frac{S_{\text{\acs{PC}}}(x) \cdot S_{\text{\acs{GM}}
 \end{equation}
 where $S_{\text{\acs{PC}}}(x)$ and $S_{\text{\acs{GM}}}(x)$ denote the \acs{PC} and \acs{GM} similarity between reference and distorted images at pixel $x$, and $\epsilon$ is a small constant to avoid division by zero. The final \acs{FSIM} score is computed as the weighted average of $S_{\text{\acs{FSIM}}}(x)$ over the image, using the \acs{PC} map as a weighting function.
 
+A multi-scale variant, \acf{MS-FSIM}~\cite{zhang2011fsim}, extends \acs{FSIM} by evaluating feature similarity across a pyramid of $S$ resolutions. At each scale $s$, phase congruency and gradient magnitude maps are computed, a local similarity $S_{\text{\acs{FSIM}},s}(x)$ is formed as in \acs{FSIM}, and an image-level score $\text{\acs{FSIM}}_s$ is obtained via \acs{PC}-weighted averaging. The final \acs{MS-FSIM} combines the per-scale scores with weights $\{w_s\}_{s=1}^S$:
+\begin{equation}
+\text{MS-FSIM} \;=\; \prod_{s=1}^{S} \big(\text{\acs{FSIM}}_s\big)^{w_s}
+\quad\text{with}\quad \sum_{s=1}^{S} w_s = 1 \, .
+\end{equation}
+Pooling across scales improves sensitivity to distortions that manifest at different spatial frequencies, such as blur, ringing, and compression artifacts, while preserving \acs{FSIM}'s emphasis on perceptually salient structure.
+
 The \acf{FSIMc}~\cite{zhang2011fsim} is an extension of \acs{FSIM} that integrates color information to better evaluate the perceptual quality of color images. In addition to the \acs{PC} and \acs{GM} features used in \acs{FSIM}, \acs{FSIMc} includes chrominance similarity components derived from the I and Q channels of the YIQ color space~\cite{ntsc1953yiq}. The final \acs{FSIMc} score is given by:
 \begin{equation}
 \text{\acs{FSIM}}_c = \frac{\sum_{x \in \Omega} S_{\text{\acs{FSIM}}}(x) \cdot S_I(x) \cdot S_Q(x) \cdot \text{\acs{PC}}_{\max}(x)}{\sum_{x \in \Omega} \text{\acs{PC}}_{\max}(x)}
@@ -187,11 +194,11 @@ The \acf{SR-SIM}~\cite{zhang2012srsim} leverages visual saliency derived from th
 \end{equation}
 where $S(x)$ denotes the local structural similarity at pixel $x$, and $\text{Sal}_{\min}(x)$ is the minimum saliency value between the reference and distorted images at that pixel. By emphasizing salient regions, \acs{SR-SIM} improves correlation with human perceptual quality judgments while maintaining low computational complexity.
 
-The \acf{ESSIM}~\cite{chen2006esim} improves \acs{SSIM} by emphasizing structural fidelity in edge regions, which are perceptually more sensitive to distortions. \acs{ESSIM} first extracts edge maps from the reference and distorted images using edge detectors such as Sobel or Canny, and then computes local \acs{SSIM} values restricted to these edge pixels. The final score is defined as:
+The \acf{ESIM}~\cite{chen2006esim} improves \acs{SSIM} by emphasizing structural fidelity in edge regions, which are perceptually more sensitive to distortions. \acs{ESIM} first extracts edge maps from the reference and distorted images using edge detectors such as Sobel or Canny, and then computes local \acs{SSIM} values restricted to these edge pixels. The final score is defined as:
 \begin{equation}
-\text{\acs{ESSIM}} = \frac{1}{N} \sum_{x \in \Omega_{\text{edge}}} S(x),
+\text{\acs{ESIM}} = \frac{1}{N} \sum_{x \in \Omega_{\text{edge}}} S(x),
 \end{equation}
-where $S(x)$ is the local \acs{SSIM} value at pixel $x$, $\Omega_{\text{edge}}$ is the set of edge pixels, and $N$ is the number of pixels in this set. By focusing on edges, \acs{ESSIM} improves sensitivity to blur and compression artifacts that strongly affect edge integrity.
+where $S(x)$ is the local \acs{SSIM} value at pixel $x$, $\Omega_{\text{edge}}$ is the set of edge pixels, and $N$ is the number of pixels in this set. By focusing on edges, \acs{ESIM} improves sensitivity to blur and compression artifacts that strongly affect edge integrity.
 
 The \acf{UQI}~\cite{wang2002uqi} models image distortion as a combination of three factors: loss of correlation, luminance distortion, and contrast distortion. \acs{UQI} is defined as:
 \begin{equation}

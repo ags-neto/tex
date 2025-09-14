@@ -1,6 +1,6 @@
 \chapter{Related Work}\label{chap:related_work}
 
-\section{Subjective \acs{IQA}}\label{sec:subjective_iqa}
+\section{Subjective \acl{IQA}}\label{sec:subjective_iqa}
 
 Subjective image quality assessment is grounded in human visual perception and remains the gold standard for evaluating visual fidelity. Standardized by \acs{ITU-R BT.500-15}~\cite{itu2023r}, these methodologies rely on controlled laboratory conditions, calibrated displays, and predefined rating procedures to ensure reproducibility and validity.
 
@@ -33,21 +33,23 @@ However, uncontrolled environments introduce noise: participants use uncalibrate
 
 \subsection{Benchmark Datasets}\label{sec:benchmark_datasets}
 
-Several benchmark datasets have been curated to support the development and evaluation of \acs{IQA} models. Early datasets such as \acf{LIVE}~\cite{livewebsite, sheikh2005live, sheikh2006live}, \acf{CSIQ}~\cite{csiq}, \acf{TID}2008~\cite{tid2008}, and \acs{TID}2013~\cite{tid2013} follow \acs{ITU-R BT.500-15}-compliant protocols, providing high-quality \acs{MOS} or \acs{DMOS} annotations across a wide variety of synthetic distortion types. These databases remain the most widely used for evaluating traditional full-reference \acs{IQA} metrics.
+Several benchmark datasets have been curated to support the development and evaluation of \acs{IQA} models. Early datasets such as \acf{LIVE}~\cite{livewebsite, sheikh2005live, sheikh2006live}, \acf{CSIQ}~\cite{csiq}, and \acf{TID}~\cite{tid2008, tid2013} follow \acs{ITU-R BT.500-15}-compliant protocols, providing high-quality \acs{MOS} or \acs{DMOS} annotations across a wide variety of synthetic distortion types. These databases remain the most widely used for evaluating traditional full-reference \acs{IQA} metrics. \acf{TID}2008~\cite{tid2008} created the accepted baseline for reporting \acs{PLCC} and \acs{SRCC} values of \acs{FR} metrics. \acs{TID}2013~\cite{tid2013} extended its previous dataset with additional distortion types and levels, further challenging \acs{IQA} models.
 
-The \acf{IVC}~\cite{ivc} dataset further contributed subjective quality scores for compression-related distortions, while \acf{SIQAD}~\cite{siqad} targeted screen content images, extending \acs{IQA} research to non-natural imagery. \acf{KADID-10k}~\cite{kadid10k} scaled this approach to 10,000 distorted images with 25 distortion types and multiple intensity levels, enabling large-scale training and fine-grained benchmarking. The Waterloo \acf{IAA} database~\cite{waterloo} emphasized robustness testing through massive-scale synthetic distortions and helped reveal model overfitting issues to specific artifact distributions.
+The \acf{IVC}~\cite{ivc} dataset further contributed subjective quality scores for compression-related distortions, while \acf{SIQAD}~\cite{siqad} targeted screen content images, extending \acs{IQA} research to non-natural imagery. \acf{KADID-10k}~\cite{kadid10k} scaled this approach to 10{,}000 distorted images, enabling large-scale training. The Waterloo \acf{IAA} database~\cite{waterloo} emphasized robustness testing through massive-scale synthetic distortions and helped reveal model overfitting issues to specific artifact distributions.
 
-More recent contributions shifted toward naturalistic and crowdsourced assessments. \acf{KonIQ-10k}~\cite{koniq10k} introduced 10,073 images collected from the web with authentic distortions and over 1.2 million quality ratings, making it one of the largest ecologically valid \acs{IQA} resources. \acf{SPAQ}~\cite{spaq} specifically addressed smartphone photography, collecting 11,125 images and crowdsourced perceptual scores to capture the variability of mobile imaging pipelines. \acf{PIPAL}~\cite{pipal} targeted perceptual quality in image restoration, including outputs from generative models, and has become a key benchmark for deep learning-based perceptual metrics. Similarly, \acf{BAPPS}~\cite{bapps} provided a large-scale pairwise comparison dataset for learning perceptual similarity directly from human judgments.
+\acf{KonIQ-10k}~\cite{koniq10k} introduced 10{,}073 images collected from the web with authentic distortions and over 1.2 million quality ratings, making it one of the largest \acs{IQA} resources. \acf{SPAQ}~\cite{spaq} specifically addressed smartphone photography, collecting 11{,}125 images and crowdsourced perceptual scores to capture the variability of mobile imaging pipelines. \acf{PIPAL}~\cite{pipal} targeted perceptual quality in image restoration, including outputs from generative models. \acf{BAPPS}~\cite{bapps} provided a large-scale pairwise comparison dataset for learning perceptual similarity directly from human judgments.
 
 Beyond general-purpose \acs{IQA}, domain-specific datasets remain critical. Remote sensing benchmarks such as \acf{ROSIS}~\cite{rosis}, \acf{AVIRIS}~\cite{aviris}, and \acf{HYDICE}~\cite{hydice} provide hyperspectral imagery where distortions affect both perceptual and functional quality, but they lack standardized \acs{MOS} or \acs{DMOS} annotations. These datasets illustrate the difficulty of extending \acs{IQA} methodologies into application-driven contexts.
 
-The \acf{FRLL}~\cite{frll} represents a distinct contribution to IQA benchmarking, focusing on high-quality facial \acs{ICAO} compliant imagery. It contains 102 unique subjects photographed under controlled studio conditions, with consistent illumination, wearing plain white t-shirts, and neutral, frontal poses. In addition to meeting passport-style requirements, the dataset also includes self-reported age, gender, and ethnicity. Attractiveness ratings (on a 1-7 scale from “much less attractive than average” to “much more attractive than average”) for the neutral front faces, provided by 2513 raters aged 17-90, are also included.
+\acf{MS-Celeb-1M}~\cite{msceleb1m} and \acf{LFW}~\cite{lfw} are large-scale face datasets primarily designed for recognition tasks, but they have been repurposed for \acs{FIQA} research, they contain a wide range of webscrapped, real-world faces. \acf{FRGC}~\cite{frgc} combines controlled and uncontrolled scenarios for recognition evaluation. The \acf{IJB-C}~\cite{ijbc} dataset further expanded this scope with images and videos captured in unconstrained environments, providing a challenging benchmark for both recognition and quality assessment.
+
+The \acf{FRLL}~\cite{frll} represents a distinct contribution to \acs{IQA} benchmarking, focusing on high-quality facial \acs{ICAO} compliant imagery. It contains 102 unique subjects photographed under controlled studio conditions, with consistent illumination, wearing plain white t-shirts, and neutral, frontal poses. In addition to meeting passport-style requirements, the dataset also includes self-reported age, gender, and ethnicity. Attractiveness ratings (on a 1-7 scale from ``much less attractive than average'' to ``much more attractive than average'') for the neutral front faces, provided by 2513 raters aged 17-90, are also included.
 
 This combination of demographic attributes and attractiveness ratings enables not only research that bridges perceptual quality with subjective aesthetic judgments, but also systematic analysis of demographic bias in human evaluations of facial images. These dual annotations make the dataset particularly suitable for studies involving biometric verification and \acs{MRTDs}, where both technical quality and fairness considerations are critical.
 
 Together, these databases trace the evolution of \acs{IQA} benchmarking from controlled laboratory studies with synthetic distortions to large-scale, crowdsourced, and application-specific datasets. This progression not only enabled the development of modern no-reference and deep learning-based \acs{IQA} models but also revealed persistent challenges in generalization to real-world, domain-critical scenarios.
 
-\section{Objective \acs{IQA}}\label{sec:objective_iqa}
+\section{Objective \acl{IQA}}\label{sec:objective_iqa}
 
 Objective \acs{IQA} refers to the automatic estimation of visual quality using computational models. Unlike subjective approaches that rely on human ratings, objective \acs{IQA} enables consistent and scalable evaluations, making it essential for applications such as compression, transmission, restoration, and enhancement~\cite{gonzalez2009digital, moorthy2011blind, lin2020surpassing}. Over the past decades, numerous methods have been proposed, shaped by different assumptions about the \acf{HVS} and the statistical properties of natural images. Surveys and comparative studies~\cite{survey2019shahrukh, wang2004image, liu2012fusion, ding2020dists} summarize this evolution, showing a progression from simple error-based fidelity measures to advanced perceptual and learning-based frameworks. Although no metric fully replicates human judgment, objective \acs{IQA} provides a reproducible and low-cost alternative that supports large-scale benchmarking and real-time quality monitoring.
 
@@ -77,120 +79,120 @@ The spectral representation specifies the channel configuration used for quality
 
 This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on it, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 6 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
 
-\section{Full-Reference \acs{IQA}}\label{sec:full_reference_iqa}
+\section{\acl{FR} \acs{IQA} Metrics}\label{sec:full_reference_iqa}
 
 \begin{longtable}{
-p{0.16\linewidth}  % Metric
+p{0.15\linewidth}  % Metric
 p{0.05\linewidth}  % Year
 p{0.22\linewidth}  % Category
-p{0.50\linewidth}  % Tested Databases
+p{0.47\linewidth}  % Tested Databases
 }
-    \caption{Summary of the 40 \acs{FR}-\acs{IQA} metrics used}\label{tab:fr_iqa_metrics}\\
+    \caption{Summary of the 40 \acs{FR-IQA} metrics used}\label{tab:fr_iqa_metrics}\\
     \hline % chktex 44
-    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
+    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\ % chktex
     \hline % chktex 44
-    \endfirsthead % chktex 1
+    \endfirsthead % chktex 0
     \multicolumn{4}{r}{\small\itshape(continuation)}\\ % chktex 6
     \hline % chktex 44
-    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
+    \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\ % chktex 8
     \hline % chktex 44
     \endhead % chktex 1
     \hline % chktex 44
     \endfoot % chktex 1
 
-    \acs{MSE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{RMSE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{MAE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{PSNR}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{PSNR-B}~\cite{ma2011psnrb} & 2011 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
+    \acs{MSE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}, \acs{KADID-10k}, \acs{IVC}, \acs{IAA}\\ \hline
+    \acs{RMSE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}, \acs{KADID-10k}, \acs{IAA} \\ \hline
+    \acs{MAE}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID},  \acs{KADID-10k}, \acs{IAA}, \acs{PIPAL} \\ \hline
+    \acs{PSNR}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID},  \acs{KADID-10k}, \acs{IAA}, \acs{PIPAL} \\ \hline
+    \acs{PSNR-B}~\cite{ma2011psnrb} & 2011 & Error-based & \acs{LIVE} \\ \hline
     \acs{SNR}~\cite{wang2004image} & 2004 & Error-based & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
-    \acs{SAM}~\cite{yuhas1992sam} & 1992 & Spectral-based & \acs{AVIRIS}, \acs{HYDICE}, \acs{ROSIS}, \acs{TID}2013 \\ \hline
-    \acs{ERGAS}~\cite{wald2000ergas} & 2000 & Spectral-based & \acs{AVIRIS}, \acs{ROSIS}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{Dlambda}~\cite{wald2000ergas} & 2000 & Spectral-based & \acs{AVIRIS}, \acs{ROSIS}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{SSIM}~\cite{wang2004image} & 2004 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013 \\ \hline
-    \acs{MS-SSIM}~\cite{wang2003multiscale} & 2003 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{DSSIM}~\cite{wang2004image} & 2004 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
+    \acs{SAM}~\cite{yuhas1992sam} & 1992 & Spectral-based & \acs{AVIRIS}, \acs{HYDICE}, \acs{ROSIS} \\ \hline
+    \acs{ERGAS}~\cite{wald2000ergas} & 2000 & Spectral-based & \acs{AVIRIS}, \acs{ROSIS} \\ \hline
+    \acs{Dlambda}~\cite{wald2000ergas} & 2000 & Spectral-based & \acs{AVIRIS}, \acs{ROSIS} \\ \hline
+    \acs{SSIM}~\cite{wang2004image} & 2004 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}, \acs{TID} \\ \hline
+    \acs{MS-SSIM}~\cite{wang2003multiscale} & 2003 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}, \acs{KADID-10k} \\ \hline
+    \acs{DSSIM}~\cite{wang2004image} & 2004 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID} \\ \hline
     \acs{IW-SSIM}~\cite{li2011iwssim} & 2010 & Structural Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
     \acs{CW-SSIM}~\cite{sampat2009cwssim} & 2009 & Wavelet Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
-    \acs{G-SSIM}~\cite{chen2006gssim} & 2006 & Gradient Similarity & \acs{LIVE}, \acs{TID}2008 \\ \hline
+    \acs{G-SSIM}~\cite{chen2006gssim} & 2006 & Gradient Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
     \acs{R-SSIM}~\cite{yan2015rssim} & 2015 & Gradient Similarity & --- \\ \hline
     \acs{L-SSIM}~\cite{wang2004image} & 2004 & Structural Similarity & --- \\ \hline
     \acs{C-SSIM}~\cite{hassan2017cssim} & 2017 & Color Similarity & \acs{TID}2013 \\ \hline
     \acs{W-SSIM}~\cite{li2009wssim} & 2009 & Wavelet Similarity & \acs{LIVE} \\ \hline
     \acs{GMS}~\cite{xue2014gmsd} & 2014 & Gradient Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
     \acs{GMSD}~\cite{xue2014gmsd} & 2014 & Gradient Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
-    \acs{VSNR}~\cite{chandler2007vsnr} & 2007 & Feature Similarity & \acs{LIVE}, \acs{CSIQ} \\ \hline
-    \acs{FSIM}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{MS-FSIM}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
-    \acs{FSIMc}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008, \acs{IVC} \\ \hline
-    \acs{SR-SIM}~\cite{zhang2012srsim} & 2013 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
-    \acs{ESSIM}~\cite{chen2006esim} & 2006 & Edge Similarity & \acs{LIVE} \\ \hline
-    \acs{UQI}~\cite{wang2002uqi} & 2002 & Structural Similarity & --- \\ \hline
+    \acs{VSNR}~\cite{chandler2007vsnr} & 2007 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID} \\ \hline
+    \acs{FSIM}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013,  \acs{KADID-10k} \\ \hline
+    \acs{MS-FSIM}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ} \\ \hline
+    \acs{FSIMc}~\cite{zhang2011fsim} & 2011 & Feature Similarity & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{IVC} \\ \hline
+    \acs{SR-SIM}~\cite{zhang2012srsim} & 2013 & Feature Similarity & \acs{LIVE}, \acs{CSIQ} \\ \hline
+    \acs{ESIM}~\cite{chen2006esim} & 2006 & Edge Similarity & \acs{LIVE} \\ \hline
+    \acs{UQI}~\cite{wang2002uqi} & 2002 & Structural Similarity & \acs{TID}2008 \\ \hline
     \acs{SCC}~\cite{eskicioglu1995scc} & 1995 & Structural Similarity & --- \\ \hline
-    \acs{IFC}~\cite{sheikh2005ifc} & 2005 & Information & \acs{LIVE} \\ \hline
+    \acs{IFC}~\cite{sheikh2005ifc} & 2005 & Information & \acs{LIVE},  \acs{TID}2008 \\ \hline
     \acs{VIF}~\cite{sheikh2006vif} & 2006 & Information & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2008 \\ \hline
-    \acs{VIFp}~\cite{sheikh2006vif} & 2006 & Information & \acs{LIVE} \\ \hline
+    \acs{VIFp}~\cite{sheikh2006vif} & 2006 & Information & \acs{LIVE}, \acs{TID} \\ \hline
     \acs{VIFc}~\cite{sheikh2006vif} & 2006 & Information & --- \\ \hline
-    \acs{LPIPS}-Alex~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
-    \acs{LPIPS}-Squeeze~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
-    \acs{LPIPS}-\acs{VGG}~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013 \\ \hline
-    \acs{DISTS}~\cite{ding2020dists} & 2020 & Deep Learning & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{WaDIQaM}~\cite{bosse2017wadiqam} & 2017 & Deep Learning & \acs{LIVE}, \acs{TID}2013 \\ \hline
+    \acs{LPIPS}-Alex~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ}\\ \hline
+    \acs{LPIPS}-Squeeze~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ} \\ \hline
+    \acs{LPIPS}-\acs{VGG}~\cite{zhang2018lpips} & 2018 & Deep Learning & \acs{BAPPS}, \acs{LIVE}, \acs{CSIQ}\\ \hline
+    \acs{DISTS}~\cite{ding2020dists} & 2020 & Deep Learning & \acs{LIVE}, \acs{CSIQ}, \acs{KADID-10k} \\ \hline
+    \acs{WaDIQaM}~\cite{bosse2017wadiqam} & 2017 & Deep Learning & \acs{LIVE} \\ \hline
     \acs{PSM}~\cite{ghildyal2022psm} & 2022 & Deep Learning & \acs{BAPPS} \\ \hline
     \acs{SPIQ}~\cite{chen2022spiq} & 2022 & Deep Learning & \acs{KADID-10k}, \acs{KonIQ-10k} \\ \hline
 \end{longtable}
 
-\acs{FR}-\acs{IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR}-\acs{IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications.
+\acf{FR-IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR-IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications.
 
-A concise overview of each metric family, together with full notation, formal definitions, and implementation details for all 40 \acs{FR}-\acs{IQA} metrics in Table~\ref{tab:fr_iqa_metrics}, is provided in Appendix~\ref{app:full-ref-metrics}.
+A concise overview of each metric family, together with full notation, formal definitions, and implementation details for all 40 \acs{FR-IQA} metrics in Table~\ref{tab:fr_iqa_metrics}, is provided in Appendix~\ref{app:full-ref-metrics}.
 
-\subsection{Error-Based Metrics}\label{sec:error_based_metrics}
+\subsection{Error-based}\label{sec:error_based_metrics}
 
-Error-based metrics quantify distortion by computing direct numerical differences between the reference and distorted images~\cite{wang2004image}. Common examples include \acf{MSE}, \acf{RMSE}, \acf{MAE}, \acf{PSNR}, \acf{PSNR-B}, and \acf{SNR}, which are mathematically simple and computationally efficient. However, they lack perceptual modeling and therefore correlate poorly with human opinion scores. Despite this limitation, they are still treated as \acs{FR}-\acs{IQA} methods and remain widely used as baselines.
+Error-based metrics quantify distortion by computing direct numerical differences between the reference and distorted images~\cite{wang2004image}. Common examples include \acf{MSE}, \acf{RMSE}, \acf{MAE}, \acf{PSNR}, \acf{PSNR-B}, and \acf{SNR}, which are mathematically simple and computationally efficient. However, they lack perceptual modeling and therefore correlate poorly with human opinion scores. Despite this limitation, they are still treated as \acs{FR-IQA} methods and remain widely used as baselines.
 
-It is important to note that although several error-based metrics are standard mathematical tools in signal processing, their use in \acs{IQA} involves a shift in interpretation. In this context, they are repurposed to estimate perceptual image degradation based solely on numerical pixel differences. Despite lacking any perceptual modeling, these metrics are still treated as \acs{FR}-\acs{IQA} methods and evaluated empirically against subjective human judgments.
+It is important to note that although several error-based metrics are standard mathematical tools in signal processing, their use in \acs{IQA} involves a shift in interpretation. In this context, they are repurposed to estimate perceptual image degradation based solely on numerical pixel differences. Despite lacking any perceptual modeling, these metrics are still treated as \acs{FR-IQA} methods and evaluated empirically against subjective human judgments.
 
-\subsection{Spectral-based Metrics}\label{sec:spectral_based_metrics}
+\subsection{Spectral-based}\label{sec:spectral_based_metrics}
 
 Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. Representative measures include the \acf{SAM}, which computes the angular difference between spectral vectors; the \acf{ERGAS}, which measures average relative errors across spectral bands; and \acs{Dlambda}, which quantifies inter-band distortion. These methods are widely used in remote sensing and image fusion, where preserving spectral integrity is critical.
 
-\subsection{Similarity-based Metrics}\label{sec:similarity_based_metrics}
+\subsection{Structural Similarity}\label{sec:similarity_based_metrics}
 
-Similarity-based metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. 
+Structural similarity metrics assess perceptual image quality by measuring structural or feature-based resemblance between the reference and distorted images. 
 Rather than relying on pixel-wise errors, they capture patterns of spatial organization, texture, luminance, or phase alignment. 
 Prominent examples include the \acf{SSIM} family and its extensions such as \acs{MS-SSIM}, \acs{IW-SSIM}, and \acs{CW-SSIM}, 
-as well as gradient- and edge-based measures like \acs{G-SSIM}, \acs{GMS}, and \acs{ESSIM}, and feature-driven approaches such as \acs{FSIM} and \acs{SR-SIM}. 
+as well as gradient- and edge-based measures like \acs{G-SSIM}, \acs{GMS}, and \acs{ESIM}, and feature-driven approaches such as \acs{FSIM} and \acs{SR-SIM}. 
 These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}, 
-and remain central in modern \acs{FR}-\acs{IQA} research. 
+and remain central in modern \acs{FR-IQA} research. 
 
 
-\subsection{Information-theoretic Metrics}\label{sec:information_theoretic_metrics}
+\subsection{Information-theoretic}\label{sec:information_theoretic_metrics}
 
 Information-theoretic approaches to \acs{IQA} are grounded in Shannon's theory of communication~\cite{shannon1948mathematical,cover1999elements}. 
 They model images as stochastic signals transmitted through a distortion channel, and quality is assessed by measuring how much mutual information between the reference and distorted images is preserved in the presence of perceptual noise. 
 Representative metrics include the \acf{IFC}, which quantifies shared mutual information between reference and distorted coefficients; the \acf{VIF}, which normalizes preserved information by that available in the reference; and its simplified or extended variants, \acs{VIFp} and \acs{VIFc}. 
 These methods provide a principled view of perceptual fidelity and often correlate well with subjective judgments, but they are typically more computationally demanding than error- or similarity-based metrics. 
 
-\subsection{Deep Learning-Based Metrics}\label{sec:deep_metrics}
+\subsection{Deep Learning Methods}\label{sec:deep_metrics}
 
-Deep learning-based approaches to \acs{IQA} exploit feature representations from convolutional neural networks pretrained on large-scale vision tasks. 
+Deep learning approaches to \acs{IQA} exploit feature representations from convolutional neural networks pretrained on large-scale vision tasks. 
 These feature spaces capture high-level perceptual attributes such as texture, structure, and semantics, which align more closely with human visual perception than pixel-wise comparisons~\cite{gatys2016image,johnson2016perceptual,zhang2018lpips}. 
 Representative metrics include the \acf{LPIPS} family, which measures distances in deep feature space; \acf{DISTS}, which combines structure and texture similarity; \acf{WaDIQaM}, a data-driven patch-based model; \acf{PSM}, a shift-tolerant variant of LPIPS; and \acf{SPIQ}, which leverages self-supervised pretraining for quality-aware representations. 
 These methods have shown strong correlation with human opinion scores, particularly for complex and perceptually salient distortions, though they typically require higher computational resources.
 
 \section{\acl{NR} \acs{IQA}}\label{sec:no_reference_iqa}
 
-\acs{NR}-\acs{IQA} estimates perceptual quality directly from a single image without requiring a pristine reference. Three modeling strategies are commonly distinguished. First, classical opinion-unaware methods rely on natural scene statistics or perceptually motivated features and operate without training on opinion scores, providing simple and interpretable baselines~\cite{mittal2012niqe,venka2015piqe}. Second, task-driven deep approaches exploit the robustness of embeddings from pretrained networks to derive quality scores without supervision, thereby aligning quality with representational stability rather than explicit perceptual labels~\cite{terhorst2020serfiq}. Third, supervised regressors adapt recognition backbones to annotated labels, explicitly learning to map features to continuous quality scores~\cite{hernandez2019faceqnet,meng2021magface}.  
+\acs{NR-IQA} estimates perceptual quality directly from a single image without requiring a pristine reference. Three modeling strategies are commonly distinguished. First, classical opinion-unaware methods rely on natural scene statistics or perceptually motivated features and operate without training on opinion scores, providing simple and interpretable baselines~\cite{mittal2012niqe,venka2015piqe}. Second, task-driven deep approaches exploit the robustness of embeddings from pretrained networks to derive quality scores without supervision, thereby aligning quality with representational stability rather than explicit perceptual labels~\cite{terhorst2020serfiq}. Third, supervised regressors adapt recognition backbones to annotated labels, explicitly learning to map features to continuous quality scores~\cite{hernandez2019faceqnet,meng2021magface}.  
 
-A complementary distinction concerns domain scope. Generic \acs{NR}-\acs{IQA} methods aim to capture perceptual fidelity across natural images, while face-specific approaches (\acs{FIQA}) target biometric utility, where quality is linked to recognition performance rather than aesthetics. The latter group has gained traction with the emergence of embedding-based models that quantify image suitability for reliable face recognition. Considering both modeling strategies and domain scope enables a nuanced comparison between general-purpose perceptual estimators and specialized, task-aligned \acs{FIQA} metrics.
+A complementary distinction concerns domain scope. Generic \acs{NR-IQA} methods aim to capture perceptual fidelity across natural images, while face-specific approaches (\acs{FIQA}) target biometric utility, where quality is linked to recognition performance rather than aesthetics. The latter group has gained traction with the emergence of embedding-based models that quantify image suitability for reliable face recognition. Considering both modeling strategies and domain scope enables a nuanced comparison between general-purpose perceptual estimators and specialized, task-aligned \acs{FIQA} metrics.
 
 \begin{longtable}{
-p{0.15\linewidth}  % Metric
+p{0.16\linewidth}  % Metric
 p{0.05\linewidth}  % Year
 p{0.30\linewidth}  % Category
 p{0.38\linewidth}  % Tested Databases
 }
-    \caption{Summary of the 6 \acs{NR}-\acs{IQA} metrics used}\label{tab:nr_iqa_metrics}\\
+    \caption{Summary of the 6 \acs{NR-IQA} metrics used}\label{tab:nr_iqa_metrics}\\
     \hline % chktex 44
     \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
     \hline % chktex 44
@@ -200,21 +202,19 @@ p{0.38\linewidth}  % Tested Databases
     \textbf{Metric} & \textbf{Year} & \textbf{Category} & \textbf{Tested Databases} \\
     \hline % chktex 44
     \endhead % chktex 1
-    \hline % chktex 44
     \endfoot % chktex 1
 
     \acs{BRISQUE}~\cite{mittal2012brisque} & 2012 & Classical (opinion-aware) & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
     \acs{NIQE}~\cite{mittal2012niqe} & 2012 & Classical (opinion-unaware) & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{KonIQ-10k} \\ \hline
     \acs{PIQE}~\cite{venka2015piqe} & 2015 & Classical (perception-based) & \acs{LIVE}, \acs{CSIQ}, \acs{TID}2013, \acs{KADID-10k} \\ \hline
-    \acs{FaceQnet}~\cite{hernandez2019faceqnet} & 2019 & Face-specific (supervised regression) & VGGFace2, BioSecure, \acs{FRGC} \\ \hline
+    \acs{FaceQnet}~\cite{hernandez2019faceqnet} & 2019 & Face-specific (supervised) & VGGFace2, BioSecure, \acs{FRGC} \\ \hline
     \acs{SER-FIQ}~\cite{terhorst2020serfiq} & 2020 & Face-specific (unsupervised) & \acs{LFW}, VGGFace2, \acs{FRGC} \\ \hline
     \acs{MagFace}~\cite{meng2021magface} & 2021 & Face-specific (supervised) & \acs{MS-Celeb-1M}, \acs{IJB-C}, \acs{LFW} \\ \hline
-
 \end{longtable}
 
-\subsection{Classical \acl{NR} \acs{IQA}}\label{sec:classical_nr_iqa}
+\subsection{Classical Approaches}\label{sec:classical_nr_iqa}
 
-Classical \acs{NR}-\acs{IQA} methods operate without any training. These approaches rely on statistical regularities of natural images and perception-motivated cues to produce a scalar quality score that is easy to compute and interpret. They are attractive baselines because they generalize across content types and avoid dataset-specific supervision, but their assumptions can be violated in narrowly structured domains such as tightly cropped faces.
+Classical \acs{NR-IQA} methods operate without any training. These approaches rely on statistical regularities of natural images and perception-motivated cues to produce a scalar quality score that is easy to compute and interpret. They are attractive baselines because they generalize across content types and avoid dataset-specific supervision, but their assumptions can be violated in narrowly structured domains such as tightly cropped faces.
 
 \acf{BRISQUE}~\cite{mittal2012brisque} is an opinion-aware method grounded in \acf{NSS}. It first applies \acf{MSCN} to locally standardize luminance:
 \begin{equation}
@@ -265,9 +265,9 @@ The global \acs{PIQE} score is computed via a weighted aggregation over the dist
 \end{equation}
 where $w_i$ are confidence weights and $\alpha, \beta, \gamma$ are scaling factors for sharpness, noise, and contrast, respectively. The reported score is typically scaled to $[0,100]$, with larger values reflecting worse perceived quality.
 
-\subsection{Facial Image Quality Assessment}\label{sec:fiqa}
+\subsection{\acl{FIQA}}\label{sec:fiqa}
 
-\acs{FIQA} refers to the estimation of face image quality with respect to its biometric utility, most often in recognition, verification, or detection pipelines. While traditionally distinct from generic \acs{NR}-\acs{IQA}, recent work has highlighted the value of perceptual cues in predicting biometric utility~\cite{survey2022fiqa, abed2025fiqabiometric}. Factors such as resolution, pose, occlusion, blur, compression, and illumination jointly affect both human perception and algorithmic performance, motivating hybrid approaches that bridge perceptual and task-specific definitions of quality.
+\acs{FIQA} refers to the estimation of face image quality with respect to its biometric utility, most often in recognition, verification, or detection pipelines. While traditionally distinct from generic \acs{NR-IQA}, recent work has highlighted the value of perceptual cues in predicting biometric utility~\cite{survey2022fiqa, abed2025fiqabiometric}. Factors such as resolution, pose, occlusion, blur, compression, and illumination jointly affect both human perception and algorithmic performance, motivating hybrid approaches that bridge perceptual and task-specific definitions of quality.
 
 Traditional \acs{FIQA} methods relied on handcrafted features such as sharpness, symmetry, or inter-eye distance~\cite{phillips2003face}. Recent models leverage deep face embeddings extracted from recognition networks~\cite{terhorst2020serfiq, best2017facerecon}. These models typically apply a regression or ranking loss to map features to quality scores correlated with recognition accuracy.
 
@@ -295,100 +295,15 @@ where higher scores indicate more stable, and thus higher-quality, facial repres
 \end{equation}
 where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector of the correct class, \( s \) is a scaling factor, and \( m(\|\mathbf{e}\|) \) is a dynamic margin that increases with quality. The final \acs{MagFace} quality score is proportional to the magnitude \( \|\mathbf{e}\| \), constrained during training to lie within a fixed interval \([l, u]\) for regularization.
 
-\section{Fusion-Based IQA Models}\label{sec:fusion_iqa}
+\section{Fusion-based IQA Models}\label{sec:fusion_iqa}
 
 Individual \acs{FR} metrics capture different aspects of perceptual degradation. Error-based metrics respond to amplitude distortions, structure-based metrics track local similarity, and learning-based metrics correlate with semantic distortions. This complementarity motivates fusion: combining heterogeneous scores to approximate \acs{MOS} more faithfully than any single metric.
 
-Early supervised fusion combined normalized metric scores linearly. \cite{liu2012fusion} introduced the \acf{MMF} framework, where a regression model learns weights that map a vector of \acs{FR}-\acs{IQA} scores to \acs{MOS}. Non-linear learners extend this principle by modeling interactions between metrics and mitigating collinearity. In a biometric setting, \cite{henniger2020assessment} demonstrated that tree ensembles trained on \acs{ISO}-compliant facial images improve correlation with utility-focused targets. Subsequent studies confirmed that carefully designed fusion outperforms standalone metrics in \acf{PLCC}~\cite{plcc} and \acf{SRCC}~\cite{srcc} against human judgments~\cite{babnik2022bias}.
+Early supervised fusion combined normalized metric scores linearly. \cite{liu2012fusion} introduced the \acf{MMF} framework, where a regression model learns weights that map a vector of \acs{FR-IQA} scores to \acs{MOS}. Non-linear learners extend this principle by modeling interactions between metrics and mitigating collinearity. In a biometric setting, \cite{henniger2020assessment} demonstrated that tree ensembles trained on \acs{ISO}-compliant facial images improve correlation with utility-focused targets. Subsequent studies confirmed that carefully designed fusion outperforms standalone metrics in \acf{PLCC}~\cite{plcc} and \acf{SRCC}~\cite{srcc} against human judgments~\cite{babnik2022bias}.
 
-When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints: one line of work fuses multiple \acs{FR}-\acs{IQA} outputs into pseudo-\acs{MOS} via averaging or reliability-weighted fusion \cite{lai2022pseudomos}; another infers labels for unlabeled samples through semi-supervised and positive unlabeled objectives within \acs{FR}-\acs{IQA} \cite{cao2022semisupervied}; a complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations \cite{liu2017rankiqa}; and, building on these proxy signals, cascaded predictors trained on pseudo-\acs{MOS} can bootstrap quality estimation when subjective ground truth is limited \cite{wu2020cascaded}.
+When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints: one line of work fuses multiple \acs{FR-IQA} outputs into \acf{pMOS} via averaging or reliability-weighted fusion \cite{lai2022pseudomos}; another infers labels for unlabeled samples through semi-supervised and positive unlabeled objectives within \acs{FR-IQA} \cite{cao2022semisupervied}; a complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations \cite{liu2017rankiqa}; and, building on these proxy signals, cascaded predictors trained on \acs{pMOS} can bootstrap quality estimation when subjective ground truth is limited \cite{wu2020cascaded}.
 
-\subsection{Regression Models}~\label{sec:regression_models}
-
-Fusion-based \ac{IQA} learns a regression from heterogeneous metric scores to a single perceptual estimate.
-Let the dataset be \( \mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n} \) with \( \mathbf{x}_i \in \mathbb{R}^{p} \) the vector of \(p\) objective scores and \( y_i \in \mathbb{R} \) the \ac{MOS}.
-We first harmonize polarity so that larger metric values indicate better quality, optionally rescale each metric to zero mean and unit variance, and map targets to a fixed range (for example 0--100).
-We then estimate a regressor \( f:\mathbb{R}^{p}\to\mathbb{R} \) by empirical risk minimization
-\[
-  \min_{\theta}\; \frac{1}{n}\sum_{i=1}^{n} \ell\!\big(y_i, f(\mathbf{x}_i;\theta)\big) + \lambda\,\Omega(\theta),
-\]
-using a squared or robust loss \( \ell \) (for example Huber), and regularizer \( \Omega \) if applicable.
-To handle redundancy, we either select the top \(k\) metrics by correlation with \(y\) or project \(\mathbf{x}_i\) to a lower-dimensional subspace learned from the score matrix.
-The learned fusion \( f \) aggregates complementary cues and typically aligns with human judgments better than any single metric.
-
-There are four useful categories for fusion on tabular metric vectors. Linear models assume an approximately additive mapping and control complexity via shrinkage or sparsity \cite{linearregression, ridgeregression, bayesianridge, elasticnet}. Bagging and gradient boosting ensembles model interactions and are robust to heterogeneous scales \cite{randomforest, ensembles, gradboost, histogram}. Modern boosted-tree frameworks optimize second order objectives with explicit regularization and efficient growth strategies \cite{xgboost, lightgbm, catboost}.
-
-Linear Regression~\cite{linearregression} fits an affine predictor by minimizing squared residuals:
-\begin{equation}
-\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2.
-\end{equation}
-The normal equations yield a closed form when \(\mathbf{X}\) is full rank. Coefficients provide direct attribution to each metric, but estimates can be unstable under collinearity.
-
-Ridge Regression~\cite{ridgeregression} stabilizes linear fusion with \(L_2\) shrinkage
-\begin{equation}
-\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2+\lambda\|\mathbf{w}\|_2^2,\quad \lambda>0.
-\end{equation}
-The solution \(\hat{\mathbf{w}}=(\mathbf{X}^{\top}\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^{\top}\mathbf{y}\) trades small bias for reduced variance and handles correlated metrics well.
-
-Bayesian Ridge~\cite{bayesianridge} is a probabilistic ridge with Gaussian prior and noise
-\begin{align}
-\mathbf{w}\mid\alpha &\sim \mathcal{N}(\mathbf{0},\,\alpha^{-1}\mathbf{I}), \quad
-y_i\mid\mathbf{x}_i,\mathbf{w},\beta \sim \mathcal{N}(\mathbf{w}^{\top}\mathbf{x}_i+b,\,\beta^{-1}),\\
-\mathbf{S} &= \left(\alpha\mathbf{I}+\beta \mathbf{X}^{\top}\mathbf{X}\right)^{-1},\quad
-\mathbf{m}=\beta\,\mathbf{S}\,\mathbf{X}^{\top}\mathbf{y}.
-\end{align}
-Posterior \(p(\mathbf{w}\mid\mathcal{D})=\mathcal{N}(\mathbf{m},\mathbf{S})\) gives predictive mean \(\hat{y}_*=\mathbf{m}^{\top}\mathbf{x}_*+b\) and variance \(\beta^{-1}+\mathbf{x}_*^{\top}\mathbf{S}\mathbf{x}_*\), useful to quantify uncertainty in fused quality.
-
-ElasticNet~\cite{elasticnet} promotes sparse yet stable linear fusion with mixed penalties
-\begin{equation}
-\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2
-+\alpha\left(\rho\|\mathbf{w}\|_{1}+\tfrac{1-\rho}{2}\|\mathbf{w}\|_{2}^{2}\right),
-\end{equation}
-with \(\alpha>0\) and \(\rho\in[0,1]\). It can drop redundant metrics while shrinking the rest to mitigate collinearity.
-
-Random Forest~\cite{randomforest} employs bagging regression trees to reduce variance and requires minimal preprocessing. Nodes choose splits that maximize variance reduction
-\begin{equation}
-\Delta=\mathrm{Var}(S)-\frac{|S_L|}{|S|}\mathrm{Var}(S_L)-\frac{|S_R|}{|S|}\mathrm{Var}(S_R),
-\end{equation}
-and the fusion prediction averages \(T\) trees
-\begin{equation}
-\hat{y}(\mathbf{x})=\frac{1}{T}\sum_{t=1}^{T}h_t(\mathbf{x}).
-\end{equation}
-
-Extremely randomized trees~\cite{ensembles} sample split thresholds at random for each feature before selecting the best split, which increases diversity and often lowers variance. Aggregation is identical to Random Forest, with similar variance reduction analysis.
-
-Gradient Boosting~\cite{gradboost} employs additive modeling to fit weak learners to pseudo residuals. For squared error, residuals are \(r_{im}=y_i-f_{m-1}(\mathbf{x}_i)\). Each stage fits a tree \(b_m\) to \(\{(\mathbf{x}_i,r_{im})\}\) and updates
-\begin{equation}
-f_m(\mathbf{x})=f_{m-1}(\mathbf{x})+\nu\,b_m(\mathbf{x}),
-\end{equation}
-with learning rate \(\nu\in(0,1]\). This captures non-linear metric interactions important in perceptual fusion.
-
-Histogram Gradient Boosting~\cite{histogram} is a histogram variant of gradient boosting that bins each feature into \(B\) buckets and accumulates gradient and Hessian statistics per bin to evaluate splits efficiently. It approximates standard boosting while improving speed and memory on many-metric settings.
-
-\acf{XGBoost}~\cite{xgboost} optimizes a second-order regularized objective with per-leaf closed-form weights:
-\begin{equation}
-\mathcal{L}=\sum_{i=1}^{n}\ell(y_i,\hat{y}_i)+\sum_{t=1}^{T}\Omega(f_t),\qquad
-\Omega(f)=\gamma T+\tfrac{\lambda}{2}\sum_{j=1}^{L}w_j^2.
-\end{equation}
-With gradients \(g_i=\partial_{\hat{y}}\ell\) and Hessians \(h_i=\partial_{\hat{y}}^2\ell\), the optimal leaf weight and split gain are
-\begin{equation}
-w_j^{*}=-\frac{\sum_{i\in I_j} g_i}{\sum_{i\in I_j} h_i+\lambda},\qquad
-\mathrm{Gain}=\tfrac{1}{2}\left(\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}\right)-\gamma,
-\end{equation}
-where \(G_{\cdot}=\sum g_i\) and \(H_{\cdot}=\sum h_i\). This yields accurate and regularized fusion on small to medium labeled sets.
-
-\acf{LightGBM}~\cite{lightgbm} builds trees leaf-wise (best-first) under depth or leaf constraints and uses gradient-based one-side sampling and exclusive feature bundling, selecting each split by maximizing a second-order regularized gain:
-\begin{equation}
-\mathrm{Gain}=\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}-\gamma,
-\end{equation}
-where $G_\cdot=\sum g_i$ and $H_\cdot=\sum h_i$ are the sums of first and second derivatives over the node and $\gamma$ penalizes splits.
-
-\acf{CatBoost}~\cite{catboost} performs ordered boosting with symmetric trees to mitigate prediction shift by computing gradients on permutation prefixes and updating leaves with second-order estimates while optimizing a standard regression loss:
-\begin{align}
-f_t(\mathbf{x}) &= f_{t-1}(\mathbf{x}) + \nu\, b_t(\mathbf{x}), \\
-w_j^{*} &= -\frac{G_j}{H_j+\lambda},
-\end{align}
-where $G_j=\sum g_i$ and $H_j=\sum h_i$ are ordered gradient and Hessian sums over leaf $j$, $\nu$ is the learning rate, and $\lambda$ is the leaf regularization.
+We refer the reader to Appendix~\ref{app:regression-models} for concise per-method descriptions and discussion.
 
 \section{Image distortion types}\label{sec:distortions}
 
@@ -396,45 +311,45 @@ Image distortions in \acs{IQA} are typically organized into operational families
 
 \subsection{Lossy compression}\label{sec:compression}
 
-Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate. JPEG is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode-decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
+Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate. \acf{JPEG}~\cite{jpeg} is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode-decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
 
-\subsection{Blur}\label{sec:blur}
+\subsection{Blur and Detail Loss}\label{sec:blur}
 
 Blur covers optical defocus from finite depth of field and focusing errors, Gaussian like point spread from lens or sensor integration, and motion blur caused by camera or subject movement. These effects smear edges, reduce acutance, and degrade recognizability of small structures \cite{gonzalez2009digital,survey2020zhai}. Real world drivers include handheld shooting, long exposures in low light, rolling shutter readout, and surveillance cameras with slow shutters or compression integrated stabilization \cite{survey2017aquisition,sheikh2006live}.
 
-\subsection{Additive noise}\label{sec:noise}
+\subsection{Additive Noise}\label{sec:noise}
 
 Additive noise includes sensor read noise, signal dependent shot noise, thermal noise, and coarse impulse like contamination from faulty pixels or transmission induced bit flips. It manifests as grain, color speckle, or salt and pepper dots that mask texture and create false edges \cite{survey2023denoising,gonzalez2009digital}. Noise dominates in dim scenes, small pixel sensors, and high ISO capture and interacts non-linearly with denoising and sharpening in the camera pipeline \cite{survey2017aquisition}. Lab datasets simulate Gaussian, Poisson, and impulse processes across standard deviations or rates \cite{sheikh2006live,tid2013,kadid10k}.
 
-\subsection{Resampling and resolution changes}\label{sec:resampling}
+\subsection{Resampling and Resolution Variations}\label{sec:resampling}
 
-Resampling and resolution changes introduce aliasing, moiré, interpolation blur, and haloing when images are downscaled or upscaled without ideal prefiltering. Repeated resampling in social platforms or display adaptation pipelines compounds these effects \cite{gonzalez2009digital,waterloo}. Edge directed sharpening and unsharp masking can further create overshoot undershoot ripples, perceived as halos around high contrast structures \cite{survey2006wang}.
+Resampling and resolution variations introduce aliasing, moiré, interpolation blur, and haloing when images are downscaled or upscaled without ideal prefiltering. Repeated resampling in social platforms or display adaptation pipelines compounds these effects \cite{gonzalez2009digital,waterloo}. Edge directed sharpening and unsharp masking can further create overshoot undershoot ripples, perceived as halos around high contrast structures \cite{survey2006wang}.
 
-\subsection{Photometric and color distortions}\label{sec:photometric}
+\subsection{Photometric and Color Distortions}\label{sec:photometric}
 
 Photometric and color distortions cover exposure errors, gamma mis calibration, global and local contrast changes, white balance shifts, channel noise imbalance, and saturation clipping. These arise from auto exposure and auto white balance failures, tone mapping, and display pipeline mismatches \cite{survey2017aquisition,ntsc1953yiq}. Perceptually, these alter scene realism, skin tone fidelity, and local visibility of detail. Benchmark datasets include luminance and contrast change variants, color shifts, and mean intensity shifts to probe metric sensitivity \cite{tid2013,kadid10k}.
 
-\subsection{Transmission and packet-level artifacts}\label{sec:transmission}
+\subsection{Transmission and Packet-Level Artifacts}\label{sec:transmission}
 
-Transmission and packet level artifacts occur when compressed bit streams traverse unreliable channels. Packet loss, bit errors, or jitter map to block corruption, freezing, or tearing in images and video, especially over wireless links or congested networks \cite{chandra2016transmission,survey2019transmission}. Although less common in still images than in streaming video, partial downloads and progressive JPEG decoding can leave visible blocky regions or coarse approximations that degrade perceived quality \cite{rabbani1991digital,livewebsite}.
+Transmission and packet-level artifacts occur when compressed bit streams traverse unreliable channels. Packet loss, bit errors, or jitter map to block corruption, freezing, or tearing in images and video, especially over wireless links or congested networks \cite{chandra2016transmission,survey2019transmission}. Although less common in still images than in streaming video, partial downloads and progressive \acs{JPEG} decoding can leave visible blocky regions or coarse approximations that degrade perceived quality \cite{rabbani1991digital,livewebsite}.
 
-\subsection{Authentic mixtures}\label{sec:authentic_mixtures}
+\subsection{Authentic Mixtures}\label{sec:authentic_mixtures}
 
-Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high \acs{ISO} noise, heavy denoising and sharpening, aggressive JPEG compression, slight motion blur, and color cast. In surveillance, long exposure blur, compression, and downsampling can occur \cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating \acs{IQA} models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as \acs{ITU-R BT.500-15} \cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families \cite{survey2019shahrukh,ma2025survey}.
+Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high \acs{ISO} noise, heavy denoising and sharpening, aggressive \acs{JPEG} compression, slight motion blur, and color cast. In surveillance, long exposure blur, compression, and downsampling can occur \cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating \acs{IQA} models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as \acs{ITU-R BT.500-15} \cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families \cite{survey2019shahrukh,ma2025survey}.
 
 \section{Steganography}\label{sec:steganography}
 
-Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through least significant bit substitution~\cite{morkel2005steganography}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the \acs{DCT} or \acs{DWT}, embedding data in coefficients less sensitive to compression~\cite{survey2016steganography}. Adaptive methods further refine the previous approaches by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{baluja2017steganography}.
+Steganography has evolved significantly with the rise of digital media and advanced compression algorithms, leading to a variety of embedding methods and detection strategies. Classical steganographic methods can be broadly categorized into spatial, frequency, and adaptive domain techniques. Spatial domain methods directly manipulate pixel values, most notably through least significant bit substitution~\cite{morkel2005steganography}, to encode binary data within an image. Frequency domain methods operate on transformed representations of the image, using tools such as the \acs{DCT} or \acf{DWT}, embedding data in coefficients less sensitive to compression~\cite{survey2016steganography}. Adaptive methods further refine the previous approaches by analyzing local characteristics of the image, dynamically choosing to embed regions to minimize perceptual distortion~\cite{baluja2017steganography}.
 
 However, current methods cover a wide range of applications, there has been a growing interest in printer-proof steganography, which survives the printing and scanning process. This is particularly relevant in contexts where physical copies of images are distributed, such as \acs{MRTDs}. The challenge lies in ensuring that the embedded information remains detectable and robust against distortions introduced by printing and scanning processes.
 
 Recent advances employ deep learning to design robust, end-to-end steganographic pipelines that simulate print-scan degradations during training. We highlight four of these methods that represent the current state of the art in printer-proof steganography for natural and facial images. The printer-proof steganography methods used were based on \acf{GANs}~\cite{heusel2017gans} to encode and decode information. Various results can be obtained depending on the method used.
 
 \subsection{StegaStamp}
-StegaStamp~\cite{tancik2020stegastamp} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and JPEG compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite the aforementioned degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual \acs{LPIPS} loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
+StegaStamp~\cite{tancik2020stegastamp} introduced the first deep learning-based pipeline for robust steganography under real-world distortions. It jointly trains an encoder-decoder architecture with simulated perturbations, such as blur, color shift, projective warps, and \acs{JPEG} compression, to mimic the print-scan process. A random bitstring is embedded into the image, and the decoder learns to retrieve it despite the aforementioned degradations. The training loss combines a cross-entropy bit loss, an $L_2$ reconstruction loss, and a perceptual \acs{LPIPS} loss to preserve visual quality. StegaStamp showed that it is possible to reliably recover short messages (e.g., 56 bits) from physically printed and scanned images, setting a benchmark for printer-proof robustness.
 
-\subsection{CodeFace}
-Code\,Face~\cite{shadmand2021codeface} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a \acf{STN} for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. CodeFace proves to be effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
+\subsection{Code\,Face}
+Code\,Face~\cite{shadmand2021codeface} extends StegaStamp with a focus on facial images used in ID documents. It introduces facial-specific modules such as a \acf{STN} for geometric alignment and a perceptual identity-preserving loss based on FaceNet embeddings. This ensures that the stego face remains visually and biometrically consistent with the original. The network is trained adversarially, with a discriminator encouraging naturalness and a decoder optimizing message recovery under print-scan distortions. Code\,Face proves to be effective for embedding messages in high-resolution facial portraits, making it suitable for privacy-preserving biometric IDs.
 
 \subsection{RiemStega}
 RiemStega~\cite{cruz2025riemstega} innovates by introducing a Riemannian manifold-based loss. Instead of comparing pixel values, it represents images through \acf{SPD} covariance matrices and minimizes the affine-invariant Riemannian distance between the cover and stego image descriptors. This statistical approach preserves global structural and texture patterns more robustly under degradation. The method maintains high visual fidelity while increasing message recoverability post-printing, and demonstrates strong performance on both generic and facial image datasets.

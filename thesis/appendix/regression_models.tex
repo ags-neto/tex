@@ -1,0 +1,91 @@
+
+Fusion-based \ac{IQA} learns a regression from heterogeneous metric scores to a single perceptual estimate.
+Let the dataset be \( \mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n} \) with \( \mathbf{x}_i \in \mathbb{R}^{p} \) the vector of \(p\) objective scores and \( y_i \in \mathbb{R} \) the \ac{MOS}.
+We first harmonize polarity so that larger metric values indicate better quality, optionally rescale each metric to zero mean and unit variance, and map targets to a fixed range (for example 0--100).
+We then estimate a regressor \( f:\mathbb{R}^{p}\to\mathbb{R} \) by empirical risk minimization
+\[
+  \min_{\theta}\; \frac{1}{n}\sum_{i=1}^{n} \ell\!\big(y_i, f(\mathbf{x}_i;\theta)\big) + \lambda\,\Omega(\theta),
+\]
+using a squared or robust loss \( \ell \) (for example Huber), and regularizer \( \Omega \) if applicable.
+To handle redundancy, we either select the top \(k\) metrics by correlation with \(y\) or project \(\mathbf{x}_i\) to a lower-dimensional subspace learned from the score matrix.
+The learned fusion \( f \) aggregates complementary cues and typically aligns with human judgments better than any single metric.
+
+There are three useful categories for fusion on tabular metric vectors. Linear models assume an approximately additive mapping and control complexity via shrinkage or sparsity \cite{linearregression, ridgeregression, bayesianridge, elasticnet}. Bootstrap aggregating and gradient boosting ensembles model interactions and are robust to heterogeneous scales \cite{randomforest, ensembles, gradboost, histogram}. Modern boosted-tree frameworks optimize second order objectives with explicit regularization and efficient growth strategies \cite{xgboost, lightgbm, catboost}.
+
+\section{Linear Models}\label{sec:linear}
+
+Linear Regression~\cite{linearregression} fits an affine predictor by minimizing squared residuals:
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2.
+\end{equation}
+The normal equations yield a closed form when \(\mathbf{X}\) is full rank. Coefficients provide direct attribution to each metric, but estimates can be unstable under collinearity.
+
+Ridge Regression~\cite{ridgeregression} stabilizes linear fusion with \(L_2\) shrinkage
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2+\lambda\|\mathbf{w}\|_2^2,\quad \lambda>0.
+\end{equation}
+The solution \(\hat{\mathbf{w}}=(\mathbf{X}^{\top}\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^{\top}\mathbf{y}\) trades small bias for reduced variance and handles correlated metrics well.
+
+Bayesian Ridge~\cite{bayesianridge} is a probabilistic ridge with Gaussian prior and noise
+\begin{align}
+\mathbf{w}\mid\alpha &\sim \mathcal{N}(\mathbf{0},\,\alpha^{-1}\mathbf{I}), \quad
+y_i\mid\mathbf{x}_i,\mathbf{w},\beta \sim \mathcal{N}(\mathbf{w}^{\top}\mathbf{x}_i+b,\,\beta^{-1}),\\
+\mathbf{S} &= \left(\alpha\mathbf{I}+\beta \mathbf{X}^{\top}\mathbf{X}\right)^{-1},\quad
+\mathbf{m}=\beta\,\mathbf{S}\,\mathbf{X}^{\top}\mathbf{y}.
+\end{align}
+Posterior \(p(\mathbf{w}\mid\mathcal{D})=\mathcal{N}(\mathbf{m},\mathbf{S})\) gives predictive mean \(\hat{y}_*=\mathbf{m}^{\top}\mathbf{x}_*+b\) and variance \(\beta^{-1}+\mathbf{x}_*^{\top}\mathbf{S}\mathbf{x}_*\), useful to quantify uncertainty in fused quality.
+
+ElasticNet~\cite{elasticnet} promotes sparse yet stable linear fusion with mixed penalties
+\begin{equation}
+\min_{\mathbf{w},\,b}\ \sum_{i=1}^{n}\left(y_i-\mathbf{w}^{\top}\mathbf{x}_i-b\right)^2
++\alpha\left(\rho\|\mathbf{w}\|_{1}+\tfrac{1-\rho}{2}\|\mathbf{w}\|_{2}^{2}\right),
+\end{equation}
+with \(\alpha>0\) and \(\rho\in[0,1]\). It can drop redundant metrics while shrinking the rest to mitigate collinearity.
+
+\section{Ensemble Methods}\label{sec:ensembles}
+
+Random Forest~\cite{randomforest} employs bagging regression trees to reduce variance and requires minimal preprocessing. Nodes choose splits that maximize variance reduction
+\begin{equation}
+\Delta=\mathrm{Var}(S)-\frac{|S_L|}{|S|}\mathrm{Var}(S_L)-\frac{|S_R|}{|S|}\mathrm{Var}(S_R),
+\end{equation}
+and the fusion prediction averages \(T\) trees
+\begin{equation}
+\hat{y}(\mathbf{x})=\frac{1}{T}\sum_{t=1}^{T}h_t(\mathbf{x}).
+\end{equation}
+
+Extremely randomized trees~\cite{ensembles} sample split thresholds at random for each feature before selecting the best split, which increases diversity and often lowers variance. Aggregation is identical to Random Forest, with similar variance reduction analysis.
+
+Gradient Boosting~\cite{gradboost} employs additive modeling to fit weak learners to pseudo residuals. For squared error, residuals are \(r_{im}=y_i-f_{m-1}(\mathbf{x}_i)\). Each stage fits a tree \(b_m\) to \(\{(\mathbf{x}_i,r_{im})\}\) and updates
+\begin{equation}
+f_m(\mathbf{x})=f_{m-1}(\mathbf{x})+\nu\,b_m(\mathbf{x}),
+\end{equation}
+with learning rate \(\nu\in(0,1]\). This captures non-linear metric interactions important in perceptual fusion.
+
+Histogram Gradient Boosting~\cite{histogram} is a histogram variant of gradient boosting that bins each feature into \(B\) buckets and accumulates gradient and Hessian statistics per bin to evaluate splits efficiently. It approximates standard boosting while improving speed and memory on many-metric settings.
+
+\section{Boosted Trees}\label{sec:modern}
+
+\acf{XGBoost}~\cite{xgboost} optimizes a second-order regularized objective with per-leaf closed-form weights:
+\begin{equation}
+\mathcal{L}=\sum_{i=1}^{n}\ell(y_i,\hat{y}_i)+\sum_{t=1}^{T}\Omega(f_t),\qquad
+\Omega(f)=\gamma T+\tfrac{\lambda}{2}\sum_{j=1}^{L}w_j^2.
+\end{equation}
+With gradients \(g_i=\partial_{\hat{y}}\ell\) and Hessians \(h_i=\partial_{\hat{y}}^2\ell\), the optimal leaf weight and split gain are
+\begin{equation}
+w_j^{*}=-\frac{\sum_{i\in I_j} g_i}{\sum_{i\in I_j} h_i+\lambda},\qquad
+\mathrm{Gain}=\tfrac{1}{2}\left(\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}\right)-\gamma,
+\end{equation}
+where \(G_{\cdot}=\sum g_i\) and \(H_{\cdot}=\sum h_i\). This yields accurate and regularized fusion on small to medium labeled sets.
+
+\acf{LightGBM}~\cite{lightgbm} builds trees leaf-wise (best-first) under depth or leaf constraints and uses gradient-based one-side sampling and exclusive feature bundling, selecting each split by maximizing a second-order regularized gain:
+\begin{equation}
+\mathrm{Gain}=\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{G^2}{H+\lambda}-\gamma,
+\end{equation}
+where $G_\cdot=\sum g_i$ and $H_\cdot=\sum h_i$ are the sums of first and second derivatives over the node and $\gamma$ penalizes splits.
+
+\acf{CatBoost}~\cite{catboost} performs ordered boosting with symmetric trees to mitigate prediction shift by computing gradients on permutation prefixes and updating leaves with second-order estimates while optimizing a standard regression loss:
+\begin{align}
+f_t(\mathbf{x}) &= f_{t-1}(\mathbf{x}) + \nu\, b_t(\mathbf{x}), \\
+w_j^{*} &= -\frac{G_j}{H_j+\lambda},
+\end{align}
+where $G_j=\sum g_i$ and $H_j=\sum h_i$ are ordered gradient and Hessian sums over leaf $j$, $\nu$ is the learning rate, and $\lambda$ is the leaf regularization.

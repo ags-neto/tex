@@ -2,71 +2,70 @@
 
 \section{Dataset}
 
-Our dataset is derived from the publicly available \acs{FRLL}~\cite{frll} set, comprising 102, $1350 \times 1350$, full colored images of frontal, \acs{ICAO}-compliant adult faces. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractive than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The \acs{FRLL} dataset was selected for its high-fidelity \acs{ICAO}-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x \mid x = 0.6 + 0.1 \times k, k \in \{0, \hdots, 8\}$, yielding a total of 3,672 distorted images.
+Our dataset is derived from the publicly available \acs{FRLL}~\cite{frll} set, comprising 102 full-color, $1350 \times 1350$ frontal, \acs{ICAO}-compliant facial images. Self-reported age, gender and ethnicity are included. Attractiveness ratings (on a 1--7 scale from ``much less attractive than average'' to ``much more attractive than average'') for the faces from 2513 people (ages 17--90) are included as well. The \acs{FRLL} dataset was selected for its high-fidelity \acs{ICAO}-compliant images, controlled acquisition conditions, and extensive demographic annotations, which are crucial for analyzing perceptual quality and potential demographic biases in subjective ratings. Each image was encoded using four printer-proof steganographic methods, each applied at nine different intensity levels, $x = 0.6 + 0.1k$ for $k \in \{0,\dots,8\}$, yielding a total of 3,672 distorted images.
 
-The dataset was partitioned to support both supervised learning and independent evaluation. A small, demographically diverse subset of 15 identities, shown in Fig.~\ref{fig:mos_set} was annotated with MOS through subjective tests. This set was split into a training portion (12 identities, Fig.~\ref{fig:mos_set_train}) used to fit the fusion model, and a disjoint test portion (3 identities, Fig.~\ref{fig:mos_set_test}) held out for final evaluation. The remaining 87 identities formed the unlabeled set, to which pseudo-\acs{MOS} were later assigned. Together, the annotated and pseudo-labeled subsets were used to train the \acs{NR}-\acs{IQA} model. A summary of these partitions, including the number of subjects and images per subset, is presented in Table~\ref{tab:dataset_partition}.
-
-\begin{table}
+\begin{table}[htbp]
 \centering
-\caption{Partitioning of the steganographically distorted dataset.}
+\caption{Partitioning of the steganographically distorted \acs{FRLL} dataset.}
 \label{tab:dataset_partition}
 \begin{tabular}{lccc}
 \hline
-\textbf{Subset}       & \textbf{Subjects} & \textbf{Images} & \textbf{Purpose} \\
+\textbf{Subset}     & \textbf{Subjects} & \textbf{Images} & \textbf{Purpose} \\
 \hline
-\acs{MOS} train set         & 12                & 432             & Train \acs{FR} fusion model \\
-\acs{MOS} test set          & 3                 & 108             & Final evaluation  \\
-Pseudo-\acs{MOS} set        & 87                & 3,132           & Generate pseudo-\acs{MOS} labels \\
-\acs{NR} train set         & 99                & 3,564           & \acs{MOS} train + pseudo-\acs{MOS} \\
+\acs{MOS} train set & 12                & 432             & Train \acs{FR} fusion model \\
+\acs{MOS} test set  & 3                 & 108             & Final evaluation  \\
+\acs{pMOS} set      & 87                & 3{,}132           & Generate proxy \acs{MOS} labels \\
+\acs{NR} train set  & 99                & 3{,}564           & \acs{MOS} train + \acs{pMOS} \\
 \hline
-\textbf{Total}        & \textbf{102}      & \textbf{3,672}  & Full dataset \\
+\textbf{Total}      & \textbf{102}      & \textbf{3{,}672}  & --- \\
 \hline
 \end{tabular}
 \end{table}
 
+The dataset was partitioned to support both supervised learning and independent evaluation. A small, demographically diverse subset of 15 identities, shown in Fig.~\ref{fig:mos_set} was annotated with \acs{MOS} through subjective tests. This set was split into a training portion (12 identities, Fig.~\ref{fig:mos_set_train}) used to fit the fusion model, and a disjoint test portion (3 identities, Fig.~\ref{fig:mos_set_test}) held out for final evaluation. The remaining 87 identities formed the unlabeled set, to which \acf{pMOS} were later assigned. Together, the annotated and pseudo-labeled subsets were used to train the \acs{NR-IQA} model. A summary of these partitions, including the number of subjects and images per subset, is presented in Table~\ref{tab:dataset_partition}.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.76\textwidth}
         
         \centering
-        \includegraphics[width=\textwidth]{images/mos_train_set.pdf}\\
+        \includegraphics[width=\textwidth]{images/frll/mos_train_set.pdf}\\
         \caption{\acs{MOS} train set}\label{fig:mos_set_train}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.19\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/mos_test_set.pdf}\\
+        \includegraphics[width=\textwidth]{images/frll/mos_test_set.pdf}\\
         \caption{\acs{MOS} test set}\label{fig:mos_set_test}
     \end{subfigure}
     \caption{Reference images from the \acs{MOS} set, comprising the selected subjects from the \acs{FRLL} dataset.}\label{fig:mos_set}
 \end{figure}
 
-The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the \acs{NR}-\acs{IQA} model. The selected steganographic methods represent diverse classes of distortion processes (geometric, color-based, local texture perturbation) commonly encountered in practical steganographic applications. The chosen intensity levels ensure a broad perceptual range from barely noticeable to clearly visible distortions.
+The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the \acs{NR-IQA} model. The selected steganographic methods represent diverse classes of distortion processes (geometric, color-based, local texture perturbation) commonly encountered in practical steganographic applications. The chosen intensity levels ensure a broad perceptual range from barely noticeable to clearly visible distortions.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.23\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/005_StegaStamp_1.4.jpg}\\
+        \includegraphics[width=\textwidth]{images/frll/005_StegaStamp_1.4.jpg}\\
         \caption{StegaStamp}\label{fig:steganography_a}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.23\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/005_CodeFace_1.4.jpg}\\
+        \includegraphics[width=\textwidth]{images/frll/005_CodeFace_1.4.jpg}\\
         \caption{Code\,Face}\label{fig:steganography_b}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.23\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/005_RiemStega_1.4.jpg}\\
+        \includegraphics[width=\textwidth]{images/frll/005_RiemStega_1.4.jpg}\\
         \caption{RiemStega}\label{fig:steganography_c}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.23\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/005_StampOne_1.4.jpg}\\
+        \includegraphics[width=\textwidth]{images/frll/005_StampOne_1.4.jpg}\\
         \caption{StampOne}\label{fig:steganography_d}
     \end{subfigure}
     \caption{Steganographically distorted facial images from each method.}\label{fig:steganography}
@@ -78,15 +77,15 @@ We followed the \acs{ITU-R BT.500-15}~\cite{itu2023r} recommendation and adopted
 
 In the subjective assessment phase, each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/webapp_test.png}
-    \caption{Django-based webapp created for the Single Stimulus test.}\label{fig:webapp}
+    \includegraphics[width=0.5\textwidth]{images/webapp/test.png}
+    \caption{Django-based web application created for the Single Stimulus test sessions.}\label{fig:webapp}
 \end{figure}
 
-Each image in the MOS set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in \acs{ITU-R BT.500-15}, resulting in the exclusion of one participant.
+Each image in the \acs{MOS} set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in \acs{ITU-R BT.500-15}, resulting in the exclusion of one participant.
 
-\begin{table}
+\begin{table}[htbp]
     \centering
     \caption{Demographic and non-demographic profile of the observers.}
     \label{tab:demographics}
@@ -97,7 +96,7 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
         \caption{Age group}
         \begin{tabular}{lr}
             \hline
-            Group & Count \\
+            \textbf{Age} & \textbf{Count} \\
             \hline
             18--25 & 85 \\
             26--40 & 54 \\
@@ -113,7 +112,7 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
         \caption{Gender}
         \begin{tabular}{lr}
             \hline
-            Gender & Count \\
+            \textbf{Gender} & \textbf{Count} \\
             \hline
             Male & 143 \\
             Female & 59 \\
@@ -126,13 +125,13 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
         \caption{Ethnicity}
         \begin{tabular}{lr}
             \hline
-            Group & Count \\
+            \textbf{Ethnicity} & \textbf{Count} \\
             \hline
             White & 177 \\
             Latino & 8 \\
             Black & 6 \\
-            Mixed / Multiple & 3 \\
-            Others & 7 \\
+            Multiracial & 3 \\
+            Other & 7 \\
             \hline
         \end{tabular}
     \end{subtable}
@@ -141,10 +140,10 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
 
     \begin{subtable}{0.3\textwidth}
         \centering
-        \caption{Education}
+        \caption{Education Level}
         \begin{tabular}{lr}
             \hline
-            Level & Count \\
+            \textbf{Education} & \textbf{Count} \\
             \hline
             Bachelor's & 92 \\
             Master's & 63 \\
@@ -157,10 +156,10 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
     \hfill
     \begin{subtable}{0.3\textwidth}
         \centering
-        \caption{Country}
+        \caption{Country of Origin}
         \begin{tabular}{lr}
             \hline
-            Country & Count \\
+            \textbf{Country} & \textbf{Count} \\
             \hline
             Portugal & 170 \\
             Brazil & 16 \\
@@ -177,7 +176,7 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
         \caption{Device Used}
         \begin{tabular}{lr}
             \hline
-            Device & Count \\
+            \textbf{Device} & \textbf{Count} \\
             \hline
             Laptop & 94 \\
             Phone & 65 \\
@@ -190,34 +189,35 @@ Each image in the MOS set was evaluated approximately 30 times by human observer
 
 The database was implemented using the Django web framework, which provides an \acf{ORM} layer that directly maps Python model classes to database tables. The \acs{ORM} also enforces data integrity constraints and simplifies querying for statistical analysis. The database management system used was PostgreSQL.
 
-The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The session models individual tests and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type, and distortion level. The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary feedback entity captures optional, anonymous, observer comments and critiques.
-
-The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset and profile fields in session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session and image, enabling consistent aggregation of ratings into a statistical descriptor such as MOS and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with \acs{ITU-R BT.500-15} recommendations.
-
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/db_conceptual.png}
-        \caption{Conceptual database schema showing entity relationships and high-level structure.}\label{fig:db_conceptual}
+        \includegraphics[width=\textwidth]{images/webapp/db_conceptual.png}
+        \caption{Conceptual schema.}\label{fig:db_conceptual}
     \end{subfigure}
-    \vfill
+
+    \par\vspace{1.5em}
     \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{images/db_physical.png}
-        \caption{Physical database schema illustrating actual tables, columns, and implementation details.}\label{fig:db_physical}
+        \includegraphics[width=\textwidth]{images/webapp/db_physical.png}
+        \caption{Physical schema.}\label{fig:db_physical}
     \end{subfigure}
-    \caption{Conceptual and physical representations of the database schema.}\label{fig:db_schemas}
+
+    \caption{Conceptual and physical database schemas implemented in the Django web application.}
+    \label{fig:db_schemas}
 \end{figure}
 
-We computed per-method descriptive statistics over the MOS subset. Table~\ref{tab:method_stats} reports the mean MOS and the mean of per-image standard deviations (mean std) for each steganographic method. Since all methods were evaluated under the same conditions and distortion levels, these aggregates enable a direct comparison of their perceptual impact. The results indicate a similar performance across methods, with Code\,Face achieving slightly higher mean MOS. Across all distorted images in the MOS subset, the overall standard deviation of MOS is 18.78.
 
+The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The session models individual tests and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type, and distortion level. The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary feedback entity captures optional, anonymous, observer comments and critiques.
 
-\begin{table}
+The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset and profile fields in session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session and image, enabling consistent aggregation of ratings into a statistical descriptor such as \acs{MOS} and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with \acs{ITU-R BT.500-15} recommendations.
+
+\begin{table}[htbp]
 \centering
-\caption{Per-method descriptive statistics on the MOS subset.}
+\caption{Per-method descriptive statistics on the \acs{MOS} subset.}
 \label{tab:method_stats}
 \begin{tabular}{lrr}
 \hline
-Method & mean MOS & mean std \\
+\textbf{Method} & \textbf{mean \acs{MOS}} & \textbf{mean std} \\
 \hline
 Code\,Face & 63.10 & 20.69 \\
 RiemStega  & 42.89 & 19.98 \\
@@ -227,17 +227,18 @@ StegaStamp & 43.16 & 19.45 \\
 \end{tabular}
 \end{table}
 
+We computed per-method descriptive statistics over the \acs{MOS} subset. Table~\ref{tab:method_stats} reports the mean \acs{MOS} and the mean of per-image standard deviations (mean std) for each steganographic method. Since all methods were evaluated under the same conditions and distortion levels, these aggregates enable a direct comparison of their perceptual impact. The results indicate a similar performance across methods, with Code\,Face achieving slightly higher mean \acs{MOS}. Across all distorted images in the \acs{MOS} subset, the overall standard deviation of \acs{MOS} is 18.78.
 
-\section{Debiasing of Subjective Scores}
+\section{Debiasing Subjective Scores}
 
 To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{ols}, where we applied a residualization method based on linear modeling. An \acf{OLS} regression was fit to the \acs{MOS} values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the \acs{MOS} prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an \acf{ANOVA}~\cite{anova} and \acf{mANOVA}~\cite{manova} test, showing no significant impact from any individual factor. The corrected \acs{MOS} labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
 
-\begin{table}
+\begin{table}[htbp]
     \centering
     \caption{\acs{ANOVA} and \acs{mANOVA} results for observer and image attributes. Before debiasing, several factors show statistically significant effects on \acs{MOS}, $p$-value $< 0.05$.\@ After residualization, all main effects show no significant impact, confirming the effectiveness of the debiasing procedure.}\label{tab:anova}
     \begin{tabular}{lcc}
         \hline % chktex 44
-        Factor & $p$-value & $p$-value (residualized) \\
+        \textbf{Factor} & $\mathbf{p}$-\textbf{value} & $\mathbf{p}$-\textbf{value (residualized)} \\
         \hline % chktex 44
         Observer gender                             & 0.022                 & 0.9930 \\
         Observer ethnicity                          & $8.44 \times 10^{-4}$ & 1 \\
@@ -249,59 +250,58 @@ To correct for demographic bias in the subjective scores, we followed a procedur
     \end{tabular}
 \end{table}
 
-\section{Correlation of \acs{FR}-\acs{IQA} Metrics with Human Perception}
-We compute 40 \acs{FR}-\acs{IQA} scores for each distorted image and compare them against the corresponding \acs{MOS}, as shown in Fig.~\ref{fig:mos_vs_iqa}. Several metrics exhibit strong linear or monotonic trends with \acs{MOS}, while others are weakly aligned or negatively correlated. A broader overview of \acs{FR} metrics is available in \cite{survey2019shahrukh}.
+\section{Evaluation of \acl{FR} Metrics}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.90\linewidth]{images/mos_vs_iqa_grid.pdf}
-    \caption{Scatter plots of \acs{MOS} versus 40 individual \acs{FR}-\acs{IQA} metrics. The red curve is a local smoothing of the trend.}\label{fig:mos_vs_iqa}
-\end{figure}
+We compute 40 \acs{FR-IQA} scores for each distorted image and compare them against the corresponding \acs{MOS}. To assess alignment with human perception, we evaluate both linear and monotonic relationships using \acs{PLCC} and \acs{SRCC}. These measures provide a ranking of metrics, IQA score, by their mean correlation. Negative correlation are kept as is, \acs{PLCC} tests linear fit, while \acs{SRCC} tests monotone ordering. Adding magnitudes would treat them as interchangeable, thus, rewarding inconsistent behavior. If a metric's polarity is reversed, the downstream fusion model can learn an appropriate sign or transformation during training.
 
-To quantify alignment with human perception, we compute \acs{PLCC} and \acs{SRCC} between each metric and \acs{MOS}, then form a ranking by the mean of \acs{PLCC} and \acs{SRCC}. Before fusion, we study the intrinsic dimensionality of the \acs{FR} feature space using \acf{SVD}. Cumulative variance guides a first choice of the number of retained metrics $k$ at a target threshold, and the Picard plot validates stability by contrasting singular values with the projected response, as shown in Fig.~\ref{fig:svd_picard}.
+Beyond pairwise correlation, we analyze the intrinsic dimensionality of the \acs{FR} feature space using \acf{SVD}. Cumulative variance helps to choose the number of retained metrics $k$ at a target threshold, and the Picard plot~\cite{picard} validates stability by contrasting singular values with the projected response. This analysis yields a compact subset of normalized, polarity-aligned metrics, which will form the input to the fusion stage.
 
-We chose $k=6$ as it provides a robust trade-off between expressiveness and stability. At this point the cumulative explained variance reaches 95\%, and the Picard curve shows singular values and response projections decaying at comparable rates, which indicates that adding further components would mostly amplify noise rather than capture signal. For $k>6$ the incremental variance is small, coefficients become less stable under cross-validation, and the mean of \acs{PLCC} and \acs{SRCC} improves by less than $2\times 10^{-3}$ while fold-to-fold variance increases. The six retained metrics cover complementary mechanisms, including structural similarity, signal-to-noise, and compression artifacts, which limits multicollinearity and preserves interpretability.
+\section{Full-Reference Fusion Metric}
 
+Building on the selected \acs{FR-IQA} features, we construct a fusion-based metric that learns to predict perceptual quality directly from heterogeneous objective scores. Each distorted image is represented by its $k$-dimensional feature vector, and the corresponding human \acs{MOS} serves as the regression target.
 
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/variance.pdf}
-        \caption{Cumulative explained variance from \acs{SVD}. Vertical markers indicate $k$ at 68, 95, and 99.7 percent.}\label{fig:svd_analysis}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/picard.pdf}
-        \caption{Picard plot showing singular values and the magnitude of the target projections.}\label{fig:picard_analysis}
-    \end{subfigure}
-    \caption{\acs{SVD}-based analysis of the \acs{FR} metric space. The variance curve selects $k$ at the chosen threshold, and the Picard plot corroborates stability near that truncation.}\label{fig:svd_picard}
-\end{figure}
-
-\section{Fusion of \acs{FR}-\acs{IQA} Metrics into \acs{MOS} Regressors}
-After ranking metrics by the average of \acs{PLCC} and \acs{SRCC}, we select the top $k$ features and train a diverse regression models to map \acs{FR}-\acs{IQA} to \acs{MOS}:
+A diverse set of regressors is trained on these features:
 
 \begin{itemize}
     \item Linear: Linear Regression \cite{linearregression}, Ridge \cite{ridgeregression}, Bayesian Ridge \cite{bayesianridge}, ElasticNet \cite{elasticnet}.
-    \item Ensembles: Random Forest \cite{randomforest}, Extra Trees \cite{ensembles}, Gradient Boosting \cite{gradboost}, HistGradientBoosting \cite{histogram}.
+    \item Ensembles: Random Forest \cite{randomforest}, Extra Trees \cite{ensembles}, Gradient Boosting \cite{gradboost}, Histogram Gradient Boosting \cite{histogram}.
     \item Boosted trees: \acs{XGBoost} \cite{xgboost}, \acs{LightGBM} \cite{lightgbm}, \acs{CatBoost} \cite{catboost}.
 \end{itemize}
 
-For a fixed $k$, each regressor is tuned with a \acf{TPE}~\cite{tpe} search implemented in Optuna~\cite{optuna}, using a Successive Halving pruner for early stopping style pruning, and evaluated by 5-fold cross-validation. The primary selection metric is the mean of \acs{PLCC} and \acs{SRCC} between cross-validated predictions and \acs{MOS}. Per-model artifacts include predictions, scores, the tuned parameters, and the trained model. A leaderboard reports the best configuration per model and the overall top performer for that $k$.
+Each regressor is tuned with a \acf{TPE}~\cite{tpe} search implemented in Optuna~\cite{optuna}, using Successive Halving~\cite{pruner} for early stopping, and evaluated by 5-fold cross-validation. Models are ranked by the mean of \acs{PLCC} and \acs{SRCC} between predictions and \acs{MOS}. Per-model outputs include predictions, scores, tuned parameters, and trained checkpoints.
 
-For tree-based models we compute \acf{SHAP}~\cite{shap}, which summarize over the selected $k$ features. This highlights which \acs{FR} metrics drive the fused prediction and whether their contributions are consistent across the dataset.
+For tree-based models we compute \acf{SHAP}~\cite{shap}, highlighting which \acs{FR} metrics drive the fused prediction and whether their contributions are consistent across the dataset. The result is a fusion-based \acs{FR} metric that consistently outperforms any single score and serves as both a standalone contribution and the basis for pseudo-label generation.
 
-\section{Pseudo-\acs{MOS} Generation}
-The best validated model at the chosen $k$ is applied to the unlabeled distorted images to produce pseudo-\acs{MOS}. The output file lists each file name and its predicted pseudo-\acs{MOS}, enabling downstream NR training and evaluation.
+\section{Pseudo-MOS Generation}
 
-The code writes a metric ranking and \acs{SVD} analyses, then for each $k$ creates a directory with the scaler, normalized features, per-model results, and the final pseudo-\acs{MOS}. Results are organized by label track to keep biased and unbias pipelines independent.
+The best validated fusion model is then applied to the unlabeled portion of the distorted dataset to produce pseudo-\acs{MOS} (\acs{pMOS}) labels. Each image is passed through the selected top-$k$ metrics, normalized with the same scaler used in training, and scored by the fusion model.
 
-\section{Developing an \acs{NR} metric from a \acs{FR} fusion}
+This procedure extends perceptual supervision from the small human-annotated subset to the entire dataset, producing a complete set of labels for downstream use. These pseudo labels enable two main objectives:
 
-We train on two complementary image roots: a labeled root containing the $\approx$10\% of images annotated with human \acs{MOS}, and a pseudo labeled root with the remaining distorted images scored by our \acs{FR} fusion into pseudo-\acs{MOS}.
+The first objective is \acs{FR-IQA} at scale when human \acs{MOS} is scarce. When a pristine reference is available but exhaustive subjective scoring is not feasible, the fusion metric provides \acs{pMOS} for all distorted versions of a reference image. This makes it possible to analyze distortion sensitivity curves, compare distortion methods across payload levels, and generate robust statistical summaries without collecting new subjective scores. In practice, this establishes a reproducible way to extend human perception to large datasets with minimal annotation effort.
 
-We train three pretrained backbones with a 1-unit linear regressor head using Smooth-$L_1$ loss ($\beta\!=\!1$), AdamW, cosine learning-rate scheduling, mixed-precision on GPU, and ImageNet normalization. For ResNet-50~\cite{resnet} we use 224$\times$224 inputs, 50 epochs, batch size 32, learning rate $10^{-3}$, weight decay $10^{-4}$, and drop rate 0. For EfficientNet-B1~\cite{efficientnet} we use 240$\times$240 inputs, 60 epochs, batch size 32, learning rate $10^{-3}$, weight decay $10^{-5}$, and drop rate 0.2. For ViT-B/16~\cite{vit} we use 224$\times$224 inputs, 60 epochs, batch size 32, learning rate $3\!\times\!10^{-4}$, weight decay $0.05$, and drop rate 0.1.
+The second objective is supervision for training \acs{NR-IQA} models. With a large quantity of labeled images available, we can train \acs{NR} regressors that predict perceptual quality directly from distorted images without a reference. The pseudo labels provide the scale and coverage needed to fit modern deep backbones, and the resulting models operate in fully blind conditions, enabling quality assessment of images where no reference is available.
+
+\section{\acs{NR} Metric from \acs{FR} Fusion}\label{sec:3nr-model}
+
+We train on two complementary image sets: a labeled set containing the $\approx$10\% of images annotated with human \acs{MOS}, and a pseudo labeled set with the remaining distorted images scored by our \acs{FR} fusion into \acs{pMOS}.
+
+We train three pretrained backbones with a 1-unit linear regressor head using Smooth-$L_1$ loss ($\beta\!=\!1$), AdamW~\cite{adamw}, cosine learning-rate scheduling, batch size of 31, mixed-precision on GPU, and ImageNet normalization. Table~\ref{tab:backbone_config} summarizes the training configuration. There was no use of data augmentation algorithms, since the distortions themselves provide sufficient variability.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Training configuration of pretrained backbones for \acs{NR} metric learning.}
+    \label{tab:backbone_config}
+    \begin{tabular}{lccccc}
+        \hline
+        \textbf{Backbone} & \textbf{Input} & \textbf{Epochs} & \textbf{Learning rate} & \textbf{Weight decay} & \textbf{Drop rate} \\
+        \hline
+        ResNet-50~\cite{resnet} & $224^{2}$ & 50 & $1\times 10^{-3}$ & $1\times 10^{-4}$ & 0 \\
+        EfficientNet-B1~\cite{efficientnet} & $240^{2}$ & 60  & $1\times 10^{-3}$ & $1\times 10^{-5}$ & 0.2 \\
+        ViT-B/16~\cite{vit} & $224^{2}$ & 60 & $3\times 10^{-4}$ & 0.05 & 0.1 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 We adopt 5-fold \acf{CV}. The merged dataset is split into 5 disjoint folds $\{F_1,\dots,F_5\}$ at the image level, stratification not enforced. For split $i$, training uses $D_{\text{train}}=D\setminus F_i$ and validation uses $D_{\text{val}}=F_i$. All hyperparameters are kept fixed. We monitor validation \acs{MAE} after every epoch and apply early stopping with patience $p$ epochs. For each fold we retain the checkpoint with the lowest validation \acs{MAE}. Let $m_i$ denote a metric on fold $i$; we report the mean and dispersion across the 5 folds:
 

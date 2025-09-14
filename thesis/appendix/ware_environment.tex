@@ -14,26 +14,7 @@ All experiments ran inside an NVIDIA NGC PyTorch container for CUDA/cuDNN compat
   \item PyTorch: 2.8.0a0 (NGC nv25.06), CUDA Runtime 12.9, cuDNN 9.1.2
   \item TorchVision: 0.22.0a0
   \item timm: 1.0.19
-  \item NumPy: \textbf{1.26.4 (pinned)}
+  \item NumPy: 1.26.4
   \item SciPy: 1.15.3,\; Pandas: 2.2.3,\; scikit-learn: 1.6.1,\; Matplotlib: 3.10.3,\; tqdm: 4.67.1
   \item OpenCV (headless): \texttt{<= 4.11.0.86} (pinned to match NumPy~1.x)
-  \item Optional: Albumentations (if enabled)
 \end{itemize}
-
-\paragraph{Note on NumPy.}
-The container's PyTorch is compiled against the NumPy~1.x C-API. Installing NumPy~2.x at user level will cause an ABI error during \texttt{import torch}. We therefore pin NumPy to 1.26.4.
-
-\section{Launch and Setup Commands}
-\begin{verbatim}
-# Start the container with GPU access and mount the project
-docker run --gpus all --ipc=host --rm -it \
-  -u $(id -u):$(id -g) \
-  -v "$PWD":/workspace -w /workspace \
-  nvcr.io/nvidia/pytorch:25.06-py3
-
-# Inside the container: environment prep
-export PATH="$HOME/.local/bin:$PATH"
-python -m pip install --user "numpy==1.26.4" \
-  timm albumentations opencv-python-headless tqdm
-\end{verbatim}
-

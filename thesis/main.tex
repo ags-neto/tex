@@ -175,7 +175,7 @@
 
 % TITLE PAGES
 \frontmatter
-\includepdf[pages={-}]{images/cover.pdf}
+\includepdf[pages={-}]{misc/cover.pdf}
 % Blank page (Back of Cover)
 \newpage\thispagestyle{empty}
 
@@ -189,15 +189,15 @@
 \addcontentsline{toc}{chapter}{Acknowledgements}
 \input{misc/acknowledgements.tex}
 
-% RESUMO
-\chapter*{Resumo}
-\addcontentsline{toc}{chapter}{Resumo}
-\input{chapters/0-resumo.tex}
-
 % ABSTRACT
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 \input{chapters/0-abstract.tex}
+
+% RESUMO
+\chapter*{Resumo}
+\addcontentsline{toc}{chapter}{Resumo}
+\input{chapters/0-resumo.tex}
 
 % INSPIRATIONAL QUOTE
 % Setup
@@ -256,6 +256,9 @@
 
 \chapter{Full Reference Metrics}\label{app:full-ref-metrics}
 \input{appendix/full_reference.tex}
+
+\chapter{Regression Models for Metric Fusion}\label{app:regression-models}
+\input{appendix/regression_models.tex}
 
 \chapter{Software and Hardware Environment}\label{app:env}
 \input{appendix/ware_environment.tex}

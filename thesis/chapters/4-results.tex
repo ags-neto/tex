@@ -1,16 +1,74 @@
 \chapter{Results}\label{chap:results}
 
-\section{Full-reference fusion}\label{sec:fr-fusion}
+This chapter reports the experimental validation of the proposed framework. The \acs{FRLL} dataset is used as the primary benchmark, providing high-quality facial images with controlled steganographic distortions and subjective opinion scores. It allows us to test the alignment of individual \acs{FR} metrics with human judgments, assess the benefits of fusion, and explore the use of pseudo-\acs{MOS} to supervise \acs{NR} models, when image content is relatively homogeneous, and distortions are subtle.
 
-Following the \acs{SVD} and Picard analyses in Fig.~\ref{fig:svd_picard}, the choice \(k=6\) reaches 95\% explained variance with stable projections. Table~\ref{tab:fr_individual_metrics} reports marginal correlation and error of selected \acs{FR} metrics against \acs{MOS}.
+We then extend the evaluation to the \acs{TID}2013 database, which covers a much broader spectrum of distortions and more diverse image content. This benchmark serves as a complementary test of generalization, confirming whether the framework remains effective beyond the face-specific domain.
 
-\begin{table}
+We further evaluate the framework on the \acs{TID}2013 database, which includes a wide variety of reference images and synthetic distortions. Unlike the face-focused \acs{FRLL} set, this benchmark spans diverse content and impairment types, providing a complementary test of generalization and robustness. Crucially, since ground-truth \acs{MOS} is available for all distorted images, \acs{TID}2013 allows us to directly test the alignment of \acs{pMOS} with true human scores, offering an independent validation of the fusion stage.
+
+\section{\acl{FRLL} Dataset Pipeline}\label{sec:frll-dataset}
+
+The evaluation begins with subjective test outcomes, then examines the correlation of individual \acs{FR} metrics with human perception, advances to the construction and validation of the fusion-based \acs{FR} metric, and finally demonstrates how \acs{pMOS} supervision supports the training of \acs{NR} models.
+
+\subsection{Subjective Test Outcomes}
+
+We computed per-method descriptive statistics over the \acs{MOS} subset. Table~\ref{tab:frll-method_stats} reports the mean \acs{MOS} and the mean of per-image standard deviations (mean std) for each steganographic method. Since all methods were evaluated under the same conditions and distortion levels, these aggregates enable a direct comparison of their perceptual impact. The results indicate a similar performance across methods, with Code\,Face achieving slightly higher mean \acs{MOS}.
+
+\begin{table}[htbp]
 \centering
-\caption{Individual \acs{FR}-\acs{IQA} metrics versus MOS on the unbiased split. Higher \acs{PLCC} and \acs{SRCC} indicate stronger correlation; lower \acs{MSE} and \acs{MAE} indicate more accurate estimates.}
+\caption{Per-method descriptive statistics on the \acs{MOS} subset.}\label{tab:frll-method_stats}
+\begin{tabular}{lrr}
+\hline
+\textbf{Method} & \textbf{mean \acs{MOS}} & \textbf{mean std} \\
+\hline
+Code\,Face & 63.10 & 20.69 \\
+RiemStega  & 42.89 & 19.98 \\
+StampOne   & 46.28 & 19.79 \\
+StegaStamp & 43.16 & 19.45 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Correlation of \acs{FR} Metrics with \acs{MOS}}\label{sec:fr-metrics}
+
+To quantify alignment, we calculate both \acs{PLCC} and \acs{SRCC}, producing a ranking by their mean correlation. Figure~\ref{fig:mos_vs_iqa} visualizes the scatter plots across metrics, showing their varying consistency with human perception. Several metrics exhibit strong linear or monotonic trends with human opinion, while others align weakly or negatively. Some metrics, such as \acs{MS-SSIM} and \acs{PSNR}, exhibit strong monotonic trends with \acs{MOS}, while others like \acs{UQI} or \acs{VIF} capture only partial aspects of perceptual quality. Deep learning-based metrics, such as \acs{LPIPS}, \acs{DISTS}, and error-based metrics, like \acs{MSE}, \acs{RMSE}, show weaker or even negative alignment, often failing to separate high- from low-quality images. Other metrics, such as \acs{Dlambda}, \acs{SR-SIM} and \acs{IW-SSIM}, don't show clear trends, indicating not to be reliable indicators of perceptual quality in this context, for either facial images or facial distortions.
+
+This heterogeneity highlights that no single \acs{FR-IQA} metric consistently matches human judgments across all distortion types, which motivates combining complementary metrics into a fused predictor.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/frll/mos_vs_iqa_grid.pdf}
+    \caption{Scatter plots of \acs{MOS} versus 40 individual \acs{FR-IQA} metrics. The red curve is a local smoothing of the trend.}\label{fig:mos_vs_iqa}
+\end{figure}
+
+The cumulative explained variance from \acs{SVD} from Figure~\ref{fig:svd_analysis} shows that, in order to explain 68\%, 95\%, and 99.7\% of the variance, we would need to retain \(k=2\), \(k=6\), and \(k=14\) metrics, respectively. We chose \(k=6\) as it provides a robust trade-off between expressiveness and stability. This dimensionality reduction ensures that the fusion model leverages the most informative components of the metric space, while avoiding overfitting and instability associated with higher dimensions. The complementary Picard plot in Figure~\ref{fig:picard_analysis} further validates this choice by contrasting the decay of singular values with the magnitude of the response projections. Both curves decrease in parallel up to approximately the sixth component, beyond this point, the singular values decay more rapidly than the projections, revealing that additional components would amplify noise rather than contribute meaningful variance. This joint evidence confirms that truncating at $k=6$ achieves a balance between expressive power and robustness, while avoiding instability from ill-conditioned directions.
+
+\begin{figure}[htbp] 
+    \centering 
+    \begin{subfigure}{0.48\textwidth} 
+        \centering 
+        \includegraphics[width=\linewidth]{images/frll/variance.pdf}
+        \caption{Cumulative explained variance from \acs{SVD}. Vertical markers indicate $k$ at 68, 95, and 99.7 percent.}\label{fig:svd_analysis} 
+    \end{subfigure} 
+    \hfill 
+    \begin{subfigure}{0.48\textwidth} 
+        \centering 
+        \includegraphics[width=\linewidth]{images/frll/picard.pdf} 
+        \caption{Picard plot showing singular values and the magnitude of the target projections.}\label{fig:picard_analysis} 
+    \end{subfigure} 
+    \caption{\acs{SVD}-based analysis of the \acs{FR} metric space. The variance curve selects $k$ at the chosen threshold, and the Picard plot corroborates stability near that truncation.}\label{fig:svd_picard} 
+\end{figure}
+
+The individual metric results in Table~\ref{tab:fr_individual_metrics} shows the \acs{PSNR} achieves the highest linear correlation, \acs{PLCC} = 0.8009, and the lowest error scores, reflecting its sensitivity to pixelwise differences in relatively controlled distortions. In contrast, \acs{MS-SSIM} shows the strongest monotonic correlation, \acs{SRCC} = 0.8489, confirming its ability to preserve rank order consistency even when absolute scores differ. Variants such as \acs{PSNR-B} and \acs{SNR} perform close to PSNR, while \acs{VIF} lags behind despite its information-theoretic basis. Interestingly, \acs{UQI} achieves an \acs{SRCC} = 0.8085, but with weaker linear correlation and elevated error.
+
+\begin{table}[htpb]
+\centering
+\caption{Individual \acs{FR-IQA} metrics versus \acs{MOS} on the unbiased split. Higher \acs{PLCC} and \acs{SRCC} indicate stronger correlation, lower \acs{MSE} and \acs{MAE} indicate more accurate estimates.}
 \label{tab:fr_individual_metrics}
 \begin{tabular}{lcccc}
 \hline
-Metric & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+\textbf{Metric} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
 \hline
 \acs{MS-SSIM} & 0.7712 & \textbf{0.8489} & 2542.00 & 47.27 \\
 \acs{PSNR}    & \textbf{0.8009} & 0.8132 & \textbf{420.70} & \textbf{16.57} \\
@@ -22,15 +80,19 @@ Metric & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
 \end{tabular}
 \end{table}
 
-Each regressor is tuned with \acs{TPE} in Optuna using a successive Halving pruner and 5-fold cross-validation. The selection metric is the mean of \acs{PLCC} and \acs{SRCC} between cross-validated predictions and \acs{MOS}. Table~\ref{tab:fusion_models_k6} compares fusion regressors trained at \(k=6\).
+\subsection{\acl{FR} Fusion}\label{sec:fr-fusion}
 
-\begin{table}
+The results in Table~\ref{tab:fusion_models_k6} show a clear gain from fusing multiple \acs{FR} metrics compared to relying on any single one. The fusion models trained at \(k=6\) consistently exceed 0.81 in both \acs{PLCC} and \acs{SRCC}, while reducing error scores by nearly an order of magnitude.
+
+Among regressors, ensemble tree methods dominate: CatBoost achieves the best overall performance, closely followed by GradientBoosting and XGBoost. The stability across these ensembles suggests that the fusion metric is robust to the choice of regressor, provided sufficient model complexity. Linear baselines (Ridge, ElasticNet, BayesianRidge, Linear) trail behind, confirming that non-linear interactions among metrics are important.
+
+\begin{table}[htpb]
 \centering
 \caption{Fusion regressors at \(k=6\) on the unbiased split.}
 \label{tab:fusion_models_k6}
 \begin{tabular}{lcccc}
 \hline
-Model & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+\textbf{Model} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
 \hline
 \acs{CatBoost}            & \textbf{0.8932} & \textbf{0.8950} & \textbf{62.28} & \textbf{6.046} \\
 GradientBoosting          & 0.8901 & 0.8905 & 63.98 & 6.100 \\
@@ -47,24 +109,26 @@ Linear                    & 0.8147 & 0.8284 & 103.55 & 7.754 \\
 \end{tabular}
 \end{table}
 
-The best fusion model is \acs{CatBoost} with 3{,}000 iterations, learning rate 0.0118, depth 10, and \(\ell_2\) leaf regularization 1.005, selected by Optuna. We compute \acs{SHAP} values to interpret the fitted model. As shown in Fig.~\ref{fig:shap_summary}, \acs{MS-SSIM} and \acs{UQI} contribute most to the fused prediction, while \acs{VIF}, \acs{PSNR-B}, \acs{SNR}, and \acs{PSNR} have moderate effects.
+The best fusion model is \acs{CatBoost} with 3{,}000 iterations, learning rate 0.0118, depth 10, and \(\ell_2\) leaf regularization 1.005, selected by Optuna. To interpret the fitted model, we compute \acs{SHAP} values, shown in Fig.~\ref{fig:shap_summary}. The analysis reveals that \acs{MS-SSIM} and \acs{UQI} provide the strongest contributions to the fused prediction, confirming their strong alignment with human \acs{MOS} observed in the single-metric analysis. \acs{VIF}, \acs{PSNR-B}, \acs{SNR}, and \acs{PSNR} have mixed positive and negative impacts depending on the distorted image.
 
-\begin{figure}
+\begin{figure}[htpb]
 \centering
-\includegraphics[width=0.9\linewidth]{images/shap_summary.png}
+\includegraphics[width=0.9\linewidth]{images/frll/shap_summary.png}
 \caption{\acs{SHAP} summary plot for \(k=6\) on the best \acs{CatBoost} fusion model.}
 \label{fig:shap_summary}
 \end{figure}
 
-\section{No-reference model}\label{sec:nr-model}
+\subsection{\acl{NR} Model}\label{sec:nr-model}
 
-\begin{table}
+Based on the backbone comparison in Table~\ref{tab:backbones}, we selected ResNet-50 as the foundation for our \acs{NR-IQA} model. The resulting metric, \acf{pMOS-StegaFace}, is named to reflect its reliance on \acs{pMOS} from the \acs{FR} fusion and its focus on facial datasets distorted by steganography.
+
+\begin{table}[htpb]
 \centering
-\caption{Backbone comparison for training pMOS-Face. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
+\caption{Backbone comparison for training \acs{pMOS-StegaFace}. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
 \label{tab:backbones}
 \begin{tabular}{lcccc}
 \hline
-Backbone        & \acs{PLCC} & \acs{SRCC} & \acs{MAE} & \acs{MSE} \\ \hline
+\textbf{Backbone}        & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MAE}} & \textbf{\acs{MSE}} \\ \hline
 ResNet-50       & \textbf{0.9765} & \textbf{0.9743} & $\mathbf{7.48 \times 10^{-4}}$ & \textbf{0.0194}   \\
 EfficientNet-B1 & 0.9509     & 0.9512     & $1.77 \times 10^{-3}$   & 0.0298   \\
 ViT-B/16        & 0.9705     & 0.9685     & $9.19 \times 10^{-4}$   & 0.0216   \\
@@ -72,35 +136,35 @@ ViT-B/16        & 0.9705     & 0.9685     & $9.19 \times 10^{-4}$   & 0.0216   \
 \end{tabular}
 \end{table}
 
-After adopting ResNet-50 as our \acs{NR}-\acs{IQA} model, pMOS-Face, uses pseudo-\acs{MOS} from the \acs{FR} fusion and evaluates on faces with human labels. Fig.~\ref{fig:nr-iqa-metric} shows two scenarios. On training data with pseudo and ground-truth \acs{MOS} we obtain \acs{PLCC} 0.9765, \acs{SRCC} 0.9743, \acs{MSE} $7.48 \times 10^{-4}$, \acs{MAE} 0.0194. On the disjoint test set we obtain \acs{PLCC} 0.8733, \acs{SRCC} 0.8722, \acs{MSE} 0.0118, \acs{MAE} 0.0882, confirming generalization to unseen human labels and alignment with the pseudo supervision.
+Fig.~\ref{fig:nr-iqa-metric} shows two scenarios. On the \acs{MOS} train set with ground-truth \acs{MOS} we obtain \acs{PLCC} = 0.9810, \acs{SRCC} = 0.9800, \acs{MSE} = $1.24 \times 10^{-3}$, \acs{MAE} = 0.0257. On the disjoint test set we obtain \acs{PLCC} = 0.8747, \acs{SRCC} = 0.8768, \acs{MSE} = 0.0108, \acs{MAE} = 0.0847, confirming generalization to unseen human labels and alignment with the pseudo supervision.
 
-\begin{figure}[ht]
+\begin{figure}[htpb]
 \centering
 \begin{subfigure}[t]{0.48\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{images/predictions_train.pdf}
-  \caption{Training.}\label{fig:nr-iqa-train}
+  \includegraphics[width=\linewidth]{images/frll/predict_train.pdf}
+  \caption{Predicted \acs{MOS} vs ground-truth \acs{MOS} from the train set.}\label{fig:nr-iqa-train}
 \end{subfigure}
 \hfill
 \begin{subfigure}[t]{0.48\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{images/predictions_test.pdf}
-  \caption{Test.}\label{fig:nr-iqa-test}
+  \includegraphics[width=\linewidth]{images/frll/predict_test.pdf}
+  \caption{Predicted \acs{MOS} vs ground-truth \acs{MOS} from the disjoint test set.}\label{fig:nr-iqa-test}
 \end{subfigure}
-\caption{Evaluation of pMOS-Face. Panel (a) uses pseudo and ground-truth \acs{MOS}; panel (b) uses only ground-truth \acs{MOS} on a disjoint test set.}
+\caption{\acs{pMOS-StegaFace} predictions on train and test sets.}
 \label{fig:nr-iqa-metric}
 \end{figure}
 
-Table~\ref{tab:nr_scores} compares pMOS-Face predictions using ResNet-50 to standard \acs{NR}-\acs{IQA} metrics, showing clear gains.
+Table~\ref{tab:nr_scores} benchmarks our learned \acs{NR-IQA} metric, \acs{pMOS-StegaFace}, against widely used no-reference baselines. \acs{pMOS-StegaFace} delivers the strongest linear and rank correlations while also achieving the lowest error.
 
-\begin{table}
+\begin{table}[htpb]
 \centering
-\caption{pMOS-Face versus \acs{NR}-\acs{IQA} baselines.}\label{tab:nr_scores}
+\caption{\acs{pMOS-StegaFace} versus \acs{NR-IQA} baselines on the test split.}\label{tab:nr_scores}
 \begin{tabular}{lcccc}
 \hline
-Metric                    & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
+\textbf{Metric}  & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
 \hline
-pMOS-Face (ours)          & \textbf{0.8733} & \textbf{0.8722} & \textbf{0.0118} & \textbf{0.0882} \\
+\acs{pMOS-StegaFace} (ours)  & \textbf{0.8747} & \textbf{0.8768} & \textbf{0.0118} & \textbf{0.0847} \\
 \acs{NIQE}                & 0.7536          & 0.7431          & 6859           & 82.62 \\
 \acs{PIQE}                & 0.2993          & 0.3114          & 3297           & 57.05 \\
 \acs{BRISQUE}             & 0.1234          & 0.5678          & 9101           & 23.45 \\
@@ -111,46 +175,257 @@ pMOS-Face (ours)          & \textbf{0.8733} & \textbf{0.8722} & \textbf{0.0118} 
 \end{tabular}
 \end{table}
 
+\section{\acl{TID} 2013 Pipeline}\label{sec:tid2013}
 
-% \section{TID2013 subset validation}\label{sec:tid2013-reprod}
+We repeated the \acs{FR} fusion and the \acs{NR} training on the \acs{TID}2013 database. We followed a very similar pipeline as in Section~\ref{sec:frll-dataset}.
 
-% The \acs{TID}2013 database provides reference images with controlled synthetic distortions and human opinion scores, making it a standard bench for \acs{FR}-\acs{IQA} and a clean testbed for cross-dataset validation. It covers a broad set of classical impairments with multiple severity levels, enabling stress tests that are complementary to our face-centric steganographic degradations.
+The \acs{TID}2013 database~\cite{tid2013} contains 3{,}000 distorted images derived from 25 reference images, shown in Figure~\ref{fig:tid_images}, with 24 distortion types at 5 levels of intensity. The dataset covers a wide spectrum of distortion types. Noise-related degradations include additive Gaussian noise, noise in color components, spatially correlated noise, masked noise, high-frequency noise, impulse noise, quantization noise, and multiplicative Gaussian noise. Blur and restoration artifacts are represented by Gaussian blur and image denoising. Compression-related distortions comprise \acs{JPEG} compression, \acs{JPEG}2000 compression, and their associated transmission errors. Additional artifacts include non-eccentric pattern noise, local block-wise distortions, mean shift, and contrast changes. Color-related impairments are captured through changes in saturation, image color quantization with dithering, and chromatic aberrations. Finally, mixed and compound degradations are represented by comfort noise, lossy compression of noisy images, and sparse sampling with reconstruction.
 
-% We use \acs{TID}2013 to probe robustness and reproducibility of the framework in a domain with known references and well-characterized distortions. A compact subset is selected to keep compute and runtime modest while preserving diversity across reference content, distortion types, and levels. This setting isolates the contribution of the fusion stage and the \acs{NR} learner from dataset-specific biases.
+\begin{figure}[htpb]
+\centering
+\begin{subfigure}{0.90\linewidth}
+  \includegraphics[width=\linewidth]{images/tid/test.png}
+  \caption{pMOS set.}
+\end{subfigure}
+\par\vspace{1em}
+\begin{subfigure}{0.68\linewidth}
+  \includegraphics[width=\linewidth]{images/tid/train.png}
+  \caption{MOS train set.}
+\end{subfigure}
+\par\vspace{1em}
+\begin{subfigure}{0.68\linewidth}
+  \includegraphics[width=\linewidth]{images/tid/disjoint.png}
+  \caption{MOS test set.}
+\end{subfigure}
+\caption{Reference images from the TID dataset.}
+\label{fig:tid_images}
+\end{figure}
 
-% The experimental protocol follows the main results unchanged. Scores are harmonized so that higher means better: \acs{DMOS} is inverted to \acs{MOS} and linearly mapped to [0,100]. We compute the \acs{FR} metric bank, fix \(k=\) as in Section~\ref{sec:fr-fusion}, and train the fusion regressor with the same Optuna setup. The resulting pseudo-\acs{MOS} supervise pMOS-Face trained with the three backbones and the default hyperparameters from Section~\ref{sec:nr-model}. Results are summarized in Tables~\ref{tab:tid2013-fusion} and \ref{tab:tid2013-nr}.
 
+A total of 971 observers performed 524{,}340 comparisons of visual quality of distorted images or 1{,}048{,}680 evaluations of relative visual quality in image pairs.
 
-% \begin{table}
-% \centering
-% \caption{\acs{FR} fusion on TID2013 subset at \(k=6\).}
-% \label{tab:tid2013-fusion}
-% \begin{tabular}{lcccc}
-% \hline
-% Model          & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
-% \hline
-% CatBoost       & -- & -- & -- & -- \\
-% XGBoost        & -- & -- & -- & -- \\
-% LightGBM       & -- & -- & -- & -- \\
-% Linear/Ridge   & -- & -- & -- & -- \\
-% \hline
-% \end{tabular}
-% \end{table}
+We split the dataset in a similar way we did previously with \acs{FRLL}, as seen in Table~\ref{tab:tid_partition}, but this time we have the true \acs{MOS} labels from the distorted set, so we can draw conclusions on the performance of our \acs{FR} fusion model on the distorted set, as well as the performance of the \acs{NR} model trained on mixed supervision. We randomly select 3 reference images to serve as the training set for the \acs{FR} fusion model, and left 3 reference images for the final evaluation of the \acs{NR} model. The remaining 19 reference images are used to generate \acs{pMOS} labels for the unlabeled set.
 
-% \begin{table}
-% \centering
-% \caption{pMOS-Face on TID2013 subset. Five-fold mean scores.}
-% \label{tab:tid2013-nr}
-% \begin{tabular}{lcccc}
-% \hline
-% Backbone        & \acs{PLCC} & \acs{SRCC} & \acs{MSE} & \acs{MAE} \\
-% \hline
-% ResNet-50       & -- & -- & -- & -- \\
-% EfficientNet-B1 & -- & -- & -- & -- \\
-% ViT-B/16        & -- & -- & -- & -- \\
-% \hline
-% \end{tabular}
-% \end{table}
+Due to the nature of the images, we skipped the debiasing step.
 
-% \paragraph{Notes.}
-% State the precise mapping used for \acs{DMOS}\(\to\)\acs{MOS}, the distortion types and levels included, and the random seed. Release the subset list and the training logs to ensure exact reproducibility.
+\begin{table}[htpb]
+\centering
+\caption{Partitioning of the TID dataset.}\label{tab:tid_partition}
+\begin{tabular}{lccc}
+\hline
+\textbf{Subset}       & \textbf{Reference} & \textbf{Images} & \textbf{Purpose} \\
+\hline
+\acs{MOS} train set   & 3           & 360      & Train \acs{FR} fusion model \\
+\acs{MOS} test set    & 3           & 360      & Final evaluation  \\
+\acs{pMOS} set        & 19          & 2{,}280  & Generate proxy \acs{MOS} labels \\
+\acs{NR} train set    & 22          & 2{,}640  & \acs{MOS} train + \acs{pMOS} \\
+\hline
+\textbf{Total}        & \textbf{25} & \textbf{3{,}000}  & --- \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Subjective Test Outcomes}
+
+We computed the per-method descriptive statistics over the dataset. Table~\ref{tab:tid_method_stats} reports the mean \acs{MOS} and the mean of per-image standard deviations (mean std) for each distortion type. It reveals clear differences in perceived quality and in rating consistency across distortion families. Mean shift achieves the top mean \acs{MOS}, followed closely by masked noise and chromatic-dominant additive noise, indicating that uniform photometric changes are judged as relatively less bothersome. By contrast, artifacts that disrupt local structure rank lowest, local block-wise distortions, sparse sampling and reconstruction, and \acs{JPEG}2000-related degradations occupy the bottom tier.
+
+Variability also differs by distortion. Local block-wise distortions show the smallest mean standard deviation, indicating consistent judgments across images. The largest variability appears for sparse sampling and reconstruction, \acs{JPEG}/\acs{JPEG}2000 compression, image denoising, and Gaussian blur, which are cases where perceived quality depends strongly on content and strength.
+
+This shows that the \acs{HVS} is most forgiving of uniform brightness shifts, and toughest on artifacts that break structure. Some distortions are judged very consistently, but others, like compression, denoising, blur, and sparse sampling, depend a lot on the image content and how strong the effect is.
+
+\begin{table}[htpb]
+\centering
+\caption{Per-distortion descriptive statistics on the \acs{TID}2013 dataset.}\label{tab:tid_method_stats}
+\begin{tabular}{lrr}
+\hline
+\textbf{Distortion} & \textbf{mean \acs{MOS}} & \textbf{mean std} \\
+\hline
+Additive Gaussian noise & 52.823608 & 8.558371 \\
+Additive noise (chromatic > luminance) & 59.689406 & 6.913883 \\
+Spatially correlated noise & 41.352106 & 9.135326 \\
+Masked noise & 59.531739 & 6.704667 \\
+High frequency noise & 53.394171 & 12.375609 \\
+Impulse noise & 44.259787 & 6.674494 \\
+Quantization noise & 45.224325 & 10.862101 \\
+Gaussian blur & 45.828900 & 14.361556 \\
+Image denoising & 49.133393 & 18.800548 \\
+\acs{JPEG} compression & 48.761858 & 18.444557 \\
+\acs{JPEG}2000 compression & 41.504723 & 19.727287 \\
+\acs{JPEG} transmission errors & 50.262821 & 13.482118 \\
+\acs{JPEG}2000 transmission errors & 40.589366 & 11.090509 \\
+Non-eccentricity pattern noise & 56.718800 & 9.817571 \\
+Local block-wise distortions & 39.799320 & 4.405221 \\
+Mean shift (intensity shift) & 61.727699 & 7.134111 \\
+Contrast change & 58.530860 & 14.483492 \\
+Change of color saturation & 47.942729 & 6.347988 \\
+Multiplicative Gaussian noise & 51.503875 & 8.412448 \\
+Comfort noise & 53.176738 & 11.947637 \\
+Lossy compression of noisy images & 46.395844 & 13.422621 \\
+Color quantization with dither & 49.454569 & 12.686575 \\
+Chromatic aberrations & 54.657177 & 14.664789 \\
+Sparse sampling and reconstruction & 40.978003 & 21.848505 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Correlation of \acs{FR} Metrics with \acs{MOS}}
+
+We calculated the \acs{PLCC} and \acs{SRCC} between each metric and \acs{MOS} for each distorted image and compare them against the corresponding \acs{MOS}. Figure~\ref{fig:mos_vs_iqa_tid} shows heterogeneous patterns across metrics. \acs{MS-SSIM} is again the best performing metric, followed by some of its variants, \acs{CW-SSIM} and \acs{IW-SSIM}. The \acs{PSNR} and \acs{MSE} families clearly show a strong regime changes, where different distortion types occupy different quality bands. Some metrics, such as \acs{VIF} and \acs{VIFc}, show a heavy heteroscedasticity, where variance in \acs{MOS} is very high for small \acs{VIF} scores, the same phenomena happens for \acs{VIFp}, but at the higher end of the spectrum. Deep learning-based metrics, such as \acs{LPIPS} and \acs{DISTS}, show, again, stronge negative correlations.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/tid/train_iqa_scatter.pdf}
+    \caption{Scatter plots of \acs{MOS} versus 40 individual \acs{FR-IQA} metrics. The red curve is a local smoothing of the trend.}\label{fig:mos_vs_iqa_tid}
+\end{figure}
+
+We chose $k=12$ as it represents 95\% explained variance, as shown in Figure~\ref{fig:tid_svd_analysis}. This choice doesn't come as a surprise, as the \acs{TID}2013 dataset contains a much wider variety of distortion types, and thus a larger number of metrics is needed to capture the relevant perceptual dimensions. The Picard plot in Figure~\ref{fig:tid_picard_analysis} again confirms that truncating at $k=12$ retains stable components, as the singular values and projection magnitudes decrease in parallel up to this point.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/tid/variance.pdf}
+        \caption{Cumulative explained variance from \acs{SVD}. Vertical markers indicate $k$ at 68, 95, and 99.7 percent.}\label{fig:tid_svd_analysis}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/tid/picard.pdf}
+        \caption{Picard plot showing singular values and the magnitude of the target projections.}\label{fig:tid_picard_analysis}
+    \end{subfigure}
+    \caption{\acs{SVD}-based analysis of the \acs{FR} metric space. The variance curve selects $k$ at the chosen threshold, and the Picard plot corroborates stability near that truncation.}\label{fig:tid_svd_picard}
+\end{figure}
+
+\subsection{\acl{FR} Fusion}
+
+The best fusion model was, again, CatBoost, this time with 1{,}500 iterations, learning rate 0.0881, depth 5, and \(\ell_2\) leaf regularization 5.628, selected by Optuna.
+
+In the \acs{SHAP} summary, from Figure.~\ref{fig:tid_shap_summary}, the dominant drivers are \acs{CW-SSIM}, \acs{PSNR}, \acs{MS-SSIM}, \acs{W-SSIM} and \acs{IW-SSIM}, which show the the widest \acs{SHAP} spreads. Their direction matches intuition, high scores cluster with positive values while low scores align with negative values, meaning larger \acs{SSIM}-family scores and \acs{PSNR} raise predicted quality and small values penalize it. The long, asymmetric negative tails for \acs{CW-SSIM} and \acs{IW-SSIM} indicate non-linear penalties, modest drops in these metrics trigger strong downward corrections that help separate truly poor images. Although several \acs{SSIM} variants are important simultaneously, their clouds are not identical, each variant captures a slightly different structural aspect, so the model exploits complementary, partially redundant information rather than any single \acs{SSIM}.
+
+We also observe occasional inversions, blue points with positive \acs{SHAP} or red points with negative \acs{SHAP}. That's a sign of feature interactions, like a high \acs{PSNR} paired with poor structure, which the CatBoost fusion can handle better than a simple one-direction mapping. In practice, most of the lift comes from combining structure-aware \acs{SSIM} variants with \acs{PSNR} for overall noise/blur, then letting specialist cues, like \acs{ESIM}, \acs{SPIQ}, \acs{L-SSIM}, and \acs{PSM}, tidy up the tricky edge cases.
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.9\linewidth]{images/tid/shap_summary.png}
+\caption{\acs{SHAP} summary plot for \(k=12\) on the best \acs{CatBoost} fusion model.}
+\label{fig:tid_shap_summary}
+\end{figure}
+
+The \acs{FR} fusion model was evaluated on the \acs{MOS} train set, was compared with the top $k=12$ individual \acs{FR} metrics in Table~\ref{tab:tid2013-fusion-mos-test}. We will refer to the fusion model as \acf{pMOS-SSIM+}, as it relies heavily on \acs{SSIM}-inspired metrics, and requires a reference image to compute \acs{pMOS}. The fusion model produced \acs{pMOS} for 2{,}280 distorted images. \acs{pMOS-SSIM+} attains a \acs{PLCC} = 0.9264 and \acs{SRCC} = 0.9174, substantially outperforming every single \acs{FR-IQA} metric.
+
+\begin{table}[htpb]
+\centering
+\caption{TID2013 \acs{FR} fusion versus individual \acs{FR-IQA} metrics on the \acs{MOS} train set.}
+\label{tab:tid2013-fusion-mos-test}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Model} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
+\hline
+\acs{pMOS-SSIM+} (ours) & \textbf{0.9264} & \textbf{0.9174} & \textbf{39.69} & \textbf{4.863} \\
+\acs{MS-SSIM} & 0.7640 & 0.7550 & 2564.2973 & 48.7645 \\
+\acs{CW-SSIM} & 0.7488 & 0.7376 & 2565.1929 & 48.7774 \\
+\acs{SPIQ} & 0.7418 & 0.7580 & 2569.1263 & 48.8276 \\
+\acs{IW-SSIM} & 0.6808 & 0.7119 & 2568.3498 & 48.8199 \\
+\acs{PSNR} & 0.6776 & 0.6619 & 651.0133 & 23.3342 \\
+\acs{PSM} & 0.6482 & 0.6483 & 2455.0229 & 47.9523 \\
+\acs{ESIM} & 0.6482 & 0.6483 & 2562.4546 & 48.7355 \\
+\acs{G-SSIM} & 0.6400 & 0.6528 & 2584.8087 & 49.0076 \\
+\acs{SCC} & 0.6379 & 0.5999 & 2562.6675 & 48.7412 \\
+\acs{L-SSIM} & 0.6366 & 0.6387 & 2573.6674 & 48.8771 \\
+\acs{SNR} & 0.6351 & 0.6139 & 1002.7718 & 29.7395 \\
+\acs{W-SSIM} & 0.6268 & 0.6453 & 2582.6103 & 48.9770 \\
+\hline
+\end{tabular}
+\end{table}
+
+\acs{TID}2013 is fully annotated with \acs{MOS}, this allows us to directly study the correlation between \acs{pMOS-SSIM+} and ground-truth \acs{MOS}, thus validating the fusion stage independently of the \acs{NR} learner. On the \acs{pMOS} set (\(n=2{,}280\)), \acs{pMOS-SSIM+} aligned strongly with human \acs{MOS}, obtaining a \acs{PLCC} of 0.8926, an \acs{SRCC} of 0.8827, an \acs{MSE} of 39.69, and an \acs{MAE} of 4.863. Figure~\ref{fig:tid_scatter_pseudo_vs_mos} confirms strong alignment confirms that the fusion model generalizes well to unseen reference images and distortion types.
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.48\linewidth]{images/tid/scatter_pseudo_vs_mos.pdf}
+\caption{Scatter plot of \acs{pMOS-SSIM+} predictions versus human \acs{MOS} on the \acs{pMOS} set. The red line is the linear fit.}\label{fig:tid_scatter_pseudo_vs_mos}
+\end{figure}
+
+This is a strong indication that human perception can be effectively modeled by combining multiple \acs{FR} metrics, and that the fusion model can produce reliable pseudo-labels, and eventually, train \acs{NR} models, even when the reference images distance from each other in content and are affected by various types of distortions.
+
+\subsection{\acl{NR} Model}
+
+This time the difference in performance were well evident, Table~\ref{tab:tid_backbones}, shows that ResNet-50 was the best suited to be our \acs{NR-IQA} model backbone. The resulting metric, \acf{pMOS-NoisyTID}, follows the same nomenclature as \acs{pMOS-StegaFace}, indicating a \acs{pMOS} regressor trained on Noisy distortions from the \acs{TID}2013 dataset.
+
+\begin{table}[htpb]
+\centering
+\caption{Backbone comparison for training \acs{pMOS-NoisyTID}. Report 5-fold mean \acs{PLCC}, \acs{SRCC}, \acs{MSE}, and \acs{MAE}.}
+\label{tab:tid_backbones}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Backbone}        & \textbf{PLCC} & \textbf{SRCC} & \textbf{MAE} & \textbf{MSE} \\ \hline
+ResNet-50       & \textbf{0.9484} & \textbf{0.9430} &  $\mathbf{1.55 \times 10^{-3}}$ & \textbf{0.0295}   \\
+EfficientNet-B1 & 0.7388     & 0.6870     & $6.7 \times 10^{-3}$   & 0.0645   \\
+ViT-B/16        & 0.8556     & 0.8296     & $3.94 \times 10^{-4}$   & 0.0454   \\
+\hline
+\end{tabular}
+\end{table}
+
+Fig.~\ref{fig:tid_nr-iqa-metric} shows two scenarios. On the \acs{MOS} train set with ground-truth \acs{MOS} the model fits almost perfectly, achieving a \acs{PLCC} = 0.9924, \acs{SRCC} = 0.9911, \acs{MSE} = $3.03 \times 10^{-4}$ and \acs{MAE} = 0.0257. On the disjoint test set, however, correlations drop sharply \acs{PLCC} = 0.6860, \acs{SRCC} = 0.5591, \acs{MSE} = 0.0305, \acs{MAE} = 0.1460. This is a classic sign of overfitting, the model memorized the training set but failed to generalize to unseen images and distortion types.
+
+\begin{figure}[htpb]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/tid/nr-train.pdf}
+  \caption{Predicted \acs{MOS} vs ground-truth \acs{MOS} from the train set.}\label{fig:tid_nr-iqa-train}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/tid/nr-test.pdf}
+  \caption{Predicted \acs{MOS} vs ground-truth \acs{MOS} from the disjoint test set.}\label{fig:tid_nr-iqa-test}
+\end{subfigure}
+\caption{\acs{pMOS-NoisyTID} predictions on train and test sets.}
+\label{fig:tid_nr-iqa-metric}
+\end{figure}
+
+We further evaluated the \acs{pMOS-NoisyTID} metric on individual groups of reference images from the test set. Results varied: for Figure~\ref{fig:tid_nr-iqa-test-ref1}, correlations remained relatively strong (\acs{PLCC} = 0.836, \acs{SRCC} = 0.796); for image~\ref{fig:tid_nr-iqa-test-ref2}, performance declined (\acs{PLCC} = 0.731, \acs{SRCC} = 0.609); and for image~\ref{fig:tid_nr-iqa-test-ref3}, correlations dropped further (\acs{PLCC} = 0.683, \acs{SRCC} = 0.557). These differences highlight the sensitivity of the model to content and distortion type.
+
+\begin{figure}[htpb]
+\centering
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/tid/i15.png}
+  \caption{}\label{fig:tid_nr-iqa-test-ref1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/tid/i17.png}
+  \caption{}\label{fig:tid_nr-iqa-test-ref2}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/tid/i24.png}
+  \caption{}\label{fig:tid_nr-iqa-test-ref3}
+\end{subfigure}
+\hfill
+\caption{\acs{TID}2013 reference images from the test set.}
+\end{figure}
+
+Table~\ref{tab:tid_nr_scores} compares \acs{pMOS-NoisyTID} predictions to standard \acs{NR-IQA} metrics, showing clear improvements.
+
+Table~\ref{tab:tid_nr_scores} shows a clear gap between standard \acs{NR-IQA} baselines and the proposed \acs{pMOS-NoisyTID}. Traditional blind metrics such as \acs{NIQE}, \acs{PIQE} and \acs{BRISQUE} exhibit weak correlation with human judgements on \acs{TID}2013, whereas \acs{pMOS-NoisyTID} aligns substantially better with subjective quality, achieving \acs{PLCC} = 0.6860, and \acs{SRCC} = 0.5591. These results support our two-stage approach, \acs{pMOS} fusion followed by \acs{NR} model training, as a more reliable and generalizable route to \acs{NR-IQA}, capturing perceptual quality variations in general images beyond the facial domain of \acs{FRLL}.
+
+\begin{table}[htpb]
+\centering
+\caption{\acs{pMOS-NoisyTID} versus \acs{NR-IQA} baselines.}\label{tab:tid_nr_scores}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Metric}  & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
+\hline
+\acs{pMOS-NoisyTID} (ours)  & \textbf{0.6860} & \textbf{0.5591} & \textbf{0.0305} & \textbf{0.1460} \\
+\acs{NIQE}     & -0.3096 & -0.2262 & 2599 & 49.02 \\
+\acs{PIQE}     & -0.4102 & -0.3643 & 2224 & 43.88 \\
+\acs{BRISQUE}  & -0.5055 & -0.4444 & 1829 & 37.34 \\
+\hline
+\end{tabular}
+\end{table}
