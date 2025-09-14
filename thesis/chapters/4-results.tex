@@ -64,7 +64,7 @@ The individual metric results in Table~\ref{tab:fr_individual_metrics} shows the
 
 \begin{table}[htpb]
 \centering
-\caption{Individual \acs{FR-IQA} metrics versus \acs{MOS} on the unbiased split. Higher \acs{PLCC} and \acs{SRCC} indicate stronger correlation, lower \acs{MSE} and \acs{MAE} indicate more accurate estimates.}
+\caption{Individual \acs{FR-IQA} metrics versus \acs{MOS} on the unbiased train set.}
 \label{tab:fr_individual_metrics}
 \begin{tabular}{lcccc}
 \hline
@@ -300,7 +300,7 @@ We chose $k=12$ as it represents 95\% explained variance, as shown in Figure~\re
 
 The best fusion model was, again, CatBoost, this time with 1{,}500 iterations, learning rate 0.0881, depth 5, and \(\ell_2\) leaf regularization 5.628, selected by Optuna.
 
-In the \acs{SHAP} summary, from Figure.~\ref{fig:tid_shap_summary}, the dominant drivers are \acs{CW-SSIM}, \acs{PSNR}, \acs{MS-SSIM}, \acs{W-SSIM} and \acs{IW-SSIM}, which show the the widest \acs{SHAP} spreads. Their direction matches intuition, high scores cluster with positive values while low scores align with negative values, meaning larger \acs{SSIM}-family scores and \acs{PSNR} raise predicted quality and small values penalize it. The long, asymmetric negative tails for \acs{CW-SSIM} and \acs{IW-SSIM} indicate non-linear penalties, modest drops in these metrics trigger strong downward corrections that help separate truly poor images. Although several \acs{SSIM} variants are important simultaneously, their clouds are not identical, each variant captures a slightly different structural aspect, so the model exploits complementary, partially redundant information rather than any single \acs{SSIM}.
+In the \acs{SHAP} summary, from Figure.~\ref{fig:tid_shap_summary}, the dominant drivers are \acs{CW-SSIM}, \acs{PSNR}, \acs{MS-SSIM}, \acs{W-SSIM} and \acs{IW-SSIM}, which show the widest \acs{SHAP} spreads. Their direction matches intuition, high scores cluster with positive values while low scores align with negative values, meaning larger \acs{SSIM}-family scores and \acs{PSNR} raise predicted quality and small values penalize it. The long, asymmetric negative tails for \acs{CW-SSIM} and \acs{IW-SSIM} indicate non-linear penalties, modest drops in these metrics trigger strong downward corrections that help separate truly poor images. Although several \acs{SSIM} variants are important simultaneously, their clouds are not identical, each variant captures a slightly different structural aspect, so the model exploits complementary, partially redundant information rather than any single \acs{SSIM}.
 
 We also observe occasional inversions, blue points with positive \acs{SHAP} or red points with negative \acs{SHAP}. That's a sign of feature interactions, like a high \acs{PSNR} paired with poor structure, which the CatBoost fusion can handle better than a simple one-direction mapping. In practice, most of the lift comes from combining structure-aware \acs{SSIM} variants with \acs{PSNR} for overall noise/blur, then letting specialist cues, like \acs{ESIM}, \acs{SPIQ}, \acs{L-SSIM}, and \acs{PSM}, tidy up the tricky edge cases.
 
@@ -311,7 +311,7 @@ We also observe occasional inversions, blue points with positive \acs{SHAP} or r
 \label{fig:tid_shap_summary}
 \end{figure}
 
-The \acs{FR} fusion model was evaluated on the \acs{MOS} train set, was compared with the top $k=12$ individual \acs{FR} metrics in Table~\ref{tab:tid2013-fusion-mos-test}. We will refer to the fusion model as \acf{pMOS-SSIM+}, as it relies heavily on \acs{SSIM}-inspired metrics, and requires a reference image to compute \acs{pMOS}. The fusion model produced \acs{pMOS} for 2{,}280 distorted images. \acs{pMOS-SSIM+} attains a \acs{PLCC} = 0.9264 and \acs{SRCC} = 0.9174, substantially outperforming every single \acs{FR-IQA} metric.
+The \acs{FR} fusion model was evaluated on the \acs{MOS} train set and compared with the top $k=12$ individual \acs{FR} metrics in Table~\ref{tab:tid2013-fusion-mos-test}. We will refer to the fusion model as \acf{pMOS-SSIM+}, as it relies heavily on \acs{SSIM}-inspired metrics, and requires a reference image to compute \acs{pMOS}. The fusion model produced \acs{pMOS} for 2{,}280 distorted images. \acs{pMOS-SSIM+} attains a \acs{PLCC} = 0.9264 and \acs{SRCC} = 0.9174, substantially outperforming every single \acs{FR-IQA} metric.
 
 \begin{table}[htpb]
 \centering
@@ -338,7 +338,7 @@ The \acs{FR} fusion model was evaluated on the \acs{MOS} train set, was compared
 \end{tabular}
 \end{table}
 
-\acs{TID}2013 is fully annotated with \acs{MOS}, this allows us to directly study the correlation between \acs{pMOS-SSIM+} and ground-truth \acs{MOS}, thus validating the fusion stage independently of the \acs{NR} learner. On the \acs{pMOS} set (\(n=2{,}280\)), \acs{pMOS-SSIM+} aligned strongly with human \acs{MOS}, obtaining a \acs{PLCC} of 0.8926, an \acs{SRCC} of 0.8827, an \acs{MSE} of 39.69, and an \acs{MAE} of 4.863. Figure~\ref{fig:tid_scatter_pseudo_vs_mos} confirms strong alignment confirms that the fusion model generalizes well to unseen reference images and distortion types.
+\acs{TID}2013 is fully annotated with \acs{MOS}, this allows us to directly study the correlation between \acs{pMOS-SSIM+} and ground-truth \acs{MOS}, thus validating the fusion stage independently of the \acs{NR} learner. On the \acs{pMOS} set (\(n=2{,}280\)), \acs{pMOS-SSIM+} aligned strongly with human \acs{MOS}, obtaining a \acs{PLCC} of 0.8926, an \acs{SRCC} of 0.8827, an \acs{MSE} of 39.69, and an \acs{MAE} of 4.863. Figure~\ref{fig:tid_scatter_pseudo_vs_mos} confirms a strong alignment and shows that the fusion model generalizes well to unseen reference images and distortion types.
 
 \begin{figure}[htpb]
 \centering
@@ -346,11 +346,11 @@ The \acs{FR} fusion model was evaluated on the \acs{MOS} train set, was compared
 \caption{Scatter plot of \acs{pMOS-SSIM+} predictions versus human \acs{MOS} on the \acs{pMOS} set. The red line is the linear fit.}\label{fig:tid_scatter_pseudo_vs_mos}
 \end{figure}
 
-This is a strong indication that human perception can be effectively modeled by combining multiple \acs{FR} metrics, and that the fusion model can produce reliable pseudo-labels, and eventually, train \acs{NR} models, even when the reference images distance from each other in content and are affected by various types of distortions.
+This is a strong indication that human perception can be effectively modeled by combining multiple \acs{FR} metrics, and that the fusion model can produce reliable pseudo-labels, and eventually, train \acs{NR} models, even when the reference images are very different from each other in content and are affected by various types of distortions.
 
 \subsection{\acl{NR} Model}
 
-This time the difference in performance were well evident, Table~\ref{tab:tid_backbones}, shows that ResNet-50 was the best suited to be our \acs{NR-IQA} model backbone. The resulting metric, \acf{pMOS-NoisyTID}, follows the same nomenclature as \acs{pMOS-StegaFace}, indicating a \acs{pMOS} regressor trained on Noisy distortions from the \acs{TID}2013 dataset.
+This time, the differences in performance were clearly evident. Table~\ref{tab:tid_backbones} shows that ResNet-50 was the best suited to be our \acs{NR-IQA} model backbone. The resulting metric, \acf{pMOS-NoisyTID}, follows the same nomenclature as \acs{pMOS-StegaFace}, indicating a \acs{pMOS} regressor trained on Noisy distortions from the \acs{TID}2013 dataset.
 
 \begin{table}[htpb]
 \centering

@@ -240,6 +240,7 @@ To correct for demographic bias in the subjective scores, we followed a procedur
         \hline % chktex 44
         \textbf{Factor} & $\mathbf{p}$-\textbf{value} & $\mathbf{p}$-\textbf{value (residualized)} \\
         \hline % chktex 44
+        Subject attractiveness                      & 0.3173               & 0.3173 \\
         Observer gender                             & 0.022                 & 0.9930 \\
         Observer ethnicity                          & $8.44 \times 10^{-4}$ & 1 \\
         Subject gender                              & $1.60 \times 10^{-3}$ & 0.9722 \\
@@ -252,7 +253,7 @@ To correct for demographic bias in the subjective scores, we followed a procedur
 
 \section{Evaluation of \acl{FR} Metrics}
 
-We compute 40 \acs{FR-IQA} scores for each distorted image and compare them against the corresponding \acs{MOS}. To assess alignment with human perception, we evaluate both linear and monotonic relationships using \acs{PLCC} and \acs{SRCC}. These measures provide a ranking of metrics, IQA score, by their mean correlation. Negative correlation are kept as is, \acs{PLCC} tests linear fit, while \acs{SRCC} tests monotone ordering. Adding magnitudes would treat them as interchangeable, thus, rewarding inconsistent behavior. If a metric's polarity is reversed, the downstream fusion model can learn an appropriate sign or transformation during training.
+We compute 40 \acs{FR-IQA} scores for each distorted image and compare them against the corresponding \acs{MOS}. To assess alignment with human perception, we evaluate both linear and monotonic relationships using \acs{PLCC} and \acs{SRCC}. These measures provide a ranking of metrics, IQA score, by their mean correlation. Negative correlations are kept as is, \acs{PLCC} tests linear fit, while \acs{SRCC} tests monotone ordering. Adding magnitudes would treat them as interchangeable, thus, rewarding inconsistent behavior. If a metric's polarity is reversed, the downstream fusion model can learn an appropriate sign or transformation during training.
 
 Beyond pairwise correlation, we analyze the intrinsic dimensionality of the \acs{FR} feature space using \acf{SVD}. Cumulative variance helps to choose the number of retained metrics $k$ at a target threshold, and the Picard plot~\cite{picard} validates stability by contrasting singular values with the projected response. This analysis yields a compact subset of normalized, polarity-aligned metrics, which will form the input to the fusion stage.
 
@@ -311,4 +312,4 @@ We adopt 5-fold \acf{CV}. The merged dataset is split into 5 disjoint folds $\{F
     \text{CI}_{95}:\;\bar{m}\pm1.96\,\frac{\hat{\sigma}}{\sqrt{5}}.
 \end{equation}
 
-Final test set results are reported on a disjoint \acs{MOS}-only set.
+Final test set results are reported on a disjoint \acs{MOS}-only set. Full hardware and software environment details are in Appendix~\ref{app:env}.

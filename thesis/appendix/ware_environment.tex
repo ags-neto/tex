@@ -1,20 +1,20 @@
-
 \section{Hardware}
-\begin{itemize}
-  \item GPU: NVIDIA GeForce RTX~5060~Ti (16\,GB)
-  \item Host driver: NVIDIA 575.57.08
-\end{itemize}
 
-\section{Containerized Stack}
-All experiments ran inside an NVIDIA NGC PyTorch container for CUDA/cuDNN compatibility:
-\begin{itemize}
-  \item Container: \texttt{nvcr.io/nvidia/pytorch:25.06-py3}
-  \item OS (in-container): Ubuntu~24.04.2 LTS
-  \item Python: 3.12.3
-  \item PyTorch: 2.8.0a0 (NGC nv25.06), CUDA Runtime 12.9, cuDNN 9.1.2
-  \item TorchVision: 0.22.0a0
-  \item timm: 1.0.19
-  \item NumPy: 1.26.4
-  \item SciPy: 1.15.3,\; Pandas: 2.2.3,\; scikit-learn: 1.6.1,\; Matplotlib: 3.10.3,\; tqdm: 4.67.1
-  \item OpenCV (headless): \texttt{<= 4.11.0.86} (pinned to match NumPy~1.x)
-\end{itemize}
+CPU: AMD Ryzen 5 7600X, GPU: NVIDIA GeForce RTX 5060 Ti (16\,GB), Host OS and kernel: Ubuntu 22.04.5 LTS (Jammy), Linux 6.8.0-79-generic
+\section{Software}
+
+\subsection*{Container and drivers}
+Docker: 28.4.0, Container image: \texttt{nvcr.io/nvidia/pytorch:25.06-py3}, OS (in-container): Ubuntu 24.04.2 LTS, Python: 3.12.3, CUDA runtime (in-container): 12.9, cuDNN: 9.1.2
+\subsection*{Core Python stack}
+NumPy: 1.26.4, SciPy: 1.15.3, pandas: 2.2.3
+\subsection*{Deep learning}
+PyTorch: 2.8.0a0 (NGC nv25.06), TorchVision: 0.22.0a0, timm: 1.0.19
+\subsection*{IQA and image processing}
+PIQ: 0.8.0, sewar: 0.4.6, LPIPS: 0.1.4, scikit-image: 0.25.2, OpenCV (headless): 4.11.0.86, Pillow: 11.2.1
+\subsection*{Fusion and explainability}
+scikit-learn: 1.6.1, CatBoost: 1.2.8, LightGBM: 4.6.0, XGBoost: 2.1.4, SHAP: 0.48.0
+\subsection*{Hyperparameter search and logging}
+Optuna: 4.5.0, TensorBoard: 2.16.2
+\subsection*{Application services for subjective tests}
+Django: 4.2.10, PostgreSQL: 15.14, psycopg2: 2.9.7, pgAdmin4: 6.8
+
