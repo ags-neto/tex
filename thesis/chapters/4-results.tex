@@ -2,8 +2,6 @@
 
 This chapter reports the experimental validation of the proposed framework. The \acs{FRLL} dataset is used as the primary benchmark, providing high-quality facial images with controlled steganographic distortions and subjective opinion scores. It allows us to test the alignment of individual \acs{FR} metrics with human judgments, assess the benefits of fusion, and explore the use of pseudo-\acs{MOS} to supervise \acs{NR} models, when image content is relatively homogeneous, and distortions are subtle.
 
-We then extend the evaluation to the \acs{TID}2013 database, which covers a much broader spectrum of distortions and more diverse image content. This benchmark serves as a complementary test of generalization, confirming whether the framework remains effective beyond the face-specific domain.
-
 We further evaluate the framework on the \acs{TID}2013 database, which includes a wide variety of reference images and synthetic distortions. Unlike the face-focused \acs{FRLL} set, this benchmark spans diverse content and impairment types, providing a complementary test of generalization and robustness. Crucially, since ground-truth \acs{MOS} is available for all distorted images, \acs{TID}2013 allows us to directly test the alignment of \acs{pMOS} with true human scores, offering an independent validation of the fusion stage.
 
 \section{\acl{FRLL} Dataset Pipeline}\label{sec:frll-dataset}
