@@ -6,22 +6,22 @@ Subjective image quality assessment is grounded in human visual perception and r
 
 \subsection{Assessment Protocols}\label{sec:assessment_protocols}
 
-Protocols are typically divided into two categories: quality assessment, which captures the overall perceived quality of an image, and impairment assessment, which measures degradation relative to a reference. Two methodological paradigms are most common: the \acf{SS} method, where each image is rated independently, and the \acf{DS} method, where reference and test images are evaluated comparatively. SS protocols dominate modern datasets due to their simplicity, efficiency, and reduced observer fatigue.
+Protocols are typically divided into two categories: quality assessment, which captures the overall perceived quality of an image, and impairment assessment, which measures degradation relative to a reference. Two methodological paradigms are most common: the \acf{SS} method, where each image is rated independently, producing \acf{MOS}, and the \acf{DS} method, where reference and test images are evaluated comparatively, outputing \acf{DMOS}. \acs{SS} protocols dominate modern datasets due to their simplicity, efficiency, and reduced observer fatigue.
 
 Rating scales can be numerical categorical or non-categorical. Numerical categorical scales range from 1 to 5, 1 to 11, or 0 to 100, and are used to express either quality (excellent to bad) or impairment (imperceptible to very annoying). Non-categorical are usually a variant of a categorical method, for example, the assessor assigns each image to a point on a line drawn between two semantic labels. Both forms must result in a distribution of numbers for each condition. The method of analysis used depends upon the type of judgment and the information required (e.g. ranks, central tendency, psychological ``distances'').
 
-Each test session consists of multiple presentations. For a given presentation defined by condition $j$, image or sequence $k$, and repetition $r$, observer $i$ provides a discrete score $u_{ijkr}$. The MOS is computed as:
+Each test session consists of multiple presentations. For a given presentation defined by condition $j$, image or sequence $k$, and repetition $r$, observer $i$ provides a discrete score $u_{ijkr}$. The \acs{MOS} is computed as:
 
 \begin{equation}
 \text{\acs{MOS}}_{jkr} = \frac{1}{N} \sum_{i=1}^{N} u_{ijkr}
 \end{equation}
-where $N$ is the number of observers. In double-stimulus protocols, the DMOS is defined as the difference between the MOS of the reference and that of the distorted image:
+where $N$ is the number of observers. In double-stimulus protocols, the \acs{DMOS} is defined as the difference between the \acs{MOS} of the reference and that of the distorted image:
 
 \begin{equation}
-\text{\acs{DMOS}}_{jkr} = \text{MOS}_{\text{ref},jkr} - \text{MOS}_{\text{dist},jkr}
+\text{\acs{DMOS}}_{jkr} = \text{\acs{MOS}}_{\text{ref},jkr} - \text{\acs{MOS}}_{\text{dist},jkr}
 \end{equation}
 
-These values are often accompanied by confidence intervals to quantify statistical uncertainty and by post-screening to remove inconsistent observers. The specific derivations, including standard deviation, confidence intervals, and the ITU-recommended kurtosis-based rejection procedure, are detailed in Appendix~\ref{app:subjective-screening}.
+These values are often accompanied by confidence intervals to quantify statistical uncertainty and by post-screening to remove inconsistent observers. The specific derivations, including standard deviation, confidence intervals, and the recommended kurtosis-based rejection procedure, are detailed in Appendix~\ref{app:subjective-screening}.
 
 \subsection{Crowdsourcing and Remote Studies}\label{sec:crowdsourcing}
 
@@ -154,7 +154,7 @@ It is important to note that although several error-based metrics are standard m
 
 \subsection{Spectral-based}\label{sec:spectral_based_metrics}
 
-Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. Representative measures include the \acf{SAM}, which computes the angular difference between spectral vectors; the \acf{ERGAS}, which measures average relative errors across spectral bands; and \acs{Dlambda}, which quantifies inter-band distortion. These methods are widely used in remote sensing and image fusion, where preserving spectral integrity is critical.
+Spectral-based metrics evaluate the consistency of spectral information in multi-band or hyperspectral images~\cite{wald2000ergas, yuhas1992sam}. Each pixel is treated as a spectral vector, and quality is assessed by comparing structural relationships in the spectral domain. Representative measures include the \acf{SAM}, which computes the angular difference between spectral vectors, the \acf{ERGAS}, which measures average relative errors across spectral bands, and \acs{Dlambda}, which quantifies inter-band distortion. These methods are widely used in remote sensing and image fusion, where preserving spectral integrity is critical.
 
 \subsection{Structural Similarity}\label{sec:similarity_based_metrics}
 
@@ -165,19 +165,18 @@ as well as gradient- and edge-based measures like \acs{G-SSIM}, \acs{GMS}, and \
 These methods often align more closely with the \acs{HVS} than purely error-based metrics~\cite{wang2004image, xue2014gmsd}, 
 and remain central in modern \acs{FR-IQA} research. 
 
-
 \subsection{Information-theoretic}\label{sec:information_theoretic_metrics}
 
 Information-theoretic approaches to \acs{IQA} are grounded in Shannon's theory of communication~\cite{shannon1948mathematical,cover1999elements}. 
 They model images as stochastic signals transmitted through a distortion channel, and quality is assessed by measuring how much mutual information between the reference and distorted images is preserved in the presence of perceptual noise. 
-Representative metrics include the \acf{IFC}, which quantifies shared mutual information between reference and distorted coefficients; the \acf{VIF}, which normalizes preserved information by that available in the reference; and its simplified or extended variants, \acs{VIFp} and \acs{VIFc}. 
+Representative metrics include the \acf{IFC}, which quantifies shared mutual information between reference and distorted coefficients, \acf{VIF}, which normalizes preserved information by that available in the reference, and its simplified or extended variants, \acs{VIFp} and \acs{VIFc}. 
 These methods provide a principled view of perceptual fidelity and often correlate well with subjective judgments, but they are typically more computationally demanding than error- or similarity-based metrics. 
 
 \subsection{Deep Learning Methods}\label{sec:deep_metrics}
 
 Deep learning approaches to \acs{IQA} exploit feature representations from convolutional neural networks pretrained on large-scale vision tasks. 
 These feature spaces capture high-level perceptual attributes such as texture, structure, and semantics, which align more closely with human visual perception than pixel-wise comparisons~\cite{gatys2016image,johnson2016perceptual,zhang2018lpips}. 
-Representative metrics include the \acf{LPIPS} family, which measures distances in deep feature space; \acf{DISTS}, which combines structure and texture similarity; \acf{WaDIQaM}, a data-driven patch-based model; \acf{PSM}, a shift-tolerant variant of LPIPS; and \acf{SPIQ}, which leverages self-supervised pretraining for quality-aware representations. 
+Representative metrics include the \acf{LPIPS} family, which measures distances in deep feature space, \acf{DISTS}, which combines structure and texture similarity, \acf{WaDIQaM}, a data-driven patch-based model, \acf{PSM}, a shift-tolerant variant of \acs{LPIPS}, and \acf{SPIQ}, which leverages self-supervised pretraining for quality-aware representations. 
 These methods have shown strong correlation with human opinion scores, particularly for complex and perceptually salient distortions, though they typically require higher computational resources.
 
 \section{\acl{NR} \acs{IQA}}\label{sec:no_reference_iqa}
@@ -299,43 +298,43 @@ where \( \theta_y \) is the angle between \( \mathbf{e} \) and the weight vector
 
 Individual \acs{FR} metrics capture different aspects of perceptual degradation. Error-based metrics respond to amplitude distortions, structure-based metrics track local similarity, and learning-based metrics correlate with semantic distortions. This complementarity motivates fusion: combining heterogeneous scores to approximate \acs{MOS} more faithfully than any single metric.
 
-Early supervised fusion combined normalized metric scores linearly. \cite{liu2012fusion} introduced the \acf{MMF} framework, where a regression model learns weights that map a vector of \acs{FR-IQA} scores to \acs{MOS}. Non-linear learners extend this principle by modeling interactions between metrics and mitigating collinearity. In a biometric setting, \cite{henniger2020assessment} demonstrated that tree ensembles trained on \acs{ISO}-compliant facial images improve correlation with utility-focused targets. Subsequent studies confirmed that carefully designed fusion outperforms standalone metrics in \acf{PLCC}~\cite{plcc} and \acf{SRCC}~\cite{srcc} against human judgments~\cite{babnik2022bias}.
+Early supervised fusion combined normalized metric scores linearly.~\cite{liu2012fusion} introduced the \acf{MMF} framework, where a regression model learns weights that map a vector of \acs{FR-IQA} scores to \acs{MOS}. Non-linear learners extend this principle by modeling interactions between metrics and mitigating collinearity. In a biometric setting,~\cite{henniger2020assessment} demonstrated that tree ensembles trained on \acs{ISO}-compliant facial images improve correlation with utility-focused targets. Subsequent studies confirmed that carefully designed fusion outperforms standalone metrics in \acf{PLCC}~\cite{plcc} and \acf{SRCC}~\cite{srcc} against human judgments~\cite{babnik2022bias}.
 
-When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints: one line of work fuses multiple \acs{FR-IQA} outputs into \acf{pMOS} via averaging or reliability-weighted fusion \cite{lai2022pseudomos}; another infers labels for unlabeled samples through semi-supervised and positive unlabeled objectives within \acs{FR-IQA} \cite{cao2022semisupervied}; a complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations \cite{liu2017rankiqa}; and, building on these proxy signals, cascaded predictors trained on \acs{pMOS} can bootstrap quality estimation when subjective ground truth is limited \cite{wu2020cascaded}.
+When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints, the simplest way to achieve this constists into fusing multiple \acs{FR-IQA} outputs into proxy scores via averaging or reliability-weighted fusion~\cite{lai2022pseudomos}. Other methods rely on semi-supervised and positive unlabeled objectives within \acs{FR-IQA}~\cite{cao2022semisupervied}. A complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations~\cite{liu2017rankiqa}. Cascaded predictors trained on these proxy metrics can bootstrap quality estimation when subjective ground truth is limited~\cite{wu2020cascaded}.
 
 We refer the reader to Appendix~\ref{app:regression-models} for concise per-method descriptions and discussion.
 
 \section{Image distortion types}\label{sec:distortions}
 
-Image distortions in \acs{IQA} are typically organized into operational families that mirror failures across capture, processing, compression, transmission, and display, with taxonomies grounded in vision science and formal subjective testing protocols \cite{survey2006wang,survey2020zhai,ma2025survey,itu2023r}. Core classes include lossy compression artifacts from transform quantization and entropy coding, blur from optical defocus or motion, stochastic noise from sensor and electronics, geometric and resampling effects such as aliasing and interpolation blur, and photometric or color shifts induced by exposure, tone mapping, and white-balance errors. Real acquisition pipelines often produce authentic mixtures of these mechanisms, especially in mobile, webcam, and surveillance scenarios \cite{kamble2015nriqa,dost2022rriqa,survey2017aquisition}.
+Image distortions in \acs{IQA} are typically organized into operational families that mirror failures across capture, processing, compression, transmission, and display, with taxonomies grounded in vision science and formal subjective testing protocols~\cite{survey2006wang,survey2020zhai,ma2025survey,itu2023r}. Core classes include lossy compression artifacts from transform quantization and entropy coding, blur from optical defocus or motion, stochastic noise from sensor and electronics, geometric and resampling effects such as aliasing and interpolation blur, and photometric or color shifts induced by exposure, tone mapping, and white-balance errors. Real acquisition pipelines often produce authentic mixtures of these mechanisms, especially in mobile, webcam, and surveillance scenarios~\cite{kamble2015nriqa,dost2022rriqa,survey2017aquisition}.
 
 \subsection{Lossy compression}\label{sec:compression}
 
-Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate. \acf{JPEG}~\cite{jpeg} is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering \cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode-decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features \cite{survey2006wang,survey2019shahrukh}.
+Lossy compression artifacts arise from transform quantization and entropy coding to reduce bitrate. \acf{JPEG}~\cite{jpeg} is dominant for images and induces blocking, ringing, and loss of high frequency detail, while modern codecs vary the artifact profile but share similar roots in quantization and in loop filtering~\cite{rabbani1991digital,survey2025compression}. These artifacts are ubiquitous in social media uploads, cloud messaging, and browser pipelines where repeated encode-decode cycles may accumulate damage. The effect is perceived as block boundaries, staircase edges, haloing near strong transitions, and texture washing out fine facial features~\cite{survey2006wang,survey2019shahrukh}.
 
 \subsection{Blur and Detail Loss}\label{sec:blur}
 
-Blur covers optical defocus from finite depth of field and focusing errors, Gaussian like point spread from lens or sensor integration, and motion blur caused by camera or subject movement. These effects smear edges, reduce acutance, and degrade recognizability of small structures \cite{gonzalez2009digital,survey2020zhai}. Real world drivers include handheld shooting, long exposures in low light, rolling shutter readout, and surveillance cameras with slow shutters or compression integrated stabilization \cite{survey2017aquisition,sheikh2006live}.
+Blur covers optical defocus from finite depth of field and focusing errors, Gaussian like point spread from lens or sensor integration, and motion blur caused by camera or subject movement. These effects smear edges, reduce acutance, and degrade recognizability of small structures~\cite{gonzalez2009digital,survey2020zhai}. Real world drivers include handheld shooting, long exposures in low light, rolling shutter readout, and surveillance cameras with slow shutters or compression integrated stabilization~\cite{survey2017aquisition,sheikh2006live}.
 
 \subsection{Additive Noise}\label{sec:noise}
 
-Additive noise includes sensor read noise, signal dependent shot noise, thermal noise, and coarse impulse like contamination from faulty pixels or transmission induced bit flips. It manifests as grain, color speckle, or salt and pepper dots that mask texture and create false edges \cite{survey2023denoising,gonzalez2009digital}. Noise dominates in dim scenes, small pixel sensors, and high \acs{ISO} capture and interacts non-linearly with denoising and sharpening in the camera pipeline \cite{survey2017aquisition}. Lab datasets simulate Gaussian, Poisson, and impulse processes across standard deviations or rates \cite{sheikh2006live,tid2013,kadid10k}.
+Additive noise includes sensor read noise, signal dependent shot noise, thermal noise, and coarse impulse like contamination from faulty pixels or transmission induced bit flips. It manifests as grain, color speckle, or salt and pepper dots that mask texture and create false edges~\cite{survey2023denoising,gonzalez2009digital}. Noise dominates in dim scenes, small pixel sensors, and high \acs{ISO} capture and interacts non-linearly with denoising and sharpening in the camera pipeline~\cite{survey2017aquisition}. Lab datasets simulate Gaussian, Poisson, and impulse processes across standard deviations or rates~\cite{sheikh2006live,tid2013,kadid10k}.
 
 \subsection{Resampling and Resolution Variations}\label{sec:resampling}
 
-Resampling and resolution variations introduce aliasing, moiré, interpolation blur, and haloing when images are downscaled or upscaled without ideal prefiltering. Repeated resampling in social platforms or display adaptation pipelines compounds these effects \cite{gonzalez2009digital,waterloo}. Edge directed sharpening and unsharp masking can further create overshoot undershoot ripples, perceived as halos around high contrast structures \cite{survey2006wang}.
+Resampling and resolution variations introduce aliasing, moiré, interpolation blur, and haloing when images are downscaled or upscaled without ideal prefiltering. Repeated resampling in social platforms or display adaptation pipelines compounds these effects~\cite{gonzalez2009digital,waterloo}. Edge directed sharpening and unsharp masking can further create overshoot undershoot ripples, perceived as halos around high contrast structures~\cite{survey2006wang}.
 
 \subsection{Photometric and Color Distortions}\label{sec:photometric}
 
-Photometric and color distortions cover exposure errors, gamma mis calibration, global and local contrast changes, white balance shifts, channel noise imbalance, and saturation clipping. These arise from auto exposure and auto white balance failures, tone mapping, and display pipeline mismatches \cite{survey2017aquisition,ntsc1953yiq}. Perceptually, these alter scene realism, skin tone fidelity, and local visibility of detail. Benchmark datasets include luminance and contrast change variants, color shifts, and mean intensity shifts to probe metric sensitivity \cite{tid2013,kadid10k}.
+Photometric and color distortions cover exposure errors, gamma mis calibration, global and local contrast changes, white balance shifts, channel noise imbalance, and saturation clipping. These arise from auto exposure and auto white balance failures, tone mapping, and display pipeline mismatches~\cite{survey2017aquisition,ntsc1953yiq}. Perceptually, these alter scene realism, skin tone fidelity, and local visibility of detail. Benchmark datasets include luminance and contrast change variants, color shifts, and mean intensity shifts to probe metric sensitivity~\cite{tid2013,kadid10k}.
 
 \subsection{Transmission and Packet-Level Artifacts}\label{sec:transmission}
 
-Transmission and packet-level artifacts occur when compressed bit streams traverse unreliable channels. Packet loss, bit errors, or jitter map to block corruption, freezing, or tearing in images and video, especially over wireless links or congested networks \cite{chandra2016transmission,survey2019transmission}. Although less common in still images than in streaming video, partial downloads and progressive \acs{JPEG} decoding can leave visible blocky regions or coarse approximations that degrade perceived quality \cite{rabbani1991digital, livewebsite}.
+Transmission and packet-level artifacts occur when compressed bit streams traverse unreliable channels. Packet loss, bit errors, or jitter map to block corruption, freezing, or tearing in images and video, especially over wireless links or congested networks~\cite{chandra2016transmission,survey2019transmission}. Although less common in still images than in streaming video, partial downloads and progressive \acs{JPEG} decoding can leave visible blocky regions or coarse approximations that degrade perceived quality~\cite{rabbani1991digital, livewebsite}.
 
 \subsection{Authentic Mixtures}\label{sec:authentic_mixtures}
 
-Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high \acs{ISO} noise, heavy denoising and sharpening, aggressive \acs{JPEG} compression, slight motion blur, and color cast. In surveillance, long exposure blur, compression, and downsampling can occur \cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating \acs{IQA} models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as \acs{ITU-R BT.500-15} \cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families \cite{survey2019shahrukh,ma2025survey}.
+Authentic mixtures combine several mechanisms in the wild: for example, a low light smartphone selfie uploaded to a social network may exhibit high \acs{ISO} noise, heavy denoising and sharpening, aggressive \acs{JPEG} compression, slight motion blur, and color cast. In surveillance, long exposure blur, compression, and downsampling can occur~\cite{ghadiyaram2015massive,koniq10k,spaq}. These combinations motivate evaluating \acs{IQA} models beyond single distortions and under realistic capture conditions, using subjective methodologies aligned with standards such as \acs{ITU-R BT.500-15}~\cite{itu2023r} and comprehensive performance studies of metric behavior across datasets and artifact families~\cite{survey2019shahrukh,ma2025survey}.
 
 \section{Steganography}\label{sec:steganography}
 

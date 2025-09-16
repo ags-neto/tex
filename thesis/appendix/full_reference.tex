@@ -167,7 +167,7 @@ The \acf{VSNR}~\cite{chandler2007vsnr} is a perceptual metric that combines subt
 \begin{equation}
 \mathrm{\acs{VSNR}}(x,y) = 20 \log_{10}\!\left(\frac{\lVert x \rVert_{2}}{\lVert \tilde d \rVert_{2}}\right)\ \text{dB}.
 \end{equation}
-Larger values (in dB) indicate better quality. If the distortion is below detection thresholds, \acs{VSNR} becomes very large, reflecting near-invisibility; otherwise it decreases as perceptual distortion grows.
+Larger values (in dB) indicate better quality. If the distortion is below detection thresholds, \acs{VSNR} becomes very large, reflecting near-invisibility, otherwise it decreases as perceptual distortion grows.
 
 The \acf{FSIM}~\cite{zhang2011fsim} assesses image quality by leveraging perceptually meaningful features. It uses \acf{PC} as the primary feature, which reflects the significance of local structure independent of luminance and contrast, and \acf{GM} as a secondary feature to weight salient regions. The local similarity map $S_{\text{FSIM}}(x)$ is defined as:
 \begin{equation}
@@ -272,13 +272,13 @@ where $\alpha_l$ and $\beta_l$ are learned weights. This design captures both st
 \end{equation}
 where $q_p(x,y)$ is the predicted quality of patch $p$ and $w_p$ is its learned weight. By learning both local quality prediction and patch importance, \acs{WaDIQaM} achieves state-of-the-art correlation with human opinion scores in a data-driven manner.
 
-\acf{PSM}~\cite{ghildyal2022psm} builds on \acs{LPIPS} to make full-reference perceptual similarity robust to small, imperceptible misalignments. It replaces shift-sensitive elements in the feature extractor with anti-aliased strided convolutions, anti-aliased pooling, reduced strides, and appropriate padding, then aggregates layerwise feature distances like \acs{LPIPS}. Let $F_l(x)$ be shift-tolerant features at layer $l$ and $\hat{F}_l$ their channel-normalized maps; the score is
+\acf{PSM}~\cite{ghildyal2022psm} builds on \acs{LPIPS} to make full-reference perceptual similarity robust to small, imperceptible misalignments. It replaces shift-sensitive elements in the feature extractor with anti-aliased strided convolutions, anti-aliased pooling, reduced strides, and appropriate padding, then aggregates layerwise feature distances like \acs{LPIPS}. Let $F_l(x)$ be shift-tolerant features at layer $l$ and $\hat{F}_l$ their channel-normalized maps, the score is
 \begin{equation}
 \text{\acs{PSM}}(x,y) = \sum_{l} w_l \cdot \frac{1}{H_l W_l}\sum_{h,w} \big| \hat{F}_l(x)_{h,w}-\hat{F}_l(y)_{h,w}\big|_2^2,
 \end{equation}
 where $w_l$ are learned weights. This preserves perceptual fidelity while reducing spurious changes under 1-2 pixel shifts.
 
-\acf{SPIQ}~\cite{chen2022spiq} is an approach that first learns a quality-aware visual representation via self-supervised pretraining, then fits a lightweight regressor on top with limited \acs{MOS} labels. Two augmented views of the same image are encouraged to produce consistent features during pretraining; at inference a regressor maps features to a scalar quality:
+\acf{SPIQ}~\cite{chen2022spiq} is an approach that first learns a quality-aware visual representation via self-supervised pretraining, then fits a lightweight regressor on top with limited \acs{MOS} labels. Two augmented views of the same image are encouraged to produce consistent features during pretraining. At inference a regressor maps features to a scalar quality:
 \begin{equation}
 \text{\acs{SPIQ}}(x) = g\big(f(x)\big),
 \end{equation}

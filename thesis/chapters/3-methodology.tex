@@ -246,18 +246,18 @@ Building on the selected \acs{FR-IQA} features, we construct a fusion-based metr
 A diverse set of regressors is trained on these features:
 
 \begin{itemize}
-    \item Linear: Linear Regression \cite{linearregression}, Ridge \cite{ridgeregression}, Bayesian Ridge \cite{bayesianridge}, ElasticNet \cite{elasticnet}.
-    \item Ensembles: Random Forest \cite{randomforest}, Extra Trees \cite{ensembles}, Gradient Boosting \cite{gradboost}, Histogram Gradient Boosting \cite{histogram}.
-    \item Boosted trees: \acs{XGBoost} \cite{xgboost}, \acs{LightGBM} \cite{lightgbm}, \acs{CatBoost} \cite{catboost}.
+    \item Linear: Linear Regression~\cite{linearregression}, Ridge~\cite{ridgeregression}, Bayesian Ridge~\cite{bayesianridge}, ElasticNet~\cite{elasticnet}.
+    \item Ensembles: Random Forest~\cite{randomforest}, Extra Trees~\cite{ensembles}, Gradient Boosting~\cite{gradboost}, Histogram Gradient Boosting~\cite{histogram}.
+    \item Boosted trees: \acs{XGBoost}~\cite{xgboost}, \acs{LightGBM}~\cite{lightgbm}, \acs{CatBoost}~\cite{catboost}.
 \end{itemize}
 
 Each regressor is tuned with a \acf{TPE}~\cite{tpe} search implemented in Optuna~\cite{optuna}, using Successive Halving~\cite{pruner} for early stopping, and evaluated by 5-fold cross-validation. Models are ranked by the mean of \acs{PLCC} and \acs{SRCC} between predictions and \acs{MOS}. Per-model outputs include predictions, scores, tuned parameters, and trained checkpoints.
 
 For tree-based models we compute \acf{SHAP}~\cite{shap}, highlighting which \acs{FR} metrics drive the fused prediction and whether their contributions are consistent across the dataset. The result is a fusion-based \acs{FR} metric that consistently outperforms any single score and serves as both a standalone contribution and the basis for pseudo-label generation.
 
-\section{Pseudo-MOS Generation}
+\section{\acl{pMOS} Generation}
 
-The best validated fusion model is then applied to the unlabeled portion of the distorted dataset to produce pseudo-\acs{MOS} (\acs{pMOS}) labels. Each image is passed through the selected top-$k$ metrics, normalized with the same scaler used in training, and scored by the fusion model.
+The best validated fusion model is then applied to the unlabeled portion of the distorted dataset to produce \acs{pMOS} labels. Each image is passed through the selected top-$k$ metrics, normalized with the same scaler used in training, and scored by the fusion model.
 
 This procedure extends perceptual supervision from the small human-annotated subset to the entire dataset, producing a complete set of labels for downstream use. These pseudo labels enable two main objectives:
 
@@ -286,7 +286,7 @@ We train three pretrained backbones with a 1-unit linear regressor head using Sm
     \end{tabular}
 \end{table}
 
-We adopt 5-fold \acf{CV}. The merged dataset is split into 5 disjoint folds $\{F_1,\dots,F_5\}$ at the image level, stratification not enforced. For split $i$, training uses $D_{\text{train}}=D\setminus F_i$ and validation uses $D_{\text{val}}=F_i$. All hyperparameters are kept fixed. We monitor validation \acs{MAE} after every epoch and apply early stopping with patience $p$ epochs. For each fold we retain the checkpoint with the lowest validation \acs{MAE}. Let $m_i$ denote a metric on fold $i$; we report the mean and dispersion across the 5 folds:
+We adopt 5-fold \acf{CV}. The merged dataset is split into 5 disjoint folds $\{F_1,\dots,F_5\}$ at the image level, stratification not enforced. For split $i$, training uses $D_{\text{train}}=D\setminus F_i$ and validation uses $D_{\text{val}}=F_i$. All hyperparameters are kept fixed. We monitor validation \acs{MAE} after every epoch and apply early stopping with patience $p$ epochs. For each fold we retain the checkpoint with the lowest validation \acs{MAE}. Let $m_i$ denote a metric on fold $i$, we report the mean and dispersion across the 5 folds:
 
 \begin{equation}
     \bar{m}=\frac{1}{5}\sum_{i=1}^{5} m_i,\quad
