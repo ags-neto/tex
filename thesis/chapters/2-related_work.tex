@@ -21,7 +21,7 @@ where $N$ is the number of observers. In double-stimulus protocols, the \acs{DMO
 \text{\acs{DMOS}}_{jkr} = \text{\acs{MOS}}_{\text{ref},jkr} - \text{\acs{MOS}}_{\text{dist},jkr}
 \end{equation}
 
-These values are often accompanied by confidence intervals to quantify statistical uncertainty and by post-screening to remove inconsistent observers. The specific derivations, including standard deviation, confidence intervals, and the recommended kurtosis-based rejection procedure, are detailed in Appendix~\ref{app:subjective-screening}.
+These values are often accompanied by confidence intervals to quantify statistical uncertainty and by post-screening to remove inconsistent observers. The specific derivations, including standard deviation, confidence intervals, and the recommended kurtosis-based rejection procedure, are detailed in~\autoref{app:subjective-screening}.
 
 \subsection{Crowdsourcing and Remote Studies}\label{sec:crowdsourcing}
 
@@ -77,7 +77,7 @@ The spectral representation specifies the channel configuration used for quality
   \item Multispectral and hyperspectral: In domains such as remote sensing, quality measures generalize to dozens or even hundreds of bands. Metrics like \acf{SAM}~\cite{yuhas1992sam}, \acf{ERGAS}~\cite{wald2000ergas}, and \acf{Dlambda}~\cite{ivc} ensure spectral consistency across wavelengths and are critical for preserving material properties.
 \end{itemize}
 
-This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on this, Table~\ref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and Table~\ref{tab:nr_iqa_metrics} summarizes the 6 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
+This dual perspective highlights the diversity of \acs{IQA} methodologies and provides a framework for their categorization. Building on this,~\autoref{tab:fr_iqa_metrics} presents the 40 \acs{FR} metrics and~\autoref{tab:nr_iqa_metrics} summarizes the 6 \acs{NR} metrics considered in this work. Each metric is characterized by its reference type, year of introduction, category domain, and tested databases, showing how the field has advanced from simple pixel-wise error measures to perceptually and semantically informed quality predictors.
 
 \section{\acl{FR} \acs{IQA} Metrics}\label{sec:full_reference_iqa}
 
@@ -144,7 +144,7 @@ p{0.47\linewidth}  % Tested Databases
 
 \acf{FR-IQA} models estimate the perceptual quality of a distorted image by comparing it to an undistorted reference. These methods assume complete access to the original image and are commonly used in contexts where ground-truth data is available, such as image compression, transmission, enhancement, and restoration~\cite{sheikh2006vif, wang2004image}. By directly quantifying deviations from the reference, \acs{FR-IQA} provides a consistent and interpretable benchmark for evaluating distortion. However, their applicability is limited to scenarios where high-quality reference images exist, making them unsuitable for many real-world applications.
 
-A concise overview of each metric family, together with full notation, formal definitions, and implementation details for all 40 \acs{FR-IQA} metrics in Table~\ref{tab:fr_iqa_metrics}, is provided in Appendix~\ref{app:full-ref-metrics}.
+A concise overview of each metric family, together with full notation, formal definitions, and implementation details for all 40 \acs{FR-IQA} metrics in~\autoref{tab:fr_iqa_metrics}, is provided in~\autoref{app:full-ref-metrics}.
 
 \subsection{Error-based}\label{sec:error_based_metrics}
 
@@ -302,7 +302,7 @@ Early supervised fusion combined normalized metric scores linearly.~\cite{liu201
 
 When large-scale \acs{MOS} is scarce, weak supervision turns to proxy signals and relative constraints, the simplest way to achieve this constists into fusing multiple \acs{FR-IQA} outputs into proxy scores via averaging or reliability-weighted fusion~\cite{lai2022pseudomos}. Other methods rely on semi-supervised and positive unlabeled objectives within \acs{FR-IQA}~\cite{cao2022semisupervied}. A complementary path replaces absolute scores with pairwise or listwise orderings induced by controlled degradations~\cite{liu2017rankiqa}. Cascaded predictors trained on these proxy metrics can bootstrap quality estimation when subjective ground truth is limited~\cite{wu2020cascaded}.
 
-We refer the reader to Appendix~\ref{app:regression-models} for concise per-method descriptions and discussion.
+We refer the reader to~\autoref{app:regression-models} for concise per-method descriptions and discussion.
 
 \section{Image distortion types}\label{sec:distortions}
 

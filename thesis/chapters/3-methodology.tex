@@ -22,7 +22,7 @@ Our dataset is derived from the publicly available \acs{FRLL}~\cite{frll} set, c
 \end{tabular}
 \end{table}
 
-The dataset was partitioned to support both supervised learning and independent evaluation. A small, demographically diverse subset of 15 identities, shown in Fig.~\ref{fig:frll_mos_set} was annotated with \acs{MOS} through subjective tests. This set was split into a training portion (12 identities, Fig.~\ref{fig:frll_mos_train_set}) used to fit the fusion model, and a disjoint test portion (3 identities, Fig.~\ref{fig:frll_mos_test_set}) held out for final evaluation. The remaining 87 identities formed the unlabeled set, to which \acf{pMOS} were later assigned. Together, the annotated and pseudo-labeled subsets were used to train the \acs{NR-IQA} model. A summary of these partitions, including the number of subjects and images per subset, is presented in Table~\ref{tab:frll_dataset_partition}.
+The dataset was partitioned to support both supervised learning and independent evaluation. A small, demographically diverse subset of 15 identities, shown in~\autoref{fig:frll_mos_set} was annotated with \acs{MOS} through subjective tests. This set was split into a training portion (12 identities,~\autoref{fig:frll_mos_train_set}) used to fit the fusion model, and a disjoint test portion (3 identities,~\autoref{fig:frll_mos_test_set}) held out for final evaluation. The remaining 87 identities formed the unlabeled set, to which \acf{pMOS} were later assigned. Together, the annotated and pseudo-labeled subsets were used to train the \acs{NR-IQA} model. A summary of these partitions, including the number of subjects and images per subset, is presented in~\autoref{tab:frll_dataset_partition}.
 
 \begin{figure}[htbp]
     \centering
@@ -41,7 +41,7 @@ The dataset was partitioned to support both supervised learning and independent 
     \caption{Reference images from the \acs{MOS} set, comprising the selected subjects from the \acs{FRLL} dataset.}\label{fig:frll_mos_set}
 \end{figure}
 
-The steganographic distortions are visible in Fig.~\ref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the \acs{NR-IQA} model. The selected steganographic methods represent diverse classes of distortion processes (geometric, color-based, local texture perturbation) commonly encountered in practical steganographic applications. The chosen intensity levels ensure a broad perceptual range from barely noticeable to clearly visible distortions.
+The steganographic distortions are visible in~\autoref{fig:steganography}, which shows examples of distorted facial images from each method. The distortions are applied to the original images, and the resulting stego images are used for both subjective evaluation and training of the \acs{NR-IQA} model. The selected steganographic methods represent diverse classes of distortion processes (geometric, color-based, local texture perturbation) commonly encountered in practical steganographic applications. The chosen intensity levels ensure a broad perceptual range from barely noticeable to clearly visible distortions.
 
 \begin{figure}[htbp]
     \centering
@@ -73,7 +73,7 @@ The steganographic distortions are visible in Fig.~\ref{fig:steganography}, whic
 
 \section{Collection of Subjective Scores}
 
-We followed the \acs{ITU-R BT.500-15}~\cite{itu2023r} recommendation and adopted the \acl{SS} method. The test was implemented using a custom Django~\cite{django} web application seen in Fig.~\ref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education level, country of origin, ethnicity, type of device being used, and where they were located at the time of the test session. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
+We followed the \acs{ITU-R BT.500-15}~\cite{itu2023r} recommendation and adopted the \acl{SS} method. The test was implemented using a custom Django~\cite{django} web application seen in~\autoref{fig:webapp}. Prior to the test session, participants signed an informed consent form and filled out a registration form providing demographic and environmental information such as age, gender, education level, country of origin, ethnicity, type of device being used, and where they were located at the time of the test session. After this, observers were shown 10 randomly selected sample images. These examples were designed to help them understand the variation in quality across the dataset.
 
 In the subjective assessment phase, each image was shown individually, with no time limit. Ratings were submitted using a labeled slider, and automatic saving ensured session robustness.
 
@@ -83,7 +83,7 @@ In the subjective assessment phase, each image was shown individually, with no t
     \caption{Django-based web application created for the Single Stimulus test sessions.}\label{fig:webapp}
 \end{figure}
 
-Each image in the \acs{MOS} set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations. Table~\ref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in \acs{ITU-R BT.500-15}, resulting in the exclusion of one participant.
+Each image in the \acs{MOS} set was evaluated approximately 30 times by human observers, resulting in over 14,000 ratings. We had around 200 participants, each session lasted about 22 minutes and included roughly 70 evaluations.~\autoref{tab:demographics} summarizes the demographic profile of the participant pool. Following the session, outlier observers were identified and removed using both Kurtosis-based and correlation-based post-screening methods described in \acs{ITU-R BT.500-15}, resulting in the exclusion of one participant.
 
 \begin{table}[htbp]
     \centering
@@ -207,13 +207,13 @@ The database was implemented using the Django web framework, which provides an \
 \end{figure}
 
 
-The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data. Fig.~\ref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The session models individual tests and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type, and distortion level. The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary feedback entity captures optional, anonymous, observer comments and critiques.
+The database schema was designed to ensure structured storage and traceability of all subjective quality evaluation data.~\autoref{fig:db_conceptual} presents the conceptual data model, which defines the main entities and their relationships. The profile entity stores participant metadata, including age, gender, education, ethnicity, country of origin, and device used. The session models individual tests and is linked to both the participant profile and the dataset being evaluated. The image entity encodes each image's filename, associated distortion type, and distortion level. The test entity stores individual subjective ratings, including the precise timestamp of submission, linked to both the session and the image presented. An auxiliary feedback entity captures optional, anonymous, observer comments and critiques.
 
-The physical implementation of this schema, shown in Fig.~\ref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset and profile fields in session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session and image, enabling consistent aggregation of ratings into a statistical descriptor such as \acs{MOS} and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with \acs{ITU-R BT.500-15} recommendations.
+The physical implementation of this schema, shown in~\autoref{fig:db_physical}, is realized as a relational database with explicit foreign key constraints to ensure referential integrity. The dataset and profile fields in session formally enforce the linkage to specific datasets and participants. The test table connects each subjective rating to its session and image, enabling consistent aggregation of ratings into a statistical descriptor such as \acs{MOS} and confidence intervals per image and per distortion level. The relational model also facilitates efficient querying for downstream statistical analysis and supports reproducibility of the experimental protocol in line with \acs{ITU-R BT.500-15} recommendations.
 
 \section{Debiasing Subjective Scores}
 
-To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{ols}, where we applied a residualization method based on linear modeling. An \acf{OLS} regression was fit to the \acs{MOS} values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in Table~\ref{tab:anova}, several factors exhibit statistically significant effects on the \acs{MOS} prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an \acf{ANOVA}~\cite{anova} and \acf{mANOVA}~\cite{manova} test, showing no significant impact from any individual factor. The corrected \acs{MOS} labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
+To correct for demographic bias in the subjective scores, we followed a procedure inspired by prior work on bias correction in perceptual tasks~\cite{ols}, where we applied a residualization method based on linear modeling. An \acf{OLS} regression was fit to the \acs{MOS} values, using observer and image attributes, and their pairwise interactions as categorical predictors. The fitted bias components were subtracted from the original scores, and the residuals were mean-centered to preserve the global score distribution. As shown in~\autoref{tab:anova}, several factors exhibit statistically significant effects on the \acs{MOS} prior to residualization, notably observer and subject ethnicity. After applying the residualization procedure, these effects disappear, as confirmed by an \acf{ANOVA}~\cite{anova} and \acf{mANOVA}~\cite{manova} test, showing no significant impact from any individual factor. The corrected \acs{MOS} labels are then used as ground truth in all supervised stages of the pipeline to ensure fairness and reduce the influence of socially conditioned priors.
 
 \begin{table}[htbp]
     \centering
@@ -269,7 +269,7 @@ The second objective is supervision for training \acs{NR-IQA} models. With a lar
 
 We train on two complementary image sets: a labeled set containing the $\approx$10\% of images annotated with human \acs{MOS}, and a pseudo labeled set with the remaining distorted images scored by our \acs{FR} fusion into \acs{pMOS}.
 
-We train three pretrained backbones with a 1-unit linear regressor head using Smooth-$L_1$ loss ($\beta\!=\!1$), AdamW~\cite{adamw}, cosine learning-rate scheduling, batch size of 31, mixed-precision on GPU, and ImageNet normalization. Table~\ref{tab:backbone_config} summarizes the training configuration. There was no use of data augmentation algorithms, since the distortions themselves provide sufficient variability.
+We train three pretrained backbones with a 1-unit linear regressor head using Smooth-$L_1$ loss ($\beta\!=\!1$), AdamW~\cite{adamw}, cosine learning-rate scheduling, batch size of 31, mixed-precision on GPU, and ImageNet normalization.~\autoref{tab:backbone_config} summarizes the training configuration. There was no use of data augmentation algorithms, since the distortions themselves provide sufficient variability.
 
 \begin{table}[htbp]
     \centering
@@ -294,4 +294,4 @@ We adopt 5-fold \acf{CV}. The merged dataset is split into 5 disjoint folds $\{F
     \text{CI}_{95}:\;\bar{m}\pm1.96\,\frac{\hat{\sigma}}{\sqrt{5}}.
 \end{equation}
 
-Final test set results are reported on a disjoint \acs{MOS}-only set. Full hardware and software environment details are in Appendix~\ref{app:env}.
+Final test set results are reported on a disjoint \acs{MOS}-only set. Full hardware and software environment details are in~\autoref{app:env}.
