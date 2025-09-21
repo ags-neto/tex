@@ -238,30 +238,30 @@ This shows that the \acs{HVS} is most forgiving of uniform brightness shifts, an
 \hline
 \textbf{Distortion} & \textbf{mean \acs{MOS}} & \textbf{mean std} \\
 \hline
-Additive Gaussian noise & 52.823608 & 8.558371 \\
-Additive noise (chromatic > luminance) & 59.689406 & 6.913883 \\
-Spatially correlated noise & 41.352106 & 9.135326 \\
-Masked noise & 59.531739 & 6.704667 \\
-High frequency noise & 53.394171 & 12.375609 \\
-Impulse noise & 44.259787 & 6.674494 \\
-Quantization noise & 45.224325 & 10.862101 \\
-Gaussian blur & 45.828900 & 14.361556 \\
-Image denoising & 49.133393 & 18.800548 \\
-\acs{JPEG} compression & 48.761858 & 18.444557 \\
-\acs{JPEG}2000 compression & 41.504723 & 19.727287 \\
-\acs{JPEG} transmission errors & 50.262821 & 13.482118 \\
-\acs{JPEG}2000 transmission errors & 40.589366 & 11.090509 \\
-Non-eccentricity pattern noise & 56.718800 & 9.817571 \\
-Local block-wise distortions & 39.799320 & 4.405221 \\
-Mean shift (intensity shift) & 61.727699 & 7.134111 \\
-Contrast change & 58.530860 & 14.483492 \\
-Change of color saturation & 47.942729 & 6.347988 \\
-Multiplicative Gaussian noise & 51.503875 & 8.412448 \\
-Comfort noise & 53.176738 & 11.947637 \\
-Lossy compression of noisy images & 46.395844 & 13.422621 \\
-Color quantization with dither & 49.454569 & 12.686575 \\
-Chromatic aberrations & 54.657177 & 14.664789 \\
-Sparse sampling and reconstruction & 40.978003 & 21.848505 \\
+Additive Gaussian noise & 52.82 & 8.558 \\
+Additive noise (chromatic > luminance) & 59.69 & 6.91 \\
+Spatially correlated noise & 41.35 & 9.14 \\
+Masked noise & 59.53 & 6.70 \\
+High frequency noise & 53.39 & 12.38 \\
+Impulse noise & 44.26 & 6.67 \\
+Quantization noise & 45.22 & 10.86 \\
+Gaussian blur & 45.83 & 14.36 \\
+Image denoising & 49.13 & 18.80 \\
+\acs{JPEG} compression & 48.76 & 18.44 \\
+\acs{JPEG}2000 compression & 41.50 & 19.73 \\
+\acs{JPEG} transmission errors & 50.26 & 13.48 \\
+\acs{JPEG}2000 transmission errors & 40.59 & 11.09 \\
+Non-eccentricity pattern noise & 56.72 & 9.82 \\
+Local block-wise distortions & 39.80 & 4.41 \\
+Mean shift (intensity shift) & 61.73 & 7.13 \\
+Contrast change & 58.53 & 14.48 \\
+Change of color saturation & 47.94 & 6.35 \\
+Multiplicative Gaussian noise & 51.50 & 8.41 \\
+Comfort noise & 53.18 & 11.95 \\
+Lossy compression of noisy images & 46.40 & 13.42 \\
+Color quantization with dither & 49.45 & 12.69 \\
+Chromatic aberrations & 54.66 & 14.66 \\
+Sparse sampling and reconstruction & 40.98 & 21.85 \\
 \hline
 \end{tabular}
 \end{table}
@@ -320,18 +320,18 @@ The \acs{FR} fusion model was evaluated on the \acs{MOS} train set and compared 
 \textbf{Model} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
 \hline
 \acs{pMOS-SSIM+} (ours) & \textbf{0.9264} & \textbf{0.9174} & \textbf{39.69} & \textbf{4.863} \\
-\acs{MS-SSIM} & 0.7640 & 0.7550 & 2564.2973 & 48.7645 \\
-\acs{CW-SSIM} & 0.7488 & 0.7376 & 2565.1929 & 48.7774 \\
-\acs{SPIQ} & 0.7418 & 0.7580 & 2569.1263 & 48.8276 \\
-\acs{IW-SSIM} & 0.6808 & 0.7119 & 2568.3498 & 48.8199 \\
-\acs{PSNR} & 0.6776 & 0.6619 & 651.0133 & 23.3342 \\
-\acs{PSM} & 0.6482 & 0.6483 & 2455.0229 & 47.9523 \\
-\acs{ESIM} & 0.6482 & 0.6483 & 2562.4546 & 48.7355 \\
-\acs{G-SSIM} & 0.6400 & 0.6528 & 2584.8087 & 49.0076 \\
-\acs{SCC} & 0.6379 & 0.5999 & 2562.6675 & 48.7412 \\
-\acs{L-SSIM} & 0.6366 & 0.6387 & 2573.6674 & 48.8771 \\
-\acs{SNR} & 0.6351 & 0.6139 & 1002.7718 & 29.7395 \\
-\acs{W-SSIM} & 0.6268 & 0.6453 & 2582.6103 & 48.9770 \\
+\acs{MS-SSIM} & 0.7640 & 0.7550 & 2564 & 48.76 \\
+\acs{CW-SSIM} & 0.7488 & 0.7376 & 2565 & 48.78 \\
+\acs{SPIQ} & 0.7418 & 0.7580 & 2569 & 48.83 \\
+\acs{IW-SSIM} & 0.6808 & 0.7119 & 2568 & 48.82 \\
+\acs{PSNR} & 0.6776 & 0.6619 & 651 & 23.33 \\
+\acs{PSM} & 0.6482 & 0.6483 & 2455 & 47.95 \\
+\acs{ESIM} & 0.6482 & 0.6483 & 2562 & 48.74 \\
+\acs{G-SSIM} & 0.6400 & 0.6528 & 2584 & 49.01 \\
+\acs{SCC} & 0.6379 & 0.5999 & 2562 & 48.74 \\
+\acs{L-SSIM} & 0.6366 & 0.6387 & 2573 & 48.88 \\
+\acs{SNR} & 0.6351 & 0.6139 & 1002 & 29.74 \\
+\acs{W-SSIM} & 0.6268 & 0.6453 & 2582 & 48.98 \\
 \hline
 \end{tabular}
 \end{table}
