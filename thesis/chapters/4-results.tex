@@ -317,7 +317,7 @@ The \acs{FR} fusion model was evaluated on the \acs{MOS} train set and compared 
 \label{tab:tid2013-fusion-mos-test}
 \begin{tabular}{lcccc}
 \hline
-\textbf{Model} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
+\textbf{Metric} & \textbf{\acs{PLCC}} & \textbf{\acs{SRCC}} & \textbf{\acs{MSE}} & \textbf{\acs{MAE}} \\
 \hline
 \acs{pMOS-SSIM+} (ours) & \textbf{0.9264} & \textbf{0.9174} & \textbf{39.69} & \textbf{4.863} \\
 \acs{MS-SSIM} & 0.7640 & 0.7550 & 2564 & 48.76 \\
@@ -409,9 +409,7 @@ We further evaluated the \acs{pMOS-NoisyTID} metric on individual groups of refe
 \caption{\acs{TID}2013 reference images from the test set.}
 \end{figure}
 
-\autoref{tab:tid_nr_scores} compares \acs{pMOS-NoisyTID} predictions to standard \acs{NR-IQA} metrics, showing clear improvements.
-
-\autoref{tab:tid_nr_scores} shows a clear gap between standard \acs{NR-IQA} baselines and the proposed \acs{pMOS-NoisyTID}. Traditional blind metrics such as \acs{NIQE}, \acs{PIQE} and \acs{BRISQUE} exhibit weak correlation with human judgements on \acs{TID}2013, whereas \acs{pMOS-NoisyTID} aligns substantially better with subjective quality, achieving \acs{PLCC} = 0.6860, and \acs{SRCC} = 0.5591. These results support our two-stage approach, \acs{pMOS} fusion followed by \acs{NR} model training, as a more reliable and generalizable route to \acs{NR-IQA}, capturing perceptual quality variations in general images beyond the facial domain of \acs{FRLL}.
+\autoref{tab:tid_nr_scores} compares \acs{pMOS-NoisyTID} predictions to standard \acs{NR-IQA} metrics, showing clear improvements. There's a clear gap between standard \acs{NR-IQA} baselines and the proposed \acs{pMOS-NoisyTID}. Traditional blind metrics such as \acs{NIQE}, \acs{PIQE} and \acs{BRISQUE} exhibit weak correlation with human judgements on \acs{TID}2013, whereas \acs{pMOS-NoisyTID} aligns substantially better with subjective quality, achieving \acs{PLCC} = 0.6860, and \acs{SRCC} = 0.5591. These results support our two-stage approach, \acs{pMOS} fusion followed by \acs{NR} model training, as a more reliable and generalizable route to \acs{NR-IQA}, capturing perceptual quality variations in general images beyond the facial domain of \acs{FRLL}.
 
 \begin{table}[htpb]
 \centering
